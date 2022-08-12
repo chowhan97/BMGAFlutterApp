@@ -18,6 +18,8 @@ class SalesOrder {
   final String? podate;
   final String? pono;
   final String? setwarehouse;
+  final String? customer_name;
+  final String? modified;
   final List<SalesOrderItems>? salesOrderItems;
 
   SalesOrder(
@@ -40,7 +42,10 @@ class SalesOrder {
       this.portofdischarge,
       this.totalnetweight,
       this.totalqty,
-      this.name});
+      this.name,
+      this.customer_name,
+      this.modified
+      });
   factory SalesOrder.fromJson(Map<String, dynamic> json) {
     return SalesOrder(
       advancepaid: json['advance_paid'] ?? 0,
@@ -62,6 +67,8 @@ class SalesOrder {
       perdelivered: json['per_delivered'] ?? 0,
       setwarehouse: json['set_warehouse'] ?? '',
       salesOrderItems: json['items'] ?? null,
+      customer_name: json['customer_name'] ?? "",
+      modified: json['modified'] ?? ""
     );
   }
 

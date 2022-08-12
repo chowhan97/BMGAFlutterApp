@@ -32,6 +32,7 @@ class SalesOrderService {
       final String so = salesOrderListUrl();
       final response = await _dio.get(so);
       var data = response.data;
+      print("data is====>>$data");
       list = data['data'];
       for (var listJson in list) {
         solist.add(SalesOrder.fromJson(listJson));

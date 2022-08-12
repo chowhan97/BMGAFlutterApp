@@ -16,15 +16,15 @@ class LoginApiService {
   //For doing login based on the username and password
   Future login(
       {required String username,
-      required String password,
-      required BuildContext context,
-      required String baseUrl}) async {
+        required String password,
+        required BuildContext context,
+        required String baseUrl}) async {
     try {
       List<String>? baseurllist = await getBaseUrlList();
       // HomeService _homeService=HomeService();
       baseUrl = "https://erptest.bharathrajesh.co.in";
-      username = "jeeva@yuvabe.com";
-      password = "NgrBhv@72";
+      username = "prithvichowhan97@gmail.com";
+      password = "vishalpatel2022";
       final String url = loginUrl(baseUrl);
       var uri=Uri.parse(url);
       final response = await http.post(
@@ -63,6 +63,7 @@ class LoginApiService {
         // String cookieSid = cookie!.split(';').first.toString();
         // setCookie(cookieSid);
         await CommonService().setGlobalDefaults(context);
+        print("home page");
         pushReplacementScreen(context, Home());
       }
       if (response.statusCode == 400) {

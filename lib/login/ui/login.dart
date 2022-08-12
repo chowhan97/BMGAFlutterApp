@@ -1,11 +1,16 @@
+
+import 'dart:convert';
+
 import 'package:ebuzz/common/circular_progress.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/display_helper.dart';
 import 'package:ebuzz/common/round_button.dart';
 import 'package:ebuzz/login/service/login_api_service.dart';
+import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/util/preference.dart';
 import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //Login class contains ui of login form
 class Login extends StatefulWidget {
@@ -221,6 +226,14 @@ class _LoginState extends State<Login> {
           if (_formKey.currentState!.validate()) {
             login();
           }
+          // login();
+          // var item_code = [{"item_code": "Demo Item 4","quantity_booked":"1","average_price":"170","amount": "470","quantity_available":"234"}];
+          // var order_list = [{"item_code": "Demo Item 4","quantity_booked":"1","average_price":"170","amount": "470","quantity_available":"234","rate_contract_check":"0"}];
+          // String item_codeString = jsonEncode(item_code);
+          // String order_listString = jsonEncode(order_list);
+          // print(item_codeString.toString());
+          // print(order_listString.toString());
+          //getTableData(context,itemcode: item_codeString,customertype: "Retail",company: "Bharath Medical %26 General Agencies",order_list: order_listString,customer: "CUST-R-00010");
         },
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
+import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_models/product.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/config/color_palette.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:collection/collection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // final ValueNotifier<String> _notify = ValueNotifier<String>("");
 var item = [{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}].toString();
 var customerType = "Retail";
@@ -64,7 +66,14 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
     super.initState();
     getItemList();
     print(widget.company);
+    saveData();
     // print(widget.customer);
+    }
+
+    saveData() async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("company", widget.company.toString());
+      prefs.setString("customer", widget.customer.toString());
     }
 
   getItemList() async {
@@ -139,8 +148,10 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
             //     context,
             //     OrderBookingForm3());
             // print("Clicked");
-            var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
-            print(salesPromos);
+            oblist.clear();
+            pushScreen(context,OrderBookingForm3());
+            // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
+            // print(salesPromos);
         },
         child: Icon(
           Icons.arrow_forward,
@@ -150,8 +161,7 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
         ],
       ),
       body: oblist.length == 0
-          ? Center(
-              child: Text(
+          ? Center(child: Text(
               'List is empty',
               style: TextStyle(fontSize: 18, color: blackColor),
             ))
@@ -340,74 +350,73 @@ class _OBItemsFormState extends State<OBItemsForm>
               child: Column(
                 children: [
                   itemCodeField(),
-                  Row(
-                    children:[
-                      SizedBox(
-                        height: 50,
-                        width: 110,
-                        child:TextField(
-                        decoration: InputDecoration(
-                        labelText: 'Brand Name',
-                        ),
-                        enabled: false,
-                        controller: brandcontractcontrollerlist[widget.i],
-                        style: TextStyle(fontSize: 14, color: blackColor),
+                  Column(
+                    children: [
+                      Row(
+                        children:[
+                          Expanded(
+                            child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Brand Name',
+                            ),
+                            enabled: false,
+                            controller: brandcontractcontrollerlist[widget.i],
+                            style: TextStyle(fontSize: 14, color: blackColor),
+                             ),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: TextField(
+                            decoration: InputDecoration(
+                            labelText: 'Quantity Available',
+                            ),
+                            enabled: false,
+                            controller: quantityavailablecontrollerlist[widget.i],
+                            style: TextStyle(fontSize: 14, color: blackColor),
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: TextField(
+                            decoration: InputDecoration(
+                            labelText: 'Last Batch Price',
+                            ),
+                            enabled: false,
+                            controller: lastbatchpricecontrollerlist[widget.i],
+                            style: TextStyle(fontSize: 14, color: blackColor),
+                            ),
+                          ),
+                        ],
                       ),
-                      ),
-                      SizedBox(width: 5),
-                      SizedBox(
-                        height: 50,
-                        width: 110,
-                        child:TextField(
-                        decoration: InputDecoration(
-                        labelText: 'Quantity Available',
-                        ),
-                        enabled: false,
-                        controller: quantityavailablecontrollerlist[widget.i],
-                        style: TextStyle(fontSize: 14, color: blackColor),
-                      ),
-                      ),
-                      SizedBox(width: 5),
-                      SizedBox(
-                        height: 50,
-                        width: 110,
-                        child:TextField(
-                        decoration: InputDecoration(
-                        labelText: 'Last Batch Price',
-                        ),
-                        enabled: false,
-                        controller: lastbatchpricecontrollerlist[widget.i],
-                        style: TextStyle(fontSize: 14, color: blackColor),
-                      ),
-                      ),
-                      SizedBox(width: 5),
-                      SizedBox(
-                        height: 50,
-                        width: 100,
-                        child:TextField(
-                        decoration: InputDecoration(
-                        labelText: 'Rate Contract',
-                        ),
-                        enabled: false,
-                        controller: ratecontractcontrollerlist[widget.i],
-                        style: TextStyle(fontSize: 14, color: blackColor),
-                      ),
-                      ),
-                      SizedBox(width: 5),
-                      SizedBox(
-                        height: 50,
-                        width: 50,
-                        child:TextField(
-                        decoration: InputDecoration(
-                        labelText: 'MRP',
-                        ),
-                        enabled: false,
-                        controller: mrpcontractcontrollerlist[widget.i],
-                        style: TextStyle(fontSize: 14, color: blackColor),
-                      ),
-                      ),
-                      SizedBox(width: 5),
-                      Expanded(child: quantityField()),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          // Expanded(
+                          //   child: TextField(
+                          //     decoration: InputDecoration(
+                          //       labelText: 'Rate Contract',
+                          //     ),
+                          //     enabled: false,
+                          //     controller: ratecontractcontrollerlist[widget.i],
+                          //     style: TextStyle(fontSize: 14, color: blackColor),
+                          //   ),
+                          // ),
+                          // SizedBox(width: 5),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.32,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                labelText: 'MRP',
+                              ),
+                              enabled: false,
+                              controller: mrpcontractcontrollerlist[widget.i],
+                              style: TextStyle(fontSize: 14, color: blackColor),
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(child: quantityField()),
+                        ],
+                      )
                     ],
                   ),
                   

@@ -59,6 +59,14 @@ String companyListUrl() {
   return '/api/resource/Company?fields=["*"]&limit_page_length=*';
 }
 
+String CustomerTypeUrl({customer}){
+  return "/api/method/bmga.bmga.doctype.order_booking_v2.api.customer_type_container?customer=$customer";
+}
+
+String tableData({itemcode,customerType,company,order_list,customer}){
+  return '/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=$itemcode&customer_type=$customerType&company=$company&order_list=$order_list&customer=$customer';
+}
+
 String customerUrl() {
   return '/api/resource/Customer/?fields=["name"]&filters=[["Customer","disabled","=","No"]]&limit_page_length=*';
 }
@@ -395,3 +403,8 @@ String salesPromoUrl(String item_code,String customer_type,String company,String
 String orderDetailUrl(String item_code, String customer_type, String company, String customer){
   return '/api/method/bmga.bmga.doctype.order_booking_v2.api.item_qty_container?item_code=$item_code&customer_type=$customer_type&company=$company&customer=$customer';
 }
+
+String orderBooking(){
+  return '/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_order_container';
+}
+

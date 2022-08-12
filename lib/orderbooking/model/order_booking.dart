@@ -5,6 +5,8 @@ class OrderBooking {
   final int? docstatus;
   final String? customer;
   final String? company;
+  final String? customer_name;
+  final String? modified;
   final List<OrderBookingItems>? orderBookingItems;
   // final List<OrderBookingSalesPromos>? orderBookingSalesPromos;
   
@@ -15,6 +17,8 @@ class OrderBooking {
       this.customer,
       this.company,
       this.name,
+      this.customer_name,
+      this.modified,
       // this.orderBookingSalesPromos
       });
   factory OrderBooking.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,8 @@ class OrderBooking {
       customer: json['customer'] ?? '',
       name: json['name'] ?? '',
       orderBookingItems: json['items'] ?? null,
+      customer_name: json['customer_name'] ?? "",
+      modified: json['modified'] ?? ""
       // orderBookingSalesPromos: json['items'] ?? null,
     );
   }

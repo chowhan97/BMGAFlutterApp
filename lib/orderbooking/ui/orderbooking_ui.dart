@@ -3,6 +3,7 @@ import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
+import 'package:ebuzz/orderbooking/ui/orderbooking_detail_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form1.dart';
 
@@ -46,8 +47,18 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
             itemCount: _orderBookingList.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                child: Text(_orderBookingList[index].name.toString()),
-                
+                onTap: (){
+                  pushScreen(
+                    context,
+                    OrderBookingDetail(
+                      bookingOrder: _orderBookingList[index],
+                    ),
+                  );
+                },
+                // child: Text(_orderBookingList[index].name.toString()),
+                child: SOTileUi(
+                  soData: _orderBookingList[index],index: index,
+                ),
               );
             },
           ),
@@ -64,8 +75,66 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
       ),
       );
     }
+}
 
-
+class SOTileUi extends StatelessWidget {
+  final OrderBooking soData;
+  final int index;
+  const SOTileUi({required this.soData,required this.index});
+  @override
+  Widget build(BuildContext context) {
+    print("data==>>>${soData}");
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    // soData.customer ?? '',
+                    soData.customer_name ?? '',
+                    style: TextStyle(fontSize: 16, color: blackColor),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    // 'Delivery Date : ' + soData.orderBookingItems!,
+                    'Order Booking Id : ' + soData.name.toString(),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    // 'Grand Total : \$' + soData.grandtotal.toString(),
+                    'Modified : ' + soData.modified.toString(),
+                  ),
+                  // SizedBox(height: 5),
+                  // Row(
+                  //   children: [
+                  //     Text(
+                  //       // 'Percent Billed : ' + soData.perbilled!.toStringAsPrecision(2) + '%  ',
+                  //       'Percent Billed : ' + "" + '%  ',
+                  //     ),
+                  //     Text(
+                  //       // 'Percent Delivered : ' + soData.perdelivered!.toStringAsPrecision(2) + '%',
+                  //       'Percent Delivered : ' + "" + '%',
+                  //     ),
+                  //   ],
+                  // ),
+                ],
+              ),
+              Spacer(),
+              SizedBox(width: 5),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
   

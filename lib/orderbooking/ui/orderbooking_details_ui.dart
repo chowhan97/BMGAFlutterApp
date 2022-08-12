@@ -11,18 +11,18 @@ class OrderBookingDetails extends StatefulWidget {
 }
 
 class _OrderBookingDetails extends State<OrderBookingDetails>{
-  List<OrderBookingDetails> details;
-  bool _loading;
+  late List<OrderBookingDetails> details;
+  late bool _loading;
 
 
   @override initState(){
     super.initState();
     _loading = true;
-    Services.getDetails(item_code, customer_type, company, customer).then((details){
-      _details = details;
-      _loading = false;
-
-    });
+    // Services.getDetails(item_code, customer_type, company, customer).then((details){
+    //   _details = details;
+    //   _loading = false;
+    //
+    // });
 
   }
 

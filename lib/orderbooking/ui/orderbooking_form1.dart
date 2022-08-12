@@ -10,6 +10,7 @@ import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderBookingForm1 extends StatefulWidget {
   @override
@@ -43,6 +44,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   TextEditingController customerController = TextEditingController();
   TextEditingController companyController = TextEditingController();
   TextEditingController warehouseController = TextEditingController();
+  TextEditingController CustomerTypeField = TextEditingController();
   // TextEditingController customer_typeController = TextEditingController();
   
 
@@ -65,8 +67,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   }
 
   getWarehouseList(String company) async {
-    warehouseList =
-        await CommonService().getWarehouseList(company, context);
+    warehouseList = await CommonService().getWarehouseList(company, context);
     print(warehouseList.length);
     setState(() {});
   }
@@ -90,15 +91,14 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: blueAccent,
         onPressed: () {
-          if (customerController.text.isNotEmpty &&
-              companyController.text.isNotEmpty) {
-            pushScreen(
-                context,
+          if (customerController.text.isNotEmpty && companyController.text.isNotEmpty) {
+            pushScreen(context,
                 OrderBookingForm2(
                   company: companyController.text,
                   customer: customerController.text,
                   customertype: customertype,
-                ));
+                ),
+            );
           }
         },
         child: Icon(
@@ -126,29 +126,49 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   }
 
   Widget customerTypeField() {
-    return CustomDropDown(
-      value: customertype,
-      decoration: BoxDecoration(
-          color: greyColor, borderRadius: BorderRadius.circular(5)),
-      items: customerTypeList.map<DropdownMenuItem<String>>((value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(
-            value.toString(),
-            style: TextStyle(fontSize: 14),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Customer Type"),
+        SizedBox(height: 8),
+        TextFormField(
+          controller: CustomerTypeField,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(color: blackColor),
+            fillColor: greyColor,
+            filled: true,
+            isDense: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(5),
+            ),
           ),
-        );
-      }).toList(),
-      alignment: CrossAxisAlignment.start,
-      onChanged: (String? newValue) {
-        setState(() {
-          customertype = newValue!;
-        });
-      },
-      label: 'Customer Type',
-      labelStyle: TextStyle(fontSize: 14),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        ),
+      ],
     );
+    // return CustomDropDown(
+    //   value: customertype,
+    //   decoration: BoxDecoration(
+    //       color: greyColor, borderRadius: BorderRadius.circular(5)),
+    //   items:  customerTypeList.map<DropdownMenuItem<String>>((value) {
+    //     return DropdownMenuItem<String>(
+    //       value: value,
+    //       child: Text(
+    //         value.toString(),
+    //         style: TextStyle(fontSize: 14),
+    //       ),
+    //     );
+    //   }).toList(),
+    //   alignment: CrossAxisAlignment.start,
+    //   onChanged: (String? newValue) {
+    //     setState(() {
+    //       customertype = newValue!;
+    //     });
+    //   },
+    //   label: 'Customer Type',
+    //   labelStyle: TextStyle(fontSize: 14),
+    //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+    // );
   }
 
   Widget companyField() {
@@ -161,7 +181,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
-          )),
+          ),
+      ),
       label: 'Company',
       labelStyle: TextStyle(color: blackColor),
       required: true,
@@ -170,18 +191,24 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         return TypeAheadWidgets.itemUi(item);
       },
       onSuggestionSelected: (suggestion) async {
+        print("suggestion selected");
         companyController.text = suggestion;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        setState(() {
+          prefs.setString("company", companyController.text);
+        });
         //after selecting company fetch warehuselist
-        getWarehouseList(companyController.text);
+
+        // getWarehouseList(companyController.text);
       },
       suggestionsCallback: (pattern) {
+        print("suggestion list call");
         return TypeAheadWidgets.getSuggestions(pattern, companyList);
       },
       transitionBuilder: (context, suggestionsBox, controller) {
         return suggestionsBox;
       },
-      validator: (val) =>
-          val == '' || val == null ? 'Company name should not be empty' : null,
+      validator: (val) => val == '' || val == null ? 'Company name should not be empty' : null,
     );
   }
 
@@ -205,6 +232,11 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       },
       onSuggestionSelected: (suggestion) async {
         customerController.text = suggestion;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        setState(() {
+          prefs.setString("customer", customerController.text);
+          getCustomerType(suggestion: suggestion);
+        });
       },
       suggestionsCallback: (pattern) {
         return TypeAheadWidgets.getSuggestions(pattern, customerList);
@@ -212,9 +244,29 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       transitionBuilder: (context, suggestionsBox, controller) {
         return suggestionsBox;
       },
-      validator: (val) =>
-          val == '' || val == null ? 'Customer name should not be empty' : null,
+      validator: (val) => val == '' || val == null ? 'Customer name should not be empty' : null,
     );
   }
+
+
+  getCustomerType({suggestion}) async {
+    var customerType = await CommonService().getCustomerType(context,customer: suggestion);
+    CustomerTypeField.text = customerType;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("cust_type", CustomerTypeField.text);
+    setState(() {});
+  }
+  //   for (var products in list) {
+  //     for (var product in products) {
+  //       if (product['name'] == name){
+  //         setState(() {
+  //           CustomerTypeField.text = product['customer_type'];
+  //         });
+  //       }
+  //       print("product is====>>>>$product");
+  //       return product;
+  //     }
+  //   }
+  // }
 
 }

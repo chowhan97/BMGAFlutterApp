@@ -55,6 +55,21 @@ class CommonService {
     return companylist;
   }
 
+  Future getCustomerType(BuildContext context, {customer}) async{
+    var customerType;
+    try {
+      Dio _dio = await BaseDio().getBaseDio();
+      final String so = CustomerTypeUrl(customer: customer);
+      final response = await _dio.get(so);
+      var data = response.data;
+      customerType = data['message']['pch_customer_type'];
+      return customerType;
+    } catch (e) {
+      exception(e, context);
+    }
+    return customerType;
+  }
+
   // Future<Customer> getCustomerDetail(
   //     String customerName, BuildContext context) async {
   //   Customer customer = Customer();
@@ -652,8 +667,7 @@ class CommonService {
   }
 
   //for fetching warehouse list
-  Future<List<String>> getWarehouseList(
-      String company, BuildContext context) async {
+  Future<List<String>> getWarehouseList(String company, BuildContext context) async {
     List<String> warehouselist = [];
     List list;
     try {

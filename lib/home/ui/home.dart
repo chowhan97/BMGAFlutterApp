@@ -69,6 +69,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     getPrefs();
   }
 
+
   getData() async {
     setState(() {
       loading = true;
@@ -119,8 +120,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         labels.contains(DoctypeNames.company) &&
         labels.contains(DoctypeNames.customer) &&
         labels.contains(DoctypeNames.warehouse))
-      widgetsList
-          .add(LabelList(label: 'Sales Order', route: SalesOrderListUi()));
+      widgetsList.add(LabelList(label: 'Sales Order', route: SalesOrderListUi()));
     // widgetsList
     //     .add(LabelList(label: 'Evaluasi Staff', route: EvaluasiStaffFormUi()));
     // if (labels.contains(DoctypeNames.item) &&
@@ -277,6 +277,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         ),
         body: loading ? CircularProgress() : _gridViewUi());
   }
+
+
 
   //For displaying cards in gridview having row column count as 2
   Widget _gridViewUi() {

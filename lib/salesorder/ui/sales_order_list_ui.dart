@@ -22,6 +22,7 @@ class _SalesOrderListUiState extends State<SalesOrderListUi> {
 
   getSalesOrderList() async {
     _salesOrderList = await SalesOrderService().getSalesOrderList(context);
+    print("_salesOrderList is=====>>$_salesOrderList");
     setState(() {});
   }
 
@@ -83,6 +84,7 @@ class SOTileUi extends StatelessWidget {
   const SOTileUi({required this.soData});
   @override
   Widget build(BuildContext context) {
+    print("data==>>>${soData}");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
       child: Card(
@@ -97,33 +99,34 @@ class SOTileUi extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    soData.customer ?? '',
+                    // soData.customer ?? '',
+                    soData.customer_name ?? '',
                     style: TextStyle(fontSize: 16, color: blackColor),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'Delivery Date : ' + soData.deliverydate!,
+                    'Modified Date : ' + soData.modified!,
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'Grand Total : \$' + soData.grandtotal.toString(),
+                    'Grand Total : \₹' + soData.grandtotal.toString(),
                   ),
                   SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        'Percent Billed : ' +
-                            soData.perbilled!.toStringAsPrecision(2) +
-                            '%  ',
-                      ),
-                      Text(
-                        'Percent Delivered : ' +
-                            soData.perdelivered!.toStringAsPrecision(2) +
-                            '%',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
+                  // Row(
+                  //   children: [
+                  //     Text(
+                  //       'Percent Billed : ' +
+                  //           soData.perbilled!.toStringAsPrecision(2) +
+                  //           '%  ',
+                  //     ),
+                  //     Text(
+                  //       'Percent Delivered : ' +
+                  //           soData.perdelivered!.toStringAsPrecision(2) +
+                  //           '%',
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(height: 5),
                   Text(
                     'Status : ' + soData.status!,
                   ),
