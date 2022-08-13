@@ -196,10 +196,9 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         setState(() {
           prefs.setString("company", companyController.text);
+          var company = prefs.getString("company");
+          print("????????????$company");
         });
-        //after selecting company fetch warehuselist
-
-        // getWarehouseList(companyController.text);
       },
       suggestionsCallback: (pattern) {
         print("suggestion list call");
@@ -235,6 +234,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         setState(() {
           prefs.setString("customer", customerController.text);
+          var cust = prefs.getString("customer");
+          print("cust????????$cust");
           getCustomerType(suggestion: suggestion);
         });
       },
@@ -254,6 +255,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
     CustomerTypeField.text = customerType;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("cust_type", CustomerTypeField.text);
+    var cust_type = prefs.getString("cust_type");
+    print("cust_type?????????$cust_type");
     setState(() {});
   }
   //   for (var products in list) {

@@ -105,7 +105,7 @@ class PromosQty {
     this.itemA,
   });
 
-  int? itemA;
+  double? itemA;
 
   factory PromosQty.fromJson(Map<String, dynamic> json) => PromosQty(
     itemA: json["ItemA"],

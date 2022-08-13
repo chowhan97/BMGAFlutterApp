@@ -8,6 +8,7 @@ import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderBookingForm4 extends StatefulWidget {
 
@@ -52,13 +53,13 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   ];
   @override
   void initState() {
-    var item_code = [{"item_code": "Demo Item 4","quantity_booked":"1","average_price":"170","amount": "470","quantity_available":"234"}];
-    var order_list = [{"item_code": "Demo Item 4","quantity_booked":"1","average_price":"170","amount": "470","quantity_available":"234","rate_contract_check":"0"}];
-    String item_codeString = jsonEncode(item_code);
-    String order_listString = jsonEncode(order_list);
-    print(item_codeString.toString());
-    print(order_listString.toString());
-    getTableData(context,itemcode: item_codeString,customertype: "Retail",company: "Bharath Medical %26 General Agencies",order_list: order_listString,customer: "CUST-R-00010");
+    // var item_code = [{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}];
+    // var order_list = [{"item_code":"IT002","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":465,"rate_contract_check":0}];
+    // String item_codeString = jsonEncode(item_code);
+    // String order_listString = jsonEncode(order_list);
+    // print(item_codeString.toString());
+    // print(order_listString.toString());
+    getTableData(context,company: "Bharath Medical %26 General Agencies");
     // getTableData(context,itemcode: '[{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}]',customertype: "Retail",company: "Bharath Medical & General Agencies",order_list: '[{"item_code":"IT002","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":465,"rate_contract_check":0}]',customer: "CUST-R-00010");
     super.initState();
   }
@@ -66,28 +67,46 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   TableModel? tableModel;
   var decodedData;
   bool isTableLoad = false;
+  var prefscompany;
+  var prefscustomer;
+  var prefscust_type;
+  var prefsitem_code;
+  var prefsorder_list;
 
-  Future getTableData(BuildContext context,{itemcode,customertype,company,order_list,customer}) async{
+  Future getTableData(BuildContext context,{company}) async{
     print("call");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+       prefscompany    = prefs.getString("company");
+       print("prefscompany??????$prefscompany");
+       prefscustomer   = prefs.getString("customer");
+       print("prefscustomer??????????$prefscustomer");
+       prefscust_type  = prefs.getString("cust_type");
+       print("prefscust_type????????$prefscust_type");
+       prefsitem_code  = prefs.getString("item_code");
+       print("prefsitem_code????????$prefsitem_code");
+       prefsorder_list = prefs.getString("order_list");
+       print("prefsorder_list????????$prefsorder_list");
+    });
     isTableLoad = true;
     var headers = {
       'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
     };
-    var request = http.Request('POST', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=$itemcode&customer_type=$customertype&company=$company&order_list=$order_list&customer=$customer'));
+    var request = http.Request('POST', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${prefsitem_code.toString()}&customer_type=$prefscust_type&company=${company}&order_list=${prefsorder_list.toString()}&customer=$prefscustomer'));
 
     request.headers.addAll(headers);
 
-    // http.StreamedResponse response = await request.send();
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-
     if (response.statusCode == 200) {
       setState(() {
-        isTableLoad = false;
         print(response.body);
         String data = response.body;
         decodedData = jsonDecode(data);
-        print(decodedData['message']['sales_order']['sales_order']);
+        isTableLoad = false;
+        print("table call");
+        tableModel = TableModel.fromJson(json.decode(data));
+        // print(decodedData['message']['sales_order']['sales_order']);
       });
       // var data = await response.stream.bytesToString();
       // tableModel = TableModel.fromJson(json.decode(data));
@@ -126,21 +145,31 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
               color: whiteColor,
             ),
           ),
-          actions: [
-            TextButton(onPressed: (){
-              setState(() {
-                getOrderBooking();
-                // Promodetail = true;
-              });
-            },
-                child: Text("Booking Order",style: TextStyle(color: whiteColor)))
-          ],
+          // actions: [
+          //   TextButton(onPressed: (){
+          //     setState(() {
+          //       getOrderBooking();
+          //       // Promodetail = true;
+          //     });
+          //   },
+          //       child: Text("Booking Order",style: TextStyle(color: whiteColor)))
+          // ],
         ),
       ),
       floatingActionButton:  FloatingActionButton(
         backgroundColor: blueAccent,
         onPressed:() {
-          pushReplacementScreen(context, OrderBookingUi());
+          setState(() {
+            // 'customer': 'CUST-R-00002',
+            // 'order_list': '[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":52,"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":"Demo Item 4","average_price":170,"amount_after_gst":180,"brand_name":"Johnson & Johnson","__checked":0,"quantity_booked":22,"amount":3740}]',
+            // 'company': 'Bharath Medical & General Agencies',
+            // 'customer_type': 'Retail',
+            // 'free_promos': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":4,"warehouse_quantity":20,"promo_type":"Buy x get same and discount for ineligible qty"}]',
+            // 'promo_dis': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_item":"Demo Item 4","quantity":2,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":272}]',
+            // 'sales_order': '[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":52,"quantity":20,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":20,"quantity":4,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":"Demo Item 4","quantity_available":52,"quantity":2,"average":136,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"BMGA Test Warehouse - BMGA"}]'
+            getOrderBooking();
+          });
+          //pushReplacementScreen(context, OrderBookingUi());
           // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
           // print(salesPromos);
         },
@@ -149,7 +178,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           color: whiteColor,
         ),
       ),
-      body: Padding(
+      body: isTableLoad == true ? Center(child: CircularProgressIndicator()): Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,11 +186,6 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                isTableLoad == true ? CircularProgressIndicator(): Text(
-                  '${decodedData['message']['sales_order']['sales_order']['qty'].toString()}',
-                  // "",
-                  style: TextStyle(fontSize: 18, color: blackColor),
-                ),
                 Text(
                   'Scroll ',
                   style: TextStyle(fontSize: 18, color: blackColor),
@@ -189,23 +213,23 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
             SizedBox(height: 8),
             Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
-            Expanded(child: ListView(
+            tableModel!.message!.salesOrder!.salesOrder!.isEmpty ? Container(): Expanded(child: ListView(
               children: [
                 _createDataTable(),
               ],
             ),
             ),
-            Text("Promos",style: TextStyle(fontSize: 18)),
+            tableModel!.message!.salesPromosItems!.isEmpty ? Container(): Text("Promos",style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
-            Expanded(child: ListView(
+            tableModel!.message!.salesPromosItems!.isEmpty ? Container(): Expanded(child: ListView(
               children: [
                 _createPromosDataTable(),
               ],
             ),
             ),
-            Text("Promos Discount",style: TextStyle(fontSize: 18)),
+            tableModel!.message!.salesPromoDiscount!.promos!.isEmpty  ? Container(): Text("Promos Discount",style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
-            Expanded(child: ListView(
+             tableModel!.message!.salesPromoDiscount!.promos!.isEmpty  ? Container(): Expanded(child: ListView(
               children: [
                 _createPromosDiscountDataTable(),
               ],
@@ -235,13 +259,15 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     ];
   }
   List<DataRow> _createRows() {
-    return _books.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book['item_code'].toString()))),
-      DataCell(Expanded(child: Text(book['quantity_available'].toString()))),
-      DataCell(Expanded(child: Text(book['quantity'].toString()))),
-      DataCell(Expanded(child: Text(book['latest_prize'].toString()))),
-      DataCell(Expanded(child: Text(book['promo_type'].toString()))),
-    ])).toList();
+    return tableModel!.message!.salesOrder!.salesOrder!.map((book) => DataRow(cells: [
+      DataCell(Expanded(child: Text(book.itemCode.toString()))),
+      DataCell(Expanded(child: Text(book.qtyAvailable.toString()))),
+      DataCell(Expanded(child: Text(book.qty.toString()))),
+      DataCell(Expanded(child: Text(book.averagePrice.toString()))),
+      DataCell(Expanded(child: Text(book.promoType.toString()))),
+       ],
+     ),
+    ).toList();
   }
   List<DataColumn> _createpromosColumns() {
     return [

@@ -53,41 +53,6 @@ class _OrderBookingForm3State extends State<OrderBookingForm3> {
     getItemList();
   }
 
-  List<Map> _books = [
-    {
-      'item_code': "Demo item 4",
-      'quantity_available': '52',
-      'quantity': '20',
-      'latest_prize': '₹ 160',
-      'promo_type': 'None',
-    },
-    {
-      'item_code': "Demo item 4",
-      'quantity_available': '52',
-      'quantity': '20',
-      'latest_prize': '₹ 136',
-      'promo_type': 'Buy x get same and discount',
-    },
-  ];
-
-  List<Map> promos = [
-    {
-      'bought': "Demo item 4",
-      'warehouse_qty': "20",
-      'free_items': "Demo item 4",
-      'qty': "4"
-    }
-  ];
-
-  List<Map> promosDiscount = [
-    {
-      'bought': "Demo item 4",
-      'free_item': "Demo item 4",
-      'discounted_prize': "₹ 136",
-      'qty': "2"
-    }
-  ];
-
   getItemList() async {
     try {
       List listData = await CommonService().getItemList(context);
@@ -162,15 +127,6 @@ class _OrderBookingForm3State extends State<OrderBookingForm3> {
           FloatingActionButton(
             backgroundColor: blueAccent,
             onPressed:() async{
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              setState(() {
-                var prefscompany = prefs.getString("company");
-                var prefscustomer = prefs.getString("customer");
-                var prefscust_type = prefs.getString("cust_type");
-                var prefsitem_code = prefs.getString("item_code");
-                var prefsorder_list = prefs.getString("order_list");
-                //getTableData(context,itemcode: '[{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}]',customertype: "Retail",company: "Bharath Medical & General Agencies",order_list: '[{"item_code":"IT002","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":465,"rate_contract_check":0}]',customer: "CUST-R-00002");
-              });
               // getTableData(context,itemcode: '[{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}]',customertype: "Retail",company: "Bharath Medical %26 General Agencies",order_list: '[{"item_code":"IT002","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":465,"rate_contract_check":0}]',customer: "CUST-R-00010");
               pushScreen(context,OrderBookingForm4());
               // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
@@ -206,80 +162,8 @@ class _OrderBookingForm3State extends State<OrderBookingForm3> {
                   );
                 }),
           ),
-          // if(Promodetail == true)
-          // Padding(
-          //   padding: EdgeInsets.all(8.0),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
-          //       _createDataTable(),
-          //       SizedBox(height: 8),
-          //        Text("Promos",style: TextStyle(fontSize: 18)),
-          //       _createPromosDataTable(),
-          //       SizedBox(height: 8),
-          //       Text("Promos Discount",style: TextStyle(fontSize: 18)),
-          //       _createPromosDiscountDataTable(),
-          //       // SizedBox(height: 8),
-          //       // Expanded(child: ListView(
-          //       //   children: [
-          //       //     _createDataTable(),
-          //       //   ],
-          //       // ),
-          //       // ),
-          //       // Text("Promos",style: TextStyle(fontSize: 18)),
-          //       // SizedBox(height: 8),
-          //       // Expanded(child: ListView(
-          //       //   children: [
-          //       //     _createPromosDataTable(),
-          //       //   ],
-          //       // ),
-          //       // ),
-          //       // Text("Promos Discount",style: TextStyle(fontSize: 18)),
-          //       // SizedBox(height: 8),
-          //       // Expanded(child: ListView(
-          //       //   children: [
-          //       //     _createPromosDiscountDataTable(),
-          //       //   ],
-          //       // ),
-          //       // ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
-      // body: Padding(
-      //   padding: EdgeInsets.all(8.0),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
-      //       SizedBox(height: 8),
-      //       Expanded(child: ListView(
-      //         children: [
-      //           _createDataTable(),
-      //         ],
-      //       ),
-      //       ),
-      //       Text("Promos",style: TextStyle(fontSize: 18)),
-      //       SizedBox(height: 8),
-      //       Expanded(child: ListView(
-      //         children: [
-      //           _createPromosDataTable(),
-      //         ],
-      //       ),
-      //       ),
-      //       Text("Promos Discount",style: TextStyle(fontSize: 18)),
-      //       SizedBox(height: 8),
-      //       Expanded(child: ListView(
-      //         children: [
-      //           _createPromosDiscountDataTable(),
-      //         ],
-      //       ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
   void assignIndex(int index, int lastElement) {
@@ -302,66 +186,6 @@ class _OrderBookingForm3State extends State<OrderBookingForm3> {
     quantitycontlist.removeAt(index);
     if (!mounted) return;
     setState(() {});
-  }
-
-  DataTable _createDataTable() {
-    return DataTable(columns: _createColumns(), rows: _createRows(),border: TableBorder.all(color: Colors.black));
-  }
-  DataTable _createPromosDataTable() {
-    return DataTable(columns: _createpromosColumns(), rows: _createPromosRows(),border: TableBorder.all(color: Colors.black));
-  }
-  DataTable _createPromosDiscountDataTable() {
-    return DataTable(columns: _createpromosDiscountColumns(), rows: _createPromosDiscountRows(),border: TableBorder.all(color: Colors.black));
-  }
-  List<DataColumn> _createColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Item Code'))),
-      DataColumn(label: Expanded(child: Text('Quantity Available'))),
-      DataColumn(label: Expanded(child: Text('Quantity'))),
-      DataColumn(label: Expanded(child: Text('Latest Batch Price'))),
-      DataColumn(label: Expanded(child: Text('Promo Type')))
-    ];
-  }
-  List<DataRow> _createRows() {
-    return _books.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book['item_code'].toString()))),
-      DataCell(Expanded(child: Text(book['quantity_available'].toString()))),
-      DataCell(Expanded(child: Text(book['quantity'].toString()))),
-      DataCell(Expanded(child: Text(book['latest_prize'].toString()))),
-      DataCell(Expanded(child: Text(book['promo_type'].toString()))),
-    ])).toList();
-  }
-  List<DataColumn> _createpromosColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Bought Item'))),
-      DataColumn(label: Expanded(child: Text('Warehouse Quantity'))),
-      DataColumn(label: Expanded(child: Text('Free items'))),
-      DataColumn(label: Expanded(child: Text('Quantity'))),
-    ];
-  }
-  List<DataRow> _createPromosRows() {
-    return promos.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book['bought'].toString()))),
-      DataCell(Expanded(child: Text(book['warehouse_qty'].toString()))),
-      DataCell(Expanded(child: Text(book['free_items'].toString()))),
-      DataCell(Expanded(child: Text(book['qty'].toString()))),
-    ])).toList();
-  }
-  List<DataColumn> _createpromosDiscountColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Bought Item'))),
-      DataColumn(label: Expanded(child: Text('Free item'))),
-      DataColumn(label: Expanded(child: Text('Discounted Price'))),
-      DataColumn(label: Expanded(child: Text('Quantity'))),
-    ];
-  }
-  List<DataRow> _createPromosDiscountRows() {
-    return promosDiscount.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book['bought'].toString()))),
-      DataCell(Expanded(child: Text(book['free_item'].toString()))),
-      DataCell(Expanded(child: Text(book['discounted_prize'].toString()))),
-      DataCell(Expanded(child: Text(book['qty'].toString()))),
-    ])).toList();
   }
 }
 
@@ -415,15 +239,14 @@ class _OBItemsformState extends State<OBItemsform> with AutomaticKeepAliveClient
       item[i].add(itemCode);
       print(item);
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // item[i].add(orderDetails["message"]["available_qty"]),
-    var item_code = [{"item_code":itemcodecontlist[index].text,"quantity_booked":quantitycontlist[index].text,"average_price":lastbatchpricecontlist[index].text,"amount": int.parse(quantitycontlist[index].text) * int.parse(lastbatchpricecontlist[index].text),"quantity_available":quantityavailablecontlist[index].text}];
-    var order_list = [{"item_code":itemcodecontlist[index].text,"quantity_booked":quantitycontlist[index].text,"average_price":lastbatchpricecontlist[index].text,"amount": int.parse(quantitycontlist[index].text) * int.parse(lastbatchpricecontlist[index].text),"quantity_available":quantityavailablecontlist[index].text,"rate_contract_check":ratecontractcontlist[index].text}];
-    var prefscompany = prefs.getString("company");
-    var prefscustomer = prefs.getString("customer");
-    var prefscustomertype = prefs.getString("cust_type");
-    prefs.setString("item_code", jsonEncode(item_code));
-    prefs.setString("order_list", jsonEncode(order_list));
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var item_code = [{"item_code":itemcodecontlist[index].text,"quantity_booked":quantitycontlist[index].text,"average_price":lastbatchpricecontlist[index].text,"amount": int.parse(quantitycontlist[index].text) * int.parse(lastbatchpricecontlist[index].text),"quantity_available":quantityavailablecontlist[index].text}];
+    // var order_list = [{"item_code":itemcodecontlist[index].text,"quantity_booked":quantitycontlist[index].text,"average_price":lastbatchpricecontlist[index].text,"amount": int.parse(quantitycontlist[index].text) * int.parse(lastbatchpricecontlist[index].text),"quantity_available":quantityavailablecontlist[index].text,"rate_contract_check":ratecontractcontlist[index].text}];
+    // var prefscompany = prefs.getString("company");
+    // var prefscustomer = prefs.getString("customer");
+    // var prefscustomertype = prefs.getString("cust_type");
+    // prefs.setString("item_code", jsonEncode(item_code));
+    // prefs.setString("order_list", jsonEncode(order_list));
     setState(() {});
   }
 

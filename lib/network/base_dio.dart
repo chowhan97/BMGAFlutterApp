@@ -15,7 +15,7 @@ class BaseDio {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options,handler)  {
       _dio.interceptors.requestLock.lock();
-      // options.headers["cookie"] = cookie;
+      options.headers["cookie"] = cookie;
       handler.next(options);
       _dio.interceptors.requestLock.unlock();
           }));

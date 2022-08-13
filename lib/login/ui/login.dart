@@ -227,12 +227,12 @@ class _LoginState extends State<Login> {
             login();
           }
           // login();
-          // var item_code = [{"item_code": "Demo Item 4","quantity_booked":"1","average_price":"170","amount": "470","quantity_available":"234"}];
-          // var order_list = [{"item_code": "Demo Item 4","quantity_booked":"1","average_price":"170","amount": "470","quantity_available":"234","rate_contract_check":"0"}];
-          // String item_codeString = jsonEncode(item_code);
-          // String order_listString = jsonEncode(order_list);
-          // print(item_codeString.toString());
-          // print(order_listString.toString());
+          var item_code = [{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}];
+          var order_list = [{"item_code":"IT002","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":465,"rate_contract_check":0}];
+          String item_codeString = jsonEncode(item_code);
+          String order_listString = jsonEncode(order_list);
+          print(item_codeString.toString());
+          print(order_listString.toString());
           //getTableData(context,itemcode: item_codeString,customertype: "Retail",company: "Bharath Medical %26 General Agencies",order_list: order_listString,customer: "CUST-R-00010");
         },
       ),

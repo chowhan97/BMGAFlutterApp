@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
@@ -10,6 +12,8 @@ import 'package:ebuzz/network/base_dio.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form3.dart';
+import 'package:ebuzz/orderbooking/ui/orderbooking_form4.dart';
+import 'package:ebuzz/salesorder/ui/sales_order_form2.dart';
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:ebuzz/widgets/custom_card.dart';
 import 'package:ebuzz/widgets/custom_textformformfield.dart';
@@ -65,7 +69,10 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
   void initState() {
     super.initState();
     getItemList();
-    print(widget.company);
+    print("1. ${widget.company}");
+    print("2. ${widget.customer}");
+    print("3. ${widget.customertype}");
+    print("4. ${widget.itemCode}");
     saveData();
     // print(widget.customer);
     }
@@ -140,16 +147,9 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
           FloatingActionButton(
           backgroundColor: blueAccent,
           onPressed:() {
-            // var item_code = itemcodecontrollerlist;
-            // var companyDetails = widget.company;
-            // companyDetails = companyDetails?.replaceAll(RegExp(' '), '+');
-            // companyDetails = companyDetails?.replaceAll(RegExp('&'), '%26');
-            // pushScreen(
-            //     context,
-            //     OrderBookingForm3());
-            // print("Clicked");
             oblist.clear();
-            pushScreen(context,OrderBookingForm3());
+            // pushScreen(context,OrderBookingForm3());
+            pushScreen(context,OrderBookingForm4());
             // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
             // print(salesPromos);
         },
@@ -272,6 +272,9 @@ class _OBItemsFormState extends State<OBItemsForm>
   var orderDetails;
   List item = [];
   String txt = " ";
+  var prefscompany;
+  var prefscustomer;
+  var prefscust_type;
   @override
   void initState() {
     super.initState();
@@ -285,14 +288,41 @@ class _OBItemsFormState extends State<OBItemsForm>
     oblist[index].rate = double.parse(product.valuationRate.toString());
     oblist[index].qty = 1.0;
     oblist[index].amount = oblist[index].rate! * oblist[index].qty!;
-    quantitycontrollerlist[index].text = 1.0.toString();
+    // quantitycontrollerlist[index].text = 1.toString();
     itemcodecontrollerlist[index].text = itemCode;
-    orderDetails = await getOrderBookingDetails(itemCode,customertype,company,customer, context);
+    // orderDetails = await getOrderBookingDetails(itemCode,customertype,company,customer, context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefscompany    = prefs.getString("company");
+      print("prefscompany??????$prefscompany");
+      prefscustomer   = prefs.getString("customer");
+      print("prefscustomer??????????$prefscustomer");
+      prefscust_type  = prefs.getString("cust_type");
+      print("prefscust_type????????$prefscust_type");
+    });
+    orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     quantityavailablecontrollerlist[index].text = orderDetails["message"]["available_qty"].toString();
     lastbatchpricecontrollerlist[index].text = orderDetails["message"]["price_details"]["price"].toString();
     ratecontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["rate_contract_check"].toString();
     mrpcontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["mrp"].toString();
     brandcontractcontrollerlist[index].text = orderDetails["message"]["brand_name"]["brand_name"].toString();
+    print("quantity_booked======>>>>${quantitycontrollerlist[index].text}");
+    print("average_price======>>>>${int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0))}");
+    print("quantity_available======>>>>${int.parse(double.parse(quantityavailablecontrollerlist[index].text).toStringAsFixed(0))}");
+    print("amount======>>>>${int.parse(quantitycontrollerlist[index].text) * int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0))}");
+    print("rate_contract_check======>>>>${int.parse(ratecontractcontrollerlist[index].text)}");
+    var item_code = [{"item_code":itemcodecontrollerlist[index].text,"quantity_booked": int.parse(quantitycontrollerlist[index].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[index].text) * int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[index].text).toStringAsFixed(0))}];
+    var order_list = [{"item_code":itemcodecontrollerlist[index].text,"quantity_booked": int.parse(quantitycontrollerlist[index].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[index].text) * int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[index].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[index].text)}];
+    String item_codeString = jsonEncode(item_code);
+    String order_listString = jsonEncode(order_list);
+    print("========?????=========$item_codeString");
+    print("========?????=========$order_listString");
+    prefs.setString("item_code", item_codeString);
+    prefs.setString("order_list", order_listString);
+    var getitem_code = prefs.getString("item_code");
+    var getorder_list = prefs.getString("order_list");
+    print("========get?????=========$getitem_code");
+    print("========get?????=========$getorder_list");
     // List item = [
     //   for (var i in itemCode)
       
@@ -303,7 +333,6 @@ class _OBItemsFormState extends State<OBItemsForm>
       }
       
       // item[i].add(orderDetails["message"]["available_qty"]),
-    
     setState(() {});
   }
 

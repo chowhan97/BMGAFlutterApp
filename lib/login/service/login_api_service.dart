@@ -9,6 +9,7 @@ import 'package:ebuzz/util/preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ebuzz/util/apiurls.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 //LoginApiService class contains function login
 class LoginApiService {
@@ -59,6 +60,13 @@ class LoginApiService {
         setUserName(username);
         setLoggedIn(true);
         setName(fullname);
+        if (kIsWeb) {
+          // running on the web!
+        } else {
+          var cookie = response.headers["set-cookie"];
+          String cookieSid = cookie!.split(';').first.toString();
+          setCookie(cookieSid);
+        }
         // var cookie = response.headers["set-cookie"];
         // String cookieSid = cookie!.split(';').first.toString();
         // setCookie(cookieSid);
