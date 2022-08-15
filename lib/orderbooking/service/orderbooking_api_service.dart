@@ -178,52 +178,10 @@ Future<List<OrderBookingSalesPromos>> getOrderBookingSalesPromo(String itemCode,
   return orderBookingDetailsMap;
 }
 
-// TableModel? tableModel;
-// var decodedData;
-// bool isTableLoad = false;
-//
-// Future getTableData(BuildContext context,{itemcode,customertype,company,order_list,customer}) async{
-//   print("call");
-//   isTableLoad = true;
-//   var headers = {
-//     'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
-//   };
-//   var request = http.Request('POST', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=$itemcode&customer_type=$customertype&company=$company&order_list=$order_list&customer=$customer'));
-//
-//   request.headers.addAll(headers);
-//
-//   // http.StreamedResponse response = await request.send();
-//   var streamedResponse = await request.send();
-//   var response = await http.Response.fromStream(streamedResponse);
-//
-//   if (response.statusCode == 200) {
-//     // var data = await response.stream.bytesToString();
-//     isTableLoad = false;
-//     print(response.body);
-//     String data = response.body;
-//     decodedData = jsonDecode(data);
-//     print("hello${decodedData['message']['sales_order']['sales_order']}");
-//     // tableModel = TableModel.fromJson(json.decode(data));
-//     // print("table data is===>>>$tableModel");
-//   }
-//   else {
-//     print(response.reasonPhrase);
-//   }
-//
-//   // var customerType;
-//   // try {
-//   //   Dio _dio = await BaseDio().getBaseDio();
-//   //   final String so = tableData(itemcode: itemcode,customerType: customertype,company: company,order_list: order_list,customer: customer);
-//   //   final response = await _dio.get(so);
-//   //   var data = response.data;
-//   //   print("table data is====>>>$data");
-//   //   // customerType = data['message']['pch_customer_type'];
-//   //   // return customerType;
-//   // } catch (e) {
-//   //   exception(e, context);
-//   // }
-//   // return customerType;
-// }
+TableModel? tableModel;
+var decodedData;
+bool isTableLoad = false;
+
 
 
 Future getOrderBooking({customer,order_list,company,customer_type,free_promos,promo_dis,sales_order}) async{
@@ -234,17 +192,25 @@ Future getOrderBooking({customer,order_list,company,customer_type,free_promos,pr
   print("prefscustomer??????????$prefscustomer");
   var prefscust_type  = prefs.getString("cust_type");
   print("prefscust_type????????$prefscust_type");
+  var book_orderlist = prefs.getString("book_orderlist");
+  print("book_orderlist????????$book_orderlist");
+  var sales_order = prefs.getString("sales_order");
+  print("sales_order????????$sales_order");
+  var free_promos = prefs.getString("free_promos");
+  print("free_promos????????$free_promos");
+  var promo_dis = prefs.getString("promo_dis");
+  print("promo_dis????????$promo_dis");
   var headers = {
     'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
   };
   var map = {
     'customer': prefscustomer.toString(),
-    'order_list': '[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":52,"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":"Demo Item 4","average_price":170,"amount_after_gst":180,"brand_name":"Johnson & Johnson","__checked":0,"quantity_booked":22,"amount":3740}]',
+    'order_list': book_orderlist.toString(),
     'company': 'Bharath Medical & General Agencies',
     'customer_type': prefscust_type.toString(),
-    'free_promos': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":4,"warehouse_quantity":20,"promo_type":"Buy x get same and discount for ineligible qty"}]',
-    'promo_dis': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_item":"Demo Item 4","quantity":2,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":272}]',
-    'sales_order': '[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":52,"quantity":20,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":20,"quantity":4,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":"Demo Item 4","quantity_available":52,"quantity":2,"average":136,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"BMGA Test Warehouse - BMGA"}]'
+    'free_promos': free_promos.toString(),
+    'promo_dis': promo_dis.toString(),
+    'sales_order': sales_order.toString()
   };
   var request = http.MultipartRequest('POST', Uri.parse('https://erptest.bharathrajesh.co.in${orderBooking()}'));
   request.fields.addAll(map);

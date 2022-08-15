@@ -106,7 +106,18 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         isTableLoad = false;
         print("table call");
         tableModel = TableModel.fromJson(json.decode(data));
-        // print(decodedData['message']['sales_order']['sales_order']);
+        // var salesorder = [{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code": tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average": tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code": tableModel!.message!.salesOrder!.salesOrder![00].itemCode ?? "IT002","quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable ?? 465,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty ?? 21,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice ?? 41,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType ?? "None","warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse ?? "BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":tableModel!.message!.salesOrder!.salesOrder![0].itemCode ?? "IT002","quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable ?? 465,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty ?? 21,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice ?? 41,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType ?? "None","warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse ?? "BMGA Test Warehouse - BMGA"}];
+        // var freepromos =  [{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item": tableModel!.message!.boughtItem![0].itemCode,"free_items":tableModel!.message!.boughtItem![0].itemCode,"price":tableModel!.message!.boughtItem![0].amount,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![0].quantityAvailable,"promo_type":"Buy x get same and discount for ineligible qty"}];
+        // var promodis = [{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":tableModel!.message!.boughtItem![0].itemCode,"free_item":tableModel!.message!.boughtItem![0].itemCode,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":tableModel!.message!.boughtItem![0].amount}];
+        // String sales_order = jsonEncode(salesorder);
+        // String free_promos = jsonEncode(freepromos);
+        // String promo_dis = jsonEncode(promodis);
+        // print("========?????=========$sales_order");
+        // print("========?????=========$free_promos");
+        // print("========?????=========$promo_dis");
+        // prefs.setString("sales_order", sales_order);
+        // prefs.setString("free_promos", free_promos);
+        // prefs.setString("promo_dis", promo_dis);
       });
       // var data = await response.stream.bytesToString();
       // tableModel = TableModel.fromJson(json.decode(data));
@@ -115,20 +126,6 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     else {
       print(response.reasonPhrase);
     }
-
-    // var customerType;
-    // try {
-    //   Dio _dio = await BaseDio().getBaseDio();
-    //   final String so = tableData(itemcode: itemcode,customerType: customertype,company: company,order_list: order_list,customer: customer);
-    //   final response = await _dio.get(so);
-    //   var data = response.data;
-    //   print("table data is====>>>$data");
-    //   // customerType = data['message']['pch_customer_type'];
-    //   // return customerType;
-    // } catch (e) {
-    //   exception(e, context);
-    // }
-    // return customerType;
   }
 
   @override
@@ -211,25 +208,28 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
               ],
             ),
             SizedBox(height: 8),
-            Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
+            tableModel!.message!.salesOrder!.salesOrder!.isEmpty ? Container():Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
             tableModel!.message!.salesOrder!.salesOrder!.isEmpty ? Container(): Expanded(child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
                 _createDataTable(),
               ],
-            ),
+             ),
             ),
             tableModel!.message!.salesPromosItems!.isEmpty ? Container(): Text("Promos",style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
             tableModel!.message!.salesPromosItems!.isEmpty ? Container(): Expanded(child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
                 _createPromosDataTable(),
               ],
             ),
             ),
-            tableModel!.message!.salesPromoDiscount!.promos!.isEmpty  ? Container(): Text("Promos Discount",style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
+             tableModel!.message!.salesPromoDiscount!.promos!.isEmpty  ? Container(): Text("Promos Discount",style: TextStyle(fontSize: 18)),
+             SizedBox(height: 8),
              tableModel!.message!.salesPromoDiscount!.promos!.isEmpty  ? Container(): Expanded(child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
                 _createPromosDiscountDataTable(),
               ],
