@@ -12,8 +12,9 @@ import 'package:ebuzz/exception/custom_exception.dart';
 import 'package:ebuzz/network/base_dio.dart';
 import 'package:ebuzz/orderbooking/model/notEditable_model.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
-import 'package:ebuzz/orderbooking/model/table_model.dart';
+// import 'package:ebuzz/orderbooking/model/table_model.dart';
 import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
+import 'package:ebuzz/orderbooking/ui/orderbooking_form2.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form3.dart';
 import 'package:ebuzz/salesorder/model/sales_order.dart';
 import 'package:ebuzz/salesorder/service/sales_order_service.dart';
@@ -46,6 +47,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
   void initState() {
     super.initState();
     print("name====>>${widget.bookingOrder.name}");
+    print("name====>>${widget.bookingOrder}");
     setState(() {
       companyController.text = widget.bookingOrder.company.toString();
       customerController.text = widget.bookingOrder.customer.toString();
@@ -55,39 +57,45 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
     getTableData(context,name: widget.bookingOrder.name);
   }
 
-  List<Map> SalesOrderPreview = [
-    {
-      'item_code': "Demo item 4",
-      'quantity_available': '52',
-      'quantity': '20',
-      'latest_prize': '₹ 160',
-      'promo_type': 'None',
-    },
-    {
-      'item_code': "Demo item 4",
-      'quantity_available': '52',
-      'quantity': '20',
-      'latest_prize': '₹ 136',
-      'promo_type': 'Buy x get same and discount',
-    },
-  ];
+  // List<Map> SalesOrderPreview = [
+  //   {
+  //     'item_code': "Demo item 4",
+  //     'quantity_available': '52',
+  //     'quantity': '20',
+  //     'latest_prize': '₹ 160',
+  //     'promo_type': 'None',
+  //   },
+  //   {
+  //     'item_code': "Demo item 4",
+  //     'quantity_available': '52',
+  //     'quantity': '20',
+  //     'latest_prize': '₹ 136',
+  //     'promo_type': 'Buy x get same and discount',
+  //   },
+  // ];
 
-  List<Map> promos = [
-    {
-      'bought': "Demo item 4",
-      'warehouse_qty': "20",
-      'free_items': "Demo item 4",
-      'qty': "4"
-    }
-  ];
+  // List<Map> promos = [
+  //   {
+  //     'bought': "Demo item 4",
+  //     'warehouse_qty': "20",
+  //     'free_items': "Demo item 4",
+  //     'qty': "4"
+  //   }
+  // ];
 
   List<Map> promosDiscount = [
     {
       'bought': "Demo item 4",
       'free_item': "Demo item 4",
-      'discounted_prize': "₹ 136",
+      'discounted_prize': "136",
       'qty': "2"
-    }
+    },
+    {
+      'bought': "Demo item 4",
+      'free_item': "Demo item 4",
+      'discounted_prize': "136",
+      'qty': "2"
+    },
   ];
 
   Future getTableData(BuildContext context,{name}) async{
@@ -134,70 +142,134 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            companyField(),
-            SizedBox(height: 15),
-            customerField(),
-            SizedBox(height: 15),
-            customerNameField(),
-            SizedBox(height: 15),
-            customerTypeField(),
-            SizedBox(height: 15),
-            Expanded(child: isNotEditableLoad == true ? Center(child: CircularProgressIndicator()) : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container(): Text("Order Booking Items V2",style: TextStyle(fontSize: 18)),
-                SizedBox(height: 8),
-                notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container(): Expanded(
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      _createDataTable(),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 8),
-                notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container(): Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 8),
-                notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container(): Expanded(
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
+      body:  Container(
+          height: MediaQuery.of(context).size.height,
+          color: Color(0xffcfd6e7),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(left: 10,right: 10),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _createPromosDataTable(),
+                          Text("Order Information",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Order ID",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                "#${widget.bookingOrder.name}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                  SizedBox(height: 8),
-                  notEditable!.docs![0].promos!.isEmpty  ? Container(): Text("Promos",style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 8),
-                   notEditable!.docs![0].promos!.isEmpty  ? Container(): Expanded(
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          _createPromosDiscountDataTable(),
-                        ],
-                      ),
-                    ),
-                SizedBox(height: 8),
-                notEditable!.docs![0].promosDiscount!.isEmpty  ? Container(): Text("Promos Discount",style: TextStyle(fontSize: 18)),
-                SizedBox(height: 8),
-                notEditable!.docs![0].promosDiscount!.isEmpty  ? Container(): Expanded(
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
+                  ),
+                  SizedBox(height: 10,),
+                  cardView(),
+                  isNotEditableLoad == true ? SizedBox(height: 300,child: Center(child: CircularProgressIndicator())) :  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _createPromosDiscDataTable(),
+                      notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container() : header("Order Booking Items V2"),
+                      listOrderBooking(notEditable!.docs![0].orderBookingItemsV2!),
+                      notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container() : header("Sales Order Preview"),
+                      listSalesOverView(notEditable!.docs![0].salesOrderPreview!),
+                      notEditable!.docs![0].promos!.isEmpty ? Container() : header("Promos"),
+                      listPromosView(notEditable!.docs![0].promos!),
+                      notEditable!.docs![0].promosDiscount!.isEmpty ? Container() : header("Promos Discount"),
+                      listPromosDiscountView(notEditable!.docs![0].promosDiscount!),
                     ],
                   ),
-                ),
-              ],
-            )),
-          ],
+                  SizedBox(height: 50,),
+                ],
+              ),
+              // child: Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     companyField(),
+              //     SizedBox(height: 15),
+              //     customerField(),
+              //     SizedBox(height: 15),
+              //     customerNameField(),
+              //     SizedBox(height: 15),
+              //     customerTypeField(),
+              //     SizedBox(height: 15),
+              //     Expanded(child: isNotEditableLoad == true ? Center(child: CircularProgressIndicator()) : Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container(): Text("Order Booking Items V2",style: TextStyle(fontSize: 18)),
+              //         SizedBox(height: 8),
+              //         notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container(): Expanded(
+              //           child: ListView(
+              //             scrollDirection: Axis.horizontal,
+              //             children: [
+              //               _createDataTable(),
+              //             ],
+              //           ),
+              //         ),
+              //         SizedBox(height: 8),
+              //         notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container(): Text("Sales Order Preview",style: TextStyle(fontSize: 18)),
+              //         SizedBox(height: 8),
+              //         notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container(): Expanded(
+              //               child: ListView(
+              //                 scrollDirection: Axis.horizontal,
+              //                 children: [
+              //                   _createPromosDataTable(),
+              //                 ],
+              //               ),
+              //             ),
+              //           SizedBox(height: 8),
+              //           notEditable!.docs![0].promos!.isEmpty  ? Container(): Text("Promos",style: TextStyle(fontSize: 18)),
+              //           SizedBox(height: 8),
+              //            notEditable!.docs![0].promos!.isEmpty  ? Container(): Expanded(
+              //               child: ListView(
+              //                 scrollDirection: Axis.horizontal,
+              //                 children: [
+              //                   _createPromosDiscountDataTable(),
+              //                 ],
+              //               ),
+              //             ),
+              //         SizedBox(height: 8),
+              //         notEditable!.docs![0].promosDiscount!.isEmpty  ? Container(): Text("Promos Discount",style: TextStyle(fontSize: 18)),
+              //         SizedBox(height: 8),
+              //         notEditable!.docs![0].promosDiscount!.isEmpty  ? Container(): Expanded(
+              //           child: ListView(
+              //             scrollDirection: Axis.horizontal,
+              //             children: [
+              //               _createPromosDiscDataTable(),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //     ),),
+              //   ],
+              // ),
+            ),
+          ),
         ),
-      )
     );
   }
   DataTable _createDataTable() {
@@ -351,6 +423,288 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+    );
+  }
+
+  cardView() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.apartment ,color: Colors.grey,),
+                    SizedBox(width: 5,),
+                    Expanded(child: Text(companyController.text,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                    SizedBox(width: 5,),
+                    Expanded(child: Text(customerController.text,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.person,color: Colors.grey,),
+                    SizedBox(width: 5,),
+                    Expanded(child: Text(customerNameController.text,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  listOrderBooking(List<OrderBookingItemsV2> list) {
+    double total = list.map((item) => item.quantityBooked! * item.averagePrice!)
+        .reduce((ele1, ele2) => ele1 + ele2);
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child: Column(
+          children: [
+            ListView.builder(
+              itemCount: list.length,
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context,index){
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 2,),
+                          Text("${list[index].quantityAvailable} Quantity Available",style: TextStyle(color: Colors.grey),),
+                          SizedBox(height: 2,),
+                          Text(
+                              "${list[index].quantityBooked} x ₹${list[index].averagePrice}",
+                            style: TextStyle(fontWeight: FontWeight.bold,),
+                          )
+                        ],
+                      ),
+                      Text(
+                          "₹${list[index].amount}",
+                        style: TextStyle(fontWeight: FontWeight.bold,),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                totalHeader("Total"),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text("₹$total",style: TextStyle(fontWeight: FontWeight.bold,),),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  listSalesOverView(List<SalesOrderPreview> list) {
+    double total = list.map((item) => item.average! * int.parse(item.quantity!))
+        .reduce((ele1, ele2) => ele1 + ele2);
+    // int total = promosDiscount.map((item) => int.parse(item['discounted_prize']!) * int.parse(item['qty']!))
+    //     .reduce((ele1, ele2) => ele1 + ele2);
+    // print(total);
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child:  Column(
+          children: [
+            ListView.builder(
+              itemCount: list.length,
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context,index){
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 2,),
+                          Text("${list[index].quantityAvailable} Quantity Available",style: TextStyle(color: Colors.grey),),
+                          SizedBox(height: 2,),
+                          Text(
+                            "${list[index].quantity} x ₹${list[index].average}",
+                            style: TextStyle(fontWeight: FontWeight.bold,),
+                          )
+                        ],
+                      ),
+                      Text(
+                        "₹" +(int.parse(list[index].quantity!) * list[index].average!).toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold,),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                totalHeader("Total"),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text("₹$total",style: TextStyle(fontWeight: FontWeight.bold,),),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  listPromosView(List<Promo> list) {
+    double total = list.map((item) => int.parse(item.quantity!) * item.price!)
+        .reduce((ele1, ele2) => ele1 + ele2);
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child:  Column(
+          children: [
+            ListView.builder(
+              itemCount: list.length,
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context,index){
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(list[index].boughtItem.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 2,),
+                          Text("${list[index].warehouseQuantity} Warehouse Quantity",style: TextStyle(color: Colors.grey),),
+                          SizedBox(height: 2,),
+                          Text(
+                            "${list[index].quantity} Quantity",
+                            style: TextStyle(fontWeight: FontWeight.bold,),
+                          )
+                        ],
+                      ),
+                      Text(
+                        "₹" +(int.parse(list[index].quantity!) * list[index].price!).toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold,),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                totalHeader("Total"),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text("₹$total",style: TextStyle(fontWeight: FontWeight.bold,),),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  listPromosDiscountView(List list) {
+    // double total = list.map((item) => int.parse(item.quantity!) * item.price!)
+    //     .reduce((ele1, ele2) => ele1 + ele2);
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child:  ListView.builder(
+          itemCount: list.length,
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(list[index].name.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                      SizedBox(height: 2,),
+                      Text("1 unit",style: TextStyle(color: Colors.grey),),
+                      SizedBox(height: 2,),
+                      Text(
+                        "${list[index].quantity} x ₹${list[index].price}",
+                        style: TextStyle(fontWeight: FontWeight.bold,),
+                      )
+                    ],
+                  ),
+                  Text(
+                    "₹" +(int.parse(list[index].quantity!) * list[index].price!).toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold,),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  header(String s) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(s,style: TextStyle(fontSize: 18)),
+    );
+  }
+
+  totalHeader(String s) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(s,style: TextStyle(fontWeight: FontWeight.bold),),
     );
   }
 }
