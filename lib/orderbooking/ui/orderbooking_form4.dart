@@ -292,20 +292,20 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                             ],
                           ),
                         ),
-                  // tableModel!.message!.salesPromosItems!.isEmpty
-                  //     ? Container()
-                  //     : Text("Promos", style: TextStyle(fontSize: 18)),
-                  // SizedBox(height: 8),
-                  // tableModel!.message!.salesPromosItems!.isEmpty
-                  //     ? Container()
-                  //     : Expanded(
-                  //         child: ListView(
-                  //           scrollDirection: Axis.horizontal,
-                  //           children: [
-                  //             _createPromosDataTable(),
-                  //           ],
-                  //         ),
-                  //       ),
+                  tableModel!.message!.salesPromosItems!.isEmpty
+                      ? Container()
+                      : Text("Promos", style: TextStyle(fontSize: 18)),
+                  SizedBox(height: 8),
+                  tableModel!.message!.salesPromosItems!.isEmpty
+                      ? Container()
+                      : Expanded(
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              _createPromosDataTable(),
+                            ],
+                          ),
+                        ),
                   tableModel!.message!.salesPromoDiscount!.promos!.isEmpty
                       ? Container()
                       : Text("Promos Discount", style: TextStyle(fontSize: 18)),
@@ -386,9 +386,9 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     return tableModel!.message!.salesPromosItems!
         .map((book) => DataRow(cells: [
               DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-              DataCell(Expanded(child: Text(book.forEveryQuantityThatIsBought.toString()))),
-              DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-              DataCell(Expanded(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))),
+              DataCell(Expanded(child: Text(book.wQty.toString()))),
+              DataCell(Expanded(child: Text(book.promoItem.toString()))),
+              DataCell(Expanded(child: Text(book.qty.toString()))),
             ]))
         .toList();
   }

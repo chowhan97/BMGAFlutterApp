@@ -584,7 +584,7 @@ class Message {
   });
 
   MessageSalesOrder? salesOrder;
-  List<dynamic>? salesPromosItems;
+  List<SalesPromoDiscountedAmount>? salesPromosItems;
   List<BoughtItem>? boughtItem;
   SalesPromo? salesPromosSameItem;
   SalesPromo? salesPromoDiffItems;
@@ -594,7 +594,7 @@ class Message {
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
     salesOrder: MessageSalesOrder.fromJson(json["sales_order"]),
-    salesPromosItems: List<dynamic>.from(json["sales_promos_items"].map((x) => x)),
+    salesPromosItems: List<SalesPromoDiscountedAmount>.from(json["sales_promos_items"].map((x) => SalesPromoDiscountedAmount.fromJson(x))),
     boughtItem: List<BoughtItem>.from(json["bought_item"].map((x) => BoughtItem.fromJson(x))),
     salesPromosSameItem: SalesPromo.fromJson(json["sales_promos_same_item"]),
     salesPromoDiffItems: SalesPromo.fromJson(json["sales_promo_diff_items"]),
@@ -605,7 +605,7 @@ class Message {
 
   Map<String, dynamic> toJson() => {
     "sales_order": salesOrder!.toJson(),
-    "sales_promos_items": List<dynamic>.from(salesPromosItems!.map((x) => x)),
+    "sales_promos_items": List<dynamic>.from(salesPromosItems!.map((x) => x.toJson())),
     "bought_item": List<dynamic>.from(boughtItem!.map((x) => x.toJson())),
     "sales_promos_same_item": salesPromosSameItem!.toJson(),
     "sales_promo_diff_items": salesPromoDiffItems!.toJson(),
@@ -764,6 +764,54 @@ class SalesPromoDiscount {
     "Promo_sales": List<dynamic>.from(promoSales!.map((x) => x)),
     "Promos": List<dynamic>.from(promos!.map((x) => x.toJson())),
     // "sales_data": List<dynamic>.from(salesData!.map((x) => x.toJson())),
+  };
+}
+
+class SalesPromoDiscountedAmount {
+  SalesPromoDiscountedAmount({
+    this.promoType,
+    this.qty,
+    this.dicQty,
+    this.dic,
+    this.rate,
+    this.boughtItem,
+    this.promoItem,
+    this.wQty,
+    this.amount,
+  });
+
+  String? promoType;
+  int? qty;
+  int? dicQty;
+  dynamic dic;
+  dynamic rate;
+  String? boughtItem;
+  String? promoItem;
+  dynamic wQty;
+  int? amount;
+
+  factory SalesPromoDiscountedAmount.fromJson(Map<String, dynamic> json) => SalesPromoDiscountedAmount(
+    promoType: json["promo_type"],
+    qty: json["qty"],
+    dicQty: json["dic_qty"],
+    dic: json["dic"],
+    rate: json["rate"],
+    boughtItem: json["bought_item"],
+    promoItem: json["promo_item"],
+    wQty: json["w_qty"],
+    amount: json["amount"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "promo_type": promoType,
+    "qty": qty,
+    "dic_qty": dicQty,
+    "dic": dic,
+    "rate": rate,
+    "bought_item": boughtItem,
+    "promo_item": promoItem,
+    "w_qty": wQty,
+    "amount": amount,
   };
 }
 

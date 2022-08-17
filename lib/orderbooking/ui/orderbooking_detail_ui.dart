@@ -114,6 +114,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
       setState(() {
         print(response.body);
         String data = response.body;
+        print(data);
         isNotEditableLoad = false;
         print("table call");
         notEditable = NotEditable.fromJson(json.decode(data));
@@ -194,13 +195,15 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container() : header("Order Booking Items V2"),
-                      listOrderBooking(notEditable!.docs![0].orderBookingItemsV2!),
-                      notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container() : header("Sales Order Preview"),
-                      listSalesOverView(notEditable!.docs![0].salesOrderPreview!),
+                      notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container() : listOrderBooking(notEditable!.docs![0].orderBookingItemsV2!),
                       notEditable!.docs![0].promos!.isEmpty ? Container() : header("Promos"),
-                      listPromosView(notEditable!.docs![0].promos!),
+                      notEditable!.docs![0].promos!.isEmpty ? Container() : listPromosView(notEditable!.docs![0].promos!),
                       notEditable!.docs![0].promosDiscount!.isEmpty ? Container() : header("Promos Discount"),
-                      listPromosDiscountView(notEditable!.docs![0].promosDiscount!),
+                      notEditable!.docs![0].promosDiscount!.isEmpty ? Container() : listPromosDiscountView(notEditable!.docs![0].promosDiscount!),
+                      notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container() : header("Sales Order Preview"),
+                      notEditable!.docs![0].salesOrderPreview!.isEmpty ? Container() : listSalesOverView(notEditable!.docs![0].salesOrderPreview!),
+
+
                     ],
                   ),
                   SizedBox(height: 50,),
@@ -281,9 +284,9 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
   DataTable _createPromosDiscountDataTable() {
     return DataTable(columns: _createpromosDiscountColumns(), rows: _createPromosDiscountRows(),border: TableBorder.all(color: Colors.black));
   }
-  DataTable _createPromosDiscDataTable() {
-    return DataTable(columns: _createpromosDiscColumns(), rows: _createPromosDiscRows(),border: TableBorder.all(color: Colors.black));
-  }
+  // DataTable _createPromosDiscDataTable() {
+  //   return DataTable(columns: _createpromosDiscColumns(), rows: _createPromosDiscRows(),border: TableBorder.all(color: Colors.black));
+  // }
   List<DataColumn> _createColumns() {
     return [
       DataColumn(label: Expanded(child: Text('Item Code'))),
@@ -354,14 +357,14 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
       DataColumn(label: Expanded(child: Text('Quantity'))),
     ];
   }
-  List<DataRow> _createPromosDiscRows() {
-    return notEditable!.docs![0].promosDiscount!.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-      DataCell(Expanded(child: Text(book.warehouseQuantity.toString()))),
-      DataCell(Expanded(child: Text(book.freeItems.toString()))),
-      DataCell(Expanded(child: Text(book.quantity.toString()))),
-    ])).toList();
-  }
+  // List<DataRow> _createPromosDiscRows() {
+  //   return notEditable!.docs![0].promosDiscount!.map((book) => DataRow(cells: [
+  //     DataCell(Expanded(child: Text(book.boughtItem.toString()))),
+  //     DataCell(Expanded(child: Text(book.warehouseQuantity.toString()))),
+  //     DataCell(Expanded(child: Text(book.freeItems.toString()))),
+  //     DataCell(Expanded(child: Text(book.quantity.toString()))),
+  //   ])).toList();
+  // }
 
 
 
@@ -442,7 +445,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   children: [
                     Icon(Icons.apartment ,color: Colors.grey,),
                     SizedBox(width: 5,),
-                    Expanded(child: Text(companyController.text,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    Expanded(child: Text(widget.bookingOrder.company.toString(),maxLines: 1,overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),
@@ -452,7 +455,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   children: [
                     Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
                     SizedBox(width: 5,),
-                    Expanded(child: Text(customerController.text,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    Expanded(child: Text(widget.bookingOrder.customer.toString(),maxLines: 1,overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),
@@ -462,7 +465,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   children: [
                     Icon(Icons.person,color: Colors.grey,),
                     SizedBox(width: 5,),
-                    Expanded(child: Text(customerNameController.text,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    Expanded(child: Text(widget.bookingOrder.customer_name.toString(),maxLines: 1,overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),
@@ -474,185 +477,53 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
   }
 
   listOrderBooking(List<OrderBookingItemsV2> list) {
-    double total = list.map((item) => item.quantityBooked! * item.averagePrice!)
-        .reduce((ele1, ele2) => ele1 + ele2);
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
         elevation: 5,
-        child: Column(
-          children: [
-            ListView.builder(
-              itemCount: list.length,
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context,index){
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: ListView.builder(
+          itemCount: list.length,
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                      SizedBox(height: 2,),
+                      Row(
                         children: [
-                          Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
-                          SizedBox(height: 2,),
-                          Text("${list[index].quantityAvailable} Quantity Available",style: TextStyle(color: Colors.grey),),
-                          SizedBox(height: 2,),
-                          Text(
-                              "${list[index].quantityBooked} x ₹${list[index].averagePrice}",
-                            style: TextStyle(fontWeight: FontWeight.bold,),
-                          )
+                          Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                          Text("${list[index].amountAfterGst}",style: TextStyle(color: Colors.grey),),
                         ],
                       ),
+                      SizedBox(height: 2,),
                       Text(
-                          "₹${list[index].amount}",
+                          "${list[index].quantityBooked} x ${list[index].averagePrice}",
                         style: TextStyle(fontWeight: FontWeight.bold,),
-                      ),
+                      )
                     ],
                   ),
-                );
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                totalHeader("Total"),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text("₹$total",style: TextStyle(fontWeight: FontWeight.bold,),),
-                ),
-              ],
-            ),
-          ],
+                  Text(
+                      "₹${list[index].amount}",
+                    style: TextStyle(fontWeight: FontWeight.bold,),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
   }
   
   listSalesOverView(List<SalesOrderPreview> list) {
-    double total = list.map((item) => item.average! * int.parse(item.quantity!))
-        .reduce((ele1, ele2) => ele1 + ele2);
-    // int total = promosDiscount.map((item) => int.parse(item['discounted_prize']!) * int.parse(item['qty']!))
-    //     .reduce((ele1, ele2) => ele1 + ele2);
-    // print(total);
-    return  Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
-        elevation: 5,
-        child:  Column(
-          children: [
-            ListView.builder(
-              itemCount: list.length,
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context,index){
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
-                          SizedBox(height: 2,),
-                          Text("${list[index].quantityAvailable} Quantity Available",style: TextStyle(color: Colors.grey),),
-                          SizedBox(height: 2,),
-                          Text(
-                            "${list[index].quantity} x ₹${list[index].average}",
-                            style: TextStyle(fontWeight: FontWeight.bold,),
-                          )
-                        ],
-                      ),
-                      Text(
-                        "₹" +(int.parse(list[index].quantity!) * list[index].average!).toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold,),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                totalHeader("Total"),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text("₹$total",style: TextStyle(fontWeight: FontWeight.bold,),),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  listPromosView(List<Promo> list) {
-    double total = list.map((item) => int.parse(item.quantity!) * item.price!)
-        .reduce((ele1, ele2) => ele1 + ele2);
-    return  Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
-        elevation: 5,
-        child:  Column(
-          children: [
-            ListView.builder(
-              itemCount: list.length,
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context,index){
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(list[index].boughtItem.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
-                          SizedBox(height: 2,),
-                          Text("${list[index].warehouseQuantity} Warehouse Quantity",style: TextStyle(color: Colors.grey),),
-                          SizedBox(height: 2,),
-                          Text(
-                            "${list[index].quantity} Quantity",
-                            style: TextStyle(fontWeight: FontWeight.bold,),
-                          )
-                        ],
-                      ),
-                      Text(
-                        "₹" +(int.parse(list[index].quantity!) * list[index].price!).toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold,),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                totalHeader("Total"),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text("₹$total",style: TextStyle(fontWeight: FontWeight.bold,),),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  listPromosDiscountView(List list) {
-    // double total = list.map((item) => int.parse(item.quantity!) * item.price!)
-    //     .reduce((ele1, ele2) => ele1 + ele2);
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -668,21 +539,195 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                        SizedBox(height: 2,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              child: Text(
+                                "${list[index].promoType}",style: TextStyle(color: Colors.grey),
+                                // maxLines: 2,overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            // Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width / 1.7,
+                            //   child: Text(
+                            //     "PromoType : ${list[index].promoType}",style: TextStyle(fontWeight: FontWeight.bold,),
+                            //       // maxLines: 2,overflow: TextOverflow.ellipsis,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        // Text("PromoType : ${list[index].promoType}",style: TextStyle(color: Colors.grey),maxLines: 2,overflow: TextOverflow.ellipsis),
+                        SizedBox(height: 2,),
+                        Text(
+                          "${list[index].quantity} x ${list[index].average}",
+                          style: TextStyle(fontWeight: FontWeight.bold,),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  Text(
+                    "₹" +(int.parse(list[index].quantity!) * list[index].average!).toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  listPromosView(List<Promo> list) {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child: ListView.builder(
+          itemCount: list.length,
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(list[index].name.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                      Text(list[index].boughtItem.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
                       SizedBox(height: 2,),
-                      Text("1 unit",style: TextStyle(color: Colors.grey),),
+                      Row(
+                        children: [
+                          Text("Free Item : ",style: TextStyle(fontWeight: FontWeight.bold,),),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              child: Text(
+                                "${list[index].freeItems}",
+                                style: TextStyle(color: Colors.grey),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: 2,),
                       Text(
-                        "${list[index].quantity} x ₹${list[index].price}",
+                        "${list[index].quantity} Quantity",
                         style: TextStyle(fontWeight: FontWeight.bold,),
-                      )
+                          maxLines: 1,overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 2,),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: Text(
+                              "${list[index].promoType}",style: TextStyle(color: Colors.grey),
+                              // maxLines: 2,overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          // Container(
+                          //   width: MediaQuery.of(context).size.width / 1.7,
+                          //   child: Text(
+                          //     "PromoType : ${list[index].promoType}",style: TextStyle(fontWeight: FontWeight.bold,),
+                          //     // maxLines: 2,overflow: TextOverflow.ellipsis,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                      // Text(
+                      //   "PromoType : ${list[index].promoType}",
+                      //   style: TextStyle(color: Colors.grey),
+                      // ),
                     ],
                   ),
+                  SizedBox(width: 10,),
                   Text(
                     "₹" +(int.parse(list[index].quantity!) * list[index].price!).toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold,),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  listPromosDiscountView(List<PromosDiscount> list) {
+    return  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        elevation: 5,
+        child:  ListView.builder(
+          itemCount: list.length,
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(list[index].boughtItem.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                        SizedBox(height: 2,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              child: Text(
+                                "${list[index].promoType}",style: TextStyle(color: Colors.grey),
+                                // maxLines: 2,overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width / 1.7,
+                            //   child: Text(
+                            //     "PromoType : ${list[index].promoType}",style: TextStyle(fontWeight: FontWeight.bold,),
+                            //     // maxLines: 2,overflow: TextOverflow.ellipsis,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                        SizedBox(height: 2,),
+                        Text(
+                          "${list[index].quantity} x ${list[index].discount}",
+                          style: TextStyle(fontWeight: FontWeight.bold,),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  Text(
+                    "₹" +(int.parse(list[index].quantity!) * list[index].discount!).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],

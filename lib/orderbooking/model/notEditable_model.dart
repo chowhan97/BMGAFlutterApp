@@ -257,7 +257,7 @@ class Doc {
   List<OrderBookingItemsV2>? orderBookingItemsV2;
   List<SalesOrderPreview>? salesOrderPreview;
   List<Promo>? promos;
-  List<dynamic>? promosDiscount;
+  List<PromosDiscount>? promosDiscount;
 
   factory Doc.fromJson(Map<String, dynamic> json) => Doc(
     name: json["name"],
@@ -277,7 +277,7 @@ class Doc {
     orderBookingItemsV2: List<OrderBookingItemsV2>.from(json["order_booking_items_v2"].map((x) => OrderBookingItemsV2.fromJson(x))),
     salesOrderPreview: List<SalesOrderPreview>.from(json["sales_order_preview"].map((x) => SalesOrderPreview.fromJson(x))),
     promos: List<Promo>.from(json["promos"].map((x) => Promo.fromJson(x))),
-    promosDiscount: List<dynamic>.from(json["promos_discount"].map((x) => x)),
+    promosDiscount: List<PromosDiscount>.from(json["promos_discount"].map((x) => PromosDiscount.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -298,7 +298,7 @@ class Doc {
     "order_booking_items_v2": List<dynamic>.from(orderBookingItemsV2!.map((x) => x.toJson())),
     "sales_order_preview": List<dynamic>.from(salesOrderPreview!.map((x) => x.toJson())),
     "promos": List<dynamic>.from(promos!.map((x) => x.toJson())),
-    "promos_discount": List<dynamic>.from(promosDiscount!.map((x) => x)),
+    "promos_discount": List<dynamic>.from(promosDiscount!.map((x) => x.toJson())),
   };
 }
 
@@ -561,6 +561,86 @@ class SalesOrderPreview {
     "quantity": quantity,
     "average": average,
     "warehouse": warehouse,
+    "promo_type": promoType,
+    "doctype": doctype,
+  };
+}
+
+class PromosDiscount {
+  PromosDiscount({
+    this.name,
+    this.owner,
+    this.creation,
+    this.modified,
+    this.modifiedBy,
+    this.parent,
+    this.parentfield,
+    this.parenttype,
+    this.idx,
+    this.docstatus,
+    this.boughtItem,
+    this.freeItem,
+    this.quantity,
+    this.discount,
+    this.amount,
+    this.promoType,
+    this.doctype,
+  });
+
+  String? name;
+  String? owner;
+  String? creation;
+  String? modified;
+  String? modifiedBy;
+  String? parent;
+  String? parentfield;
+  String? parenttype;
+  int? idx;
+  int? docstatus;
+  String? boughtItem;
+  String? freeItem;
+  String? quantity;
+  double? discount;
+  double? amount;
+  String? promoType;
+  String? doctype;
+
+  factory PromosDiscount.fromJson(Map<String, dynamic> json) => PromosDiscount(
+    name: json["name"],
+    owner: json["owner"],
+    creation: json["creation"],
+    modified: json["modified"],
+    modifiedBy: json["modified_by"],
+    parent: json["parent"],
+    parentfield: json["parentfield"],
+    parenttype: json["parenttype"],
+    idx: json["idx"],
+    docstatus: json["docstatus"],
+    boughtItem: json["bought_item"],
+    freeItem: json["free_item"],
+    quantity: json["quantity"],
+    discount: json["discount"],
+    amount: json["amount"],
+    promoType: json["promo_type"],
+    doctype: json["doctype"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "owner": owner,
+    "creation": creation,
+    "modified": modified,
+    "modified_by": modifiedBy,
+    "parent": parent,
+    "parentfield": parentfield,
+    "parenttype": parenttype,
+    "idx": idx,
+    "docstatus": docstatus,
+    "bought_item": boughtItem,
+    "free_item": freeItem,
+    "quantity": quantity,
+    "discount": discount,
+    "amount": amount,
     "promo_type": promoType,
     "doctype": doctype,
   };
