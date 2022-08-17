@@ -550,7 +550,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                           children: [
                             Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
                             Container(
-                              width: MediaQuery.of(context).size.width / 2.5,
+                              width: MediaQuery.of(context).size.width / 2.7,
                               child: Text(
                                 "${list[index].promoType}",style: TextStyle(color: Colors.grey),
                                 // maxLines: 2,overflow: TextOverflow.ellipsis,
@@ -617,7 +617,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                         children: [
                           Text("Free Item : ",style: TextStyle(fontWeight: FontWeight.bold,),),
                           Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
+                              width: MediaQuery.of(context).size.width * 0.4,
                               child: Text(
                                 "${list[index].freeItems}",
                                 style: TextStyle(color: Colors.grey),
@@ -639,7 +639,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                         children: [
                           Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
                           Container(
-                            width: MediaQuery.of(context).size.width / 2.5,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               "${list[index].promoType}",style: TextStyle(color: Colors.grey),
                               // maxLines: 2,overflow: TextOverflow.ellipsis,
@@ -701,7 +701,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                           children: [
                             Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
                             Container(
-                              width: MediaQuery.of(context).size.width / 2.5,
+                              width: MediaQuery.of(context).size.width / 2.7,
                               child: Text(
                                 "${list[index].promoType}",style: TextStyle(color: Colors.grey),
                                 // maxLines: 2,overflow: TextOverflow.ellipsis,

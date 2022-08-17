@@ -4,6 +4,7 @@ import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_detail_ui.dart';
+import 'package:ebuzz/orderbooking/ui/orderbooking_form2.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form1.dart';
 
@@ -48,12 +49,22 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: (){
-                  pushScreen(
-                    context,
-                    OrderBookingDetail(
-                      bookingOrder: _orderBookingList[index],
-                    ),
-                  );
+                  if(_orderBookingList[index].name == "" || _orderBookingList[index].name == null){
+                    pushScreen(context, OrderBookingForm2());
+                  }else{
+                    pushScreen(
+                      context,
+                      OrderBookingDetail(
+                        bookingOrder: _orderBookingList[index],
+                      ),
+                    );
+                  }
+                  // pushScreen(
+                  //   context,
+                  //   OrderBookingDetail(
+                  //     bookingOrder: _orderBookingList[index],
+                  //   ),
+                  // );
                 },
                 // child: Text(_orderBookingList[index].name.toString()),
                 child: SOTileUi(

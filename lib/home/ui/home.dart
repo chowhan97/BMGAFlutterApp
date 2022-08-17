@@ -9,6 +9,7 @@ import 'package:ebuzz/logout/service/logout_api_service.dart';
 import 'package:ebuzz/purchaseorder/ui/purchase_order_ui.dart';
 import 'package:ebuzz/qualityinspection/ui/quality_inspection_list_ui.dart';
 import 'package:ebuzz/quotation/ui/quotation_list_ui.dart';
+import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_history.dart';
 import 'package:ebuzz/salesorder/ui/sales_order_list_ui.dart';
 import 'package:ebuzz/settings/ui/settings.dart';
 import 'package:ebuzz/stockentry/ui/stock_entry_list.dart';
@@ -83,6 +84,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     //   print(label);
     // });
     print(labels.length);
+    print("labels is===>>$labels");
     addLabelListToWidgetList();
   }
 
@@ -148,8 +150,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       widgetsList
           .add(LabelList(label: 'Order Booking', route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
-      widgetsList
-          .add(LabelList(label: 'Quotation List', route: QuotationListUi()));
+      widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
+      widgetsList.add(LabelList(label: 'Sales Person-Wise Transaction Summary', route: TransactionHistory()));
     print(widgetsList.length);
     setState(() {});
   }

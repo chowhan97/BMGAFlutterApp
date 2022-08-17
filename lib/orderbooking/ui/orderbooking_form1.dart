@@ -106,19 +106,30 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           color: whiteColor,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              companyField(),
-              SizedBox(height: 15),
-              customerField(),
-              SizedBox(height: 15),
-              customerTypeField(),
-              SizedBox(height: 15),
-              SizedBox(height: 15),
-            ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: Color(0xffcfd6e7),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    companyField(),
+                    SizedBox(height: 15),
+                    customerField(),
+                    SizedBox(height: 15),
+                    customerTypeField(),
+                    SizedBox(height: 15),
+                    // SizedBox(height: 15),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -129,7 +140,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Customer Type"),
+        Text("Customer Type",style: TextStyle(fontWeight: FontWeight.bold),),
         SizedBox(height: 8),
         TextFormField(
           controller: CustomerTypeField,
@@ -142,6 +153,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(5),
             ),
+            hintText: 'Select Customer Type',
+            hintStyle: TextStyle(fontSize: 14,),
           ),
         ),
       ],
@@ -182,9 +195,10 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
           ),
+        hintText: 'Select Company',
       ),
       label: 'Company',
-      labelStyle: TextStyle(color: blackColor),
+      labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
       required: true,
       style: TextStyle(fontSize: 14, color: blackColor),
       itemBuilder: (context, item) {
@@ -221,9 +235,11 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
-          )),
+          ),
+        hintText: 'Select Customer',
+      ),
       label: 'Customer',
-      labelStyle: TextStyle(color: blackColor),
+      labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
       required: true,
       style: TextStyle(fontSize: 14, color: blackColor),
       itemBuilder: (context, item) {

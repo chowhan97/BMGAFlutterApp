@@ -160,35 +160,42 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
       ),
         ],
       ),
-      body: oblist.length == 0
-          ? Center(child: Text(
-              'List is empty',
-              style: TextStyle(fontSize: 18, color: blackColor),
-            ))
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: oblist.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final item = oblist[index];
-                        int lastElement = oblist.length - 1;
-                        return Column(
-                          children: [
-                            OBItemsForm(
-                              key: ObjectKey(item),
-                              obi: item,
-                              i: index,
-                              onDelete: () => onDelete(index, lastElement),
-                            ),
-                          ],
-                        );
-                      }),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: Color(0xffcfd6e7),
+        child: oblist.length == 0
+            ? Center(child: Text(
+                'List is empty',
+                style: TextStyle(fontSize: 18, color: blackColor),
+              ))
+            : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: oblist.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final item = oblist[index];
+                            int lastElement = oblist.length - 1;
+                            return Column(
+                              children: [
+                                OBItemsForm(
+                                  key: ObjectKey(item),
+                                  obi: item,
+                                  i: index,
+                                  onDelete: () => onDelete(index, lastElement),
+                                ),
+                              ],
+                            );
+                          }),
+                    ),
+                  ],
                 ),
-              ],
             ),
+      ),
     );
   }
 
@@ -307,7 +314,8 @@ class _OBItemsFormState extends State<OBItemsForm>
     mrpcontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["mrp"].toString();
     brandcontractcontrollerlist[index].text = orderDetails["message"]["brand_name"]["brand_name"].toString();
     //=============
-    var Bookorderlist = [{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[index].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[index].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[index].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[index].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[index].text,"__checked":0,"quantity_booked":quantitycontrollerlist[index].text,"amount":int.parse(quantitycontrollerlist[index].text) * int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0))}];
+    var owner = prefs.getString("owner");
+    var Bookorderlist = [{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[index].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[index].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[index].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[index].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[index].text,"__checked":0,"quantity_booked":quantitycontrollerlist[index].text,"amount":int.parse(quantitycontrollerlist[index].text) * int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0))}];
     String book_orderlist = jsonEncode(Bookorderlist);
     print("========?????=========$book_orderlist");
     prefs.setString("book_orderlist", book_orderlist);
@@ -319,7 +327,6 @@ class _OBItemsFormState extends State<OBItemsForm>
        item[i].add(itemCode); 
        print(item);
       }
-      
       // item[i].add(orderDetails["message"]["available_qty"]),
     // print("quantity_booked======>>>>${quantitycontrollerlist[widget.i].text}");
     // print("average_price======>>>>${int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}");
@@ -409,76 +416,63 @@ class _OBItemsFormState extends State<OBItemsForm>
               child: Column(
                 children: [
                   itemCodeField(),
-                  Column(
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children:[
-                          Expanded(
-                            child: TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Brand Name',
-                            ),
-                            enabled: false,
-                            controller: brandcontractcontrollerlist[widget.i],
-                            style: TextStyle(fontSize: 14, color: blackColor),
-                             ),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(
-                            child: TextField(
-                            decoration: InputDecoration(
-                            labelText: 'Quantity Available',
-                            ),
-                            enabled: false,
-                            controller: quantityavailablecontrollerlist[widget.i],
-                            style: TextStyle(fontSize: 14, color: blackColor),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(
-                            child: TextField(
-                            decoration: InputDecoration(
-                            labelText: 'Last Batch Price',
-                            ),
-                            enabled: false,
-                            controller: lastbatchpricecontrollerlist[widget.i],
-                            style: TextStyle(fontSize: 14, color: blackColor),
-                            ),
-                          ),
-                        ],
+                      Text("Brand Name : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Expanded(
+                        child: Text(
+                          "${brandcontractcontrollerlist[widget.i].text}",style: TextStyle(color: Colors.grey),
+                          maxLines: 1,overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          // Expanded(
-                          //   child: TextField(
-                          //     decoration: InputDecoration(
-                          //       labelText: 'Rate Contract',
-                          //     ),
-                          //     enabled: false,
-                          //     controller: ratecontractcontrollerlist[widget.i],
-                          //     style: TextStyle(fontSize: 14, color: blackColor),
-                          //   ),
-                          // ),
-                          // SizedBox(width: 5),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.32,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: 'MRP',
-                              ),
-                              enabled: false,
-                              controller: mrpcontractcontrollerlist[widget.i],
-                              style: TextStyle(fontSize: 14, color: blackColor),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(child: quantityField()),
-                        ],
-                      )
                     ],
                   ),
-                  
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Quantity Available : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        child: Text(
+                          "${quantityavailablecontrollerlist[widget.i].text}",style: TextStyle(color: Colors.grey),
+                          // maxLines: 2,overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Last Batch Price : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        child: Text(
+                          "${lastbatchpricecontrollerlist[widget.i].text}",style: TextStyle(color: Colors.grey),
+                          // maxLines: 2,overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        child: Text(
+                          "${mrpcontractcontrollerlist[widget.i].text}",style: TextStyle(color: Colors.grey),
+                          // maxLines: 2,overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  quantityField()
                   // Row(
                   //   children: [
                   //     SizedBox(width: 5),
@@ -512,9 +506,11 @@ class _OBItemsFormState extends State<OBItemsForm>
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
-          )),
+          ),
+        hintText: 'Select Item Code',
+      ),
       label: 'Item Code',
-      labelStyle: TextStyle(color: blackColor),
+      labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
       required: true,
       style: TextStyle(fontSize: 14, color: blackColor),
       itemBuilder: (context, item) {
@@ -586,7 +582,7 @@ class _OBItemsFormState extends State<OBItemsForm>
             borderRadius: BorderRadius.circular(5),
           )),
       label: 'Quantity',
-      labelStyle: TextStyle(color: blackColor),
+      labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
       style: TextStyle(fontSize: 14, color: blackColor),
     );
   }

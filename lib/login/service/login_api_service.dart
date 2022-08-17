@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:shared_preferences/shared_preferences.dart';
 
 //LoginApiService class contains function login
 class LoginApiService {
@@ -26,6 +27,8 @@ class LoginApiService {
       baseUrl = "https://erptest.bharathrajesh.co.in";
       username = "prithvichowhan97@gmail.com";
       password = "vishalpatel2022";
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("owner", username);
       final String url = loginUrl(baseUrl);
       var uri=Uri.parse(url);
       final response = await http.post(

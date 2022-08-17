@@ -700,10 +700,10 @@ class SalesOrderElement {
 
   factory SalesOrderElement.fromJson(Map<String, dynamic> json) => SalesOrderElement(
     promoType: json["promo_type"],
-    qty: json["qty"],
+    qty: json["qty"] == null ? 0 : json["qty"],
     itemCode: json["item_code"],
     dic: json["dic"],
-    averagePrice: json["average_price"],
+    averagePrice: json["average_price"] == null ? 0.0 : json["average_price"],
     warehouse: json["warehouse"],
     qtyAvailable: json["qty_available"],
   );
@@ -751,12 +751,12 @@ class SalesPromoDiscount {
   });
 
   List<dynamic>? promoSales;
-  List<Promo>? promos;
+  List<PromoDisc>? promos;
   // List<SalesDatum>? salesData;
 
   factory SalesPromoDiscount.fromJson(Map<String, dynamic> json) => SalesPromoDiscount(
     promoSales: List<dynamic>.from(json["Promo_sales"].map((x) => x)),
-    promos: List<Promo>.from(json["Promos"].map((x) => Promo.fromJson(x))),
+    promos: List<PromoDisc>.from(json["Promos"].map((x) => PromoDisc.fromJson(x))),
     // salesData: List<SalesDatum>.from(json["sales_data"].map((x) => SalesDatum.fromJson(x))),
   );
 
@@ -781,25 +781,25 @@ class SalesPromoDiscountedAmount {
   });
 
   String? promoType;
-  int? qty;
+  dynamic qty;
   int? dicQty;
   dynamic dic;
   dynamic rate;
   String? boughtItem;
   String? promoItem;
   dynamic wQty;
-  int? amount;
+  dynamic amount;
 
   factory SalesPromoDiscountedAmount.fromJson(Map<String, dynamic> json) => SalesPromoDiscountedAmount(
     promoType: json["promo_type"],
-    qty: json["qty"],
+    qty: json["qty"] == null ? 0 : json["qty"],
     dicQty: json["dic_qty"],
     dic: json["dic"],
     rate: json["rate"],
     boughtItem: json["bought_item"],
     promoItem: json["promo_item"],
     wQty: json["w_qty"],
-    amount: json["amount"],
+    amount: json["amount"] == null ? 0.0 : json["amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -815,8 +815,8 @@ class SalesPromoDiscountedAmount {
   };
 }
 
-class Promo {
-  Promo({
+class PromoDisc {
+  PromoDisc({
     this.startDate,
     this.endDate,
     this.forEveryQuantityThatIsBought,
@@ -827,18 +827,18 @@ class Promo {
 
   DateTime? startDate;
   DateTime? endDate;
-  int? forEveryQuantityThatIsBought;
+  dynamic forEveryQuantityThatIsBought;
   int? quantityOfFreeItemsThatsGiven;
   String? boughtItem;
-  double? discount;
+  dynamic discount;
 
-  factory Promo.fromJson(Map<String, dynamic> json) => Promo(
+  factory PromoDisc.fromJson(Map<String, dynamic> json) => PromoDisc(
     startDate: DateTime.parse(json["start_date"]),
     endDate: DateTime.parse(json["end_date"]),
-    forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"],
+    forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"] == null ? 0 : json["for_every_quantity_that_is_bought"],
     quantityOfFreeItemsThatsGiven: json["quantity_of_free_items_thats_given"],
     boughtItem: json["bought_item"],
-    discount: json["discount"],
+    discount: json["discount"] == null ? 0.0 : json["discount"],
   );
 
   Map<String, dynamic> toJson() => {
