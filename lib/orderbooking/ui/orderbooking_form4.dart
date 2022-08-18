@@ -14,6 +14,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderBookingForm4 extends StatefulWidget {
+  var itemcode,orderlist;
+  OrderBookingForm4({this.itemcode, this.orderlist});
+
   @override
   State<OrderBookingForm4> createState() => _OrderBookingForm4State();
 }
@@ -61,6 +64,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     // String order_listString = jsonEncode(order_list);
     // print(item_codeString.toString());
     // print(order_listString.toString());
+    print("itemcode??=====>>>>${widget.itemcode}");
+    print("orderlist??=====>>>>${widget.orderlist}");
     getTableData(context, company: "Bharath Medical %26 General Agencies");
     // getTableData(context,itemcode: '[{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}]',customertype: "Retail",company: "Bharath Medical & General Agencies",order_list: '[{"item_code":"IT002","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":465,"rate_contract_check":0}]',customer: "CUST-R-00010");
     super.initState();
@@ -87,10 +92,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       print("prefscustomer??????????$prefscustomer");
       prefscust_type = prefs.getString("cust_type");
       print("prefscust_type????????$prefscust_type");
-      prefsitem_code = prefs.getString("item_code");
-      print("prefsitem_code????????$prefsitem_code");
-      prefsorder_list = prefs.getString("order_list");
-      print("prefsorder_list????????$prefsorder_list");
+      // prefsitem_code = prefs.getString("item_code");
+      // print("prefsitem_code????????$prefsitem_code");
+      // prefsorder_list = prefs.getString("order_list");
+      // print("prefsorder_list????????$prefsorder_list");
       owner = prefs.getString("owner");
       print("owner????????$owner");
     });
@@ -101,8 +106,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     };
     var request = http.Request(
         'POST',
-        Uri.parse(
-            'https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${prefsitem_code.toString()}&customer_type=$prefscust_type&company=${company}&order_list=${prefsorder_list.toString()}&customer=$prefscustomer'));
+        Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${widget.itemcode.toString()}&customer_type=$prefscust_type&company=${company}&order_list=${widget.orderlist.toString()}&customer=$prefscustomer'));
 
     request.headers.addAll(headers);
 
@@ -116,9 +120,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         isTableLoad = false;
         print("table call");
         tableModel = TableModel.fromJson(json.decode(data));
-        var salesorder = [{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code": tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average": tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code": tableModel!.message!.salesOrder!.salesOrder![00].itemCode ?? "IT002","quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable ?? 465,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty ?? 21,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice ?? 41,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType ?? "None","warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse ?? "BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":tableModel!.message!.salesOrder!.salesOrder![0].itemCode ?? "IT002","quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable ?? 465,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty ?? 21,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice ?? 41,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType ?? "None","warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse ?? "BMGA Test Warehouse - BMGA"}];
-        var freepromos =  [{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item": tableModel!.message!.boughtItem![0].itemCode,"free_items":tableModel!.message!.boughtItem![0].itemCode,"price":tableModel!.message!.boughtItem![0].amount,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![0].quantityAvailable,"promo_type":"Buy x get same and discount for ineligible qty"}];
-        var promodis = [{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":tableModel!.message!.boughtItem![0].itemCode,"free_item":tableModel!.message!.boughtItem![0].itemCode,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":tableModel!.message!.boughtItem![0].amount}];
+        var owner = prefs.getString("owner");
+        var salesorder = [{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":owner,"parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code": tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average": tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code": tableModel!.message!.salesOrder!.salesOrder![00].itemCode ?? "IT002","quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable ?? 465,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty ?? 21,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice ?? 41,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType ?? "None","warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse ?? "BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":tableModel!.message!.salesOrder!.salesOrder![0].itemCode ?? "IT002","quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable ?? 465,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty ?? 21,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice ?? 41,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType ?? "None","warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse ?? "BMGA Test Warehouse - BMGA"}];
+        var freepromos =  [{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":owner,"parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item": tableModel!.message!.boughtItem![0].itemCode,"free_items":tableModel!.message!.boughtItem![0].itemCode,"price":tableModel!.message!.boughtItem![0].amount,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![0].quantityAvailable,"promo_type":"Buy x get same and discount for ineligible qty"}];
+        var promodis = [{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":owner,"parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":tableModel!.message!.boughtItem![0].itemCode,"free_item":tableModel!.message!.boughtItem![0].itemCode,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":tableModel!.message!.boughtItem![0].amount}];
         String sales_order = jsonEncode(salesorder);
         String free_promos = jsonEncode(freepromos);
         String promo_dis = jsonEncode(promodis);
@@ -146,14 +151,14 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         order_booking_items_v2 = prefs.getString("order_booking_items_v2");
         print("prefsorder_list????????$order_booking_items_v2");
       });
-      var promos = [{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":tableModel!.message!.boughtItem![0].itemCode,"free_items":tableModel!.message!.boughtItem![0].itemCode,"price":tableModel!.message!.boughtItem![0].averagePrice,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![0].quantityAvailable,"promo_type":"Buy x get same x"}];
+      String Owner = jsonEncode(owner);
+      var promos = [{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":tableModel!.message!.boughtItem![0].itemCode,"free_items":tableModel!.message!.boughtItem![0].itemCode,"price":tableModel!.message!.boughtItem![0].averagePrice,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![0].quantityAvailable,"promo_type":"Buy x get same x"}];
       String PromosList = jsonEncode(promos);
-      var sales_order_preview = [{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code": tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse}];
+      var sales_order_preview = [{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code": tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":tableModel!.message!.salesOrder!.salesOrder![0].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![0].qty,"average":tableModel!.message!.salesOrder!.salesOrder![0].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![0].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![0].warehouse}];
       String sales_order_previewList = jsonEncode(sales_order_preview);
       String customer = jsonEncode(prefscustomer);
       String customerType = jsonEncode(prefscust_type);
       String company = jsonEncode(prefscompany);
-      String Owner = jsonEncode(owner);
 
       // isNotEditableLoad = true;
     var headers = {
@@ -211,6 +216,15 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     var headers = {
       'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
     };
+    // var map = {
+    //   'customer': prefscustomer.toString(),
+    //   'order_list': book_orderlist.toString(),
+    //   'company': prefscompany.toString(),
+    //   'customer_type': prefscust_type.toString(),
+    //   'free_promos': free_promos.toString(),
+    //   'promo_dis': promo_dis.toString(),
+    //   'sales_order': sales_order.toString()
+    // };
     var map = {
       'customer': prefscustomer.toString(),
       'order_list': book_orderlist.toString(),
@@ -236,6 +250,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     }
     else {
       print(response.reasonPhrase);
+      print(response.statusCode);
       setState(() {
         isLoadbook = false;
       });

@@ -499,7 +499,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                       SizedBox(height: 2,),
                       Row(
                         children: [
-                          Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                          Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold)),
                           Text("${list[index].amountAfterGst}",style: TextStyle(color: Colors.grey),),
                         ],
                       ),
@@ -550,7 +550,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                           children: [
                             Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
                             Container(
-                              width: MediaQuery.of(context).size.width / 2.7,
+                              width: MediaQuery.of(context).size.width / 2.9,
                               child: Text(
                                 "${list[index].promoType}",style: TextStyle(color: Colors.grey),
                                 // maxLines: 2,overflow: TextOverflow.ellipsis,
@@ -617,7 +617,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                         children: [
                           Text("Free Item : ",style: TextStyle(fontWeight: FontWeight.bold,),),
                           Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.38,
                               child: Text(
                                 "${list[index].freeItems}",
                                 style: TextStyle(color: Colors.grey),

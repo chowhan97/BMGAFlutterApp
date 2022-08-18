@@ -89,7 +89,7 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
       for (int i = 0; i < listData.length; i++) {
         itemCodeList.add(listData[i]['item_code']);
       }
-      print(itemCodeList.length);
+      print("aaaaaaaaa===${itemCodeList.length}");
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -147,11 +147,19 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
           FloatingActionButton(
           backgroundColor: blueAccent,
           onPressed:() {
-            oblist.clear();
-            // pushScreen(context,OrderBookingForm3());
-            pushScreen(context,OrderBookingForm4());
-            // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
-            // print(salesPromos);
+            // Create for loop of item list
+            List itemcode = [];
+            List orderlist = [];
+            itemcode.clear();
+            orderlist.clear();
+            print("length is==>>${oblist.length}");
+            for(var i=0; i< oblist.length; i++){
+              itemcode.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0))}));
+              orderlist.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[i].text)}));
+              print("item code====>>>>${itemcode}");
+              print("orderlist====>>>>${orderlist}");
+            }
+            pushScreen(context,OrderBookingForm4(itemcode: itemcode,orderlist: orderlist));
         },
         child: Icon(
           Icons.arrow_forward,
@@ -354,7 +362,7 @@ class _OBItemsFormState extends State<OBItemsForm>
     print("rate_contract_check======>>>>${int.parse(ratecontractcontrollerlist[widget.i].text)}");
     var item_code = [{"item_code":itemcodecontrollerlist[widget.i].text,"quantity_booked": int.parse(quantitycontrollerlist[widget.i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0))}];
     var order_list = [{"item_code":itemcodecontrollerlist[widget.i].text,"quantity_booked": int.parse(quantitycontrollerlist[widget.i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[widget.i].text)}];
-    var order_booking_items_v2 = [{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[widget.i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[widget.i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[widget.i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[widget.i].text,"quantity_booked":int.parse(quantitycontrollerlist[widget.i].text),"amount":int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}];
+    var order_booking_items_v2 = [{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[widget.i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[widget.i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[widget.i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[widget.i].text,"quantity_booked":int.parse(quantitycontrollerlist[widget.i].text),"amount":int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}];
     String item_codeString = jsonEncode(item_code);
     String order_listString = jsonEncode(order_list);
     String order_booking_items_String = jsonEncode(order_booking_items_v2);
@@ -546,19 +554,21 @@ class _OBItemsFormState extends State<OBItemsForm>
           oblist[widget.i].qty = double.parse(value);
           if (!mounted) return;
           setState(() {}); // print("quantity_booked======>>>>${quantitycontrollerlist[widget.i].text}");
-          print("average_price======>>>>${int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}");
-          print("quantity_available======>>>>${int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0))}");
-          print("amount======>>>>${int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}");
-          print("rate_contract_check======>>>>${int.parse(ratecontractcontrollerlist[widget.i].text)}");
+          // print("average_price======>>>>${int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}");
+          // print("quantity_available======>>>>${int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0))}");
+          // print("amount======>>>>${int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}");
+          // print("rate_contract_check======>>>>${int.parse(ratecontractcontrollerlist[widget.i].text)}");
           var item_code = [{"item_code":itemcodecontrollerlist[widget.i].text,"quantity_booked": int.parse(quantitycontrollerlist[widget.i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0))}];
           var order_list = [{"item_code":itemcodecontrollerlist[widget.i].text,"quantity_booked": int.parse(quantitycontrollerlist[widget.i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[widget.i].text)}];
+          print("item_code============${item_code}");
+          print("order_list============${order_list}");
           var order_booking_items_v2 = [{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[widget.i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[widget.i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[widget.i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[widget.i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[widget.i].text,"quantity_booked":int.parse(quantitycontrollerlist[widget.i].text),"amount":int.parse(quantitycontrollerlist[widget.i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[widget.i].text).toStringAsFixed(0))}];
           String item_codeString = jsonEncode(item_code);
           String order_listString = jsonEncode(order_list);
           String order_booking_items_String = jsonEncode(order_booking_items_v2);
-          print("========?????=========$item_codeString");
-          print("========?????=========$order_listString");
-          print("========?????=========$order_booking_items_String");
+          // print("========?????=========$item_codeString");
+          // print("========?????=========$order_listString");
+          // print("========?????=========$order_booking_items_String");
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString("item_code", item_codeString);
           prefs.setString("order_list", order_listString);
@@ -566,9 +576,9 @@ class _OBItemsFormState extends State<OBItemsForm>
           var getitem_code = prefs.getString("item_code");
           var getorder_list = prefs.getString("order_list");
           var getorder_booking_items_v2 = prefs.getString("order_booking_items_v2");
-          print("========get?????=========$getitem_code");
-          print("========get?????=========$getorder_list");
-          print("========get?????=========$getorder_booking_items_v2");
+          // print("========get?????=========$getitem_code");
+          // print("========get?????=========$getorder_list");
+          // print("========get?????=========$getorder_booking_items_v2");
         }
 
       },
