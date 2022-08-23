@@ -518,8 +518,8 @@ class SalesOrderPreview {
   int? idx;
   int? docstatus;
   String? itemCode;
-  String? quantityAvailable;
-  String? quantity;
+  dynamic quantityAvailable;
+  dynamic quantity;
   double? average;
   String? warehouse;
   String? promoType;

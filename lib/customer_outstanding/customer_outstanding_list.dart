@@ -108,38 +108,274 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
       body: Column(
         children: [
           SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Column(
             children: [
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: blueAccent, borderRadius: BorderRadius.circular(8)),
-                child: Column(
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
                   children: [
-                    Text("Total Invoice Amount",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5),
-                    head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[9]}", style: TextStyle(color: Colors.white)),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Total Invoice Amount",
+                                style: TextStyle(color: Colors.black)),
+                            SizedBox(height: 10),
+                            head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Total Outstanding Amount",
+                                style: TextStyle(
+                                    color: Colors.black)),
+                            SizedBox(height: 10),
+                            head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[12]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("0-30 Total",
+                                  style: TextStyle(
+                                      color: Colors.black)),
+                              SizedBox(height: 10),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[14]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("31-60 Total",
+                                  style: TextStyle(
+                                      color: Colors.black)),
+                              SizedBox(height: 10),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[15]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("61-90 Total",
+                                  style: TextStyle(
+                                      color: Colors.black)),
+                              SizedBox(height: 10),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[16]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("91-120 Total",
+                                  style: TextStyle(
+                                      color: Colors.black)),
+                              SizedBox(height: 10),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[17] == "" ? "0.0" : header.last[17]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 180,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("121-above Total",
+                                  style: TextStyle(
+                                      color: Colors.black)),
+                              SizedBox(height: 10),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[18] == "" ? "0.0" : header.last[17]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(width: 8),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: blueAccent, borderRadius: BorderRadius.circular(8)),
-                child: Column(
-                  children: [
-                    Text("Total Outstanding Amount",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5),
-                    head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[12]}", style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("Total Invoice Amount",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[9]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //     Container(width: 1,color: Colors.white,height: 50),
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("Total Outstanding Amount",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[12]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Container(width: double.infinity,color: Colors.white,height: 1),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("0-30",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[14]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //     Container(width: 1,color: Colors.white,height: 50),
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("31-60",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[15]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //     Container(width: 1,color: Colors.white,height: 50),
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("61-90",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[16]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Container(width: double.infinity,color: Colors.white,height: 1),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("91-120",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[17] == "" ? "0.0" : header.last[17]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //     Container(width: 1,color: Colors.white,height: 50),
+              //     Container(
+              //       padding: EdgeInsets.all(8),
+              //       // decoration: BoxDecoration(
+              //       //     color: blueAccent, borderRadius: BorderRadius.circular(8)),
+              //       child: Column(
+              //         children: [
+              //           Text("121-above",
+              //               style: TextStyle(
+              //                   color: Colors.white)),
+              //           SizedBox(height: 5),
+              //           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[18] == "" ? "0.0" : header.last[18]}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17)),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
           Expanded(

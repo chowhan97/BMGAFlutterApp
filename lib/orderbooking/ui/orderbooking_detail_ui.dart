@@ -577,7 +577,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" +(int.parse(list[index].quantity!) * list[index].average!).toString(),
+                    "₹" +((list[index].quantity!) * list[index].average!).toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -699,9 +699,9 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold)),
                             Container(
-                              width: MediaQuery.of(context).size.width / 2.7,
+                              width: MediaQuery.of(context).size.width / 2.9,
                               child: Text(
                                 "${list[index].promoType}",style: TextStyle(color: Colors.grey),
                                 // maxLines: 2,overflow: TextOverflow.ellipsis,
@@ -717,10 +717,10 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                           ],
                         ),
                         // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        SizedBox(height: 2,),
+                        SizedBox(height: 2),
                         Text(
                           "${list[index].quantity} x ${list[index].discount}",
-                          style: TextStyle(fontWeight: FontWeight.bold,),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
                     ),

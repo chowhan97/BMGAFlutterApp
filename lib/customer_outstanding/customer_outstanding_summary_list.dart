@@ -96,39 +96,152 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
       body: Column(
         children: [
           SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: blueAccent, borderRadius: BorderRadius.circular(8)),
-                child: Column(
-                  children: [
-                    Text("Total Invoice Amount",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5),
-                    head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[9]}", style: TextStyle(color: Colors.white)),
-                  ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Total Invoice Amount",
+                            style: TextStyle(color: Colors.black)),
+                        SizedBox(height: 10),
+                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[3]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: blueAccent, borderRadius: BorderRadius.circular(8)),
-                child: Column(
-                  children: [
-                    Text("Total Outstanding Amount",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5),
-                    head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("${header.last[12]}", style: TextStyle(color: Colors.white)),
-                  ],
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Total Outstanding Amount",
+                            style: TextStyle(color: Colors.black)),
+                        SizedBox(height: 10),
+                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[6]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  width: 180,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("0-30 Total",
+                              style: TextStyle(
+                                  color: Colors.black)),
+                          SizedBox(height: 10),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[7]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 180,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("31-60 Total",
+                              style: TextStyle(
+                                  color: Colors.black)),
+                          SizedBox(height: 10),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[8]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 180,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("61-90 Total",
+                              style: TextStyle(
+                                  color: Colors.black)),
+                          SizedBox(height: 10),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 180,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("91-120 Total",
+                              style: TextStyle(
+                                  color: Colors.black)),
+                          SizedBox(height: 10),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[10] == "" ? "0.0" : header.last[10]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 180,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("121-above Total",
+                              style: TextStyle(
+                                  color: Colors.black)),
+                          SizedBox(height: 10),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[11] == "" ? "0.0" : header.last[11]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: fetch == true
@@ -147,34 +260,34 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             listText(
-                                heading: "Voucher type",
+                                heading: "Customer",
                                 val:
-                                "${accountReceivableSummary[index]['voucher_type']}"),
+                                "${accountReceivableSummary[index]['party']}"),
                             SizedBox(height: 8),
                             listText(
                                 heading: "Customer name",
                                 val:
-                                "${accountReceivableSummary[index]['customer_name']}"),
+                                "${accountReceivableSummary[index]['party_name']}"),
                             SizedBox(height: 8),
                             listText(
-                                heading: "Posting date",
+                                heading: "Customer group",
                                 val:
-                                "${accountReceivableSummary[index]['posting_date']}"),
+                                "${accountReceivableSummary[index]['customer_group']}"),
                             SizedBox(height: 8),
                             listText(
-                                heading: "Voucher number",
+                                heading: "Territory",
                                 val:
-                                "${accountReceivableSummary[index]['voucher_no']}"),
+                                "${accountReceivableSummary[index]['territory']}"),
                             SizedBox(height: 8),
                             listText(
-                                heading: "Due date",
+                                heading: "Due amount",
                                 val:
-                                "${accountReceivableSummary[index]['posting_date']}"),
+                                "${accountReceivableSummary[index]['total_due']}"),
                             SizedBox(height: 8),
                             listText(
                                 heading: "Invoice amount",
                                 val:
-                                "${accountReceivableSummary[index]['invoice_grand_total']}"),
+                                "${accountReceivableSummary[index]['invoiced']}"),
                             SizedBox(height: 8),
                             listText(
                                 heading: "Outstanding amount",

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
@@ -476,11 +475,11 @@ class _OBItemsFormState extends State<OBItemsForm>
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold)),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.5,
                         child: Text(
