@@ -5,6 +5,7 @@ import 'package:ebuzz/common/custom_toast.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding_list.dart';
+import 'package:ebuzz/customer_outstanding/customer_outstanding_summary_list.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                 ],
               ),
               SizedBox(height: 15),
-              if(accountReceivableSummary == true)
+              // if(accountReceivableSummary == true)
               Container(
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
@@ -245,7 +246,11 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                       );
               }
               else {
-                pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text));
+                if(accountReceivableSummary == true){
+                  pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text));
+                }else{
+                  pushScreen(context, CustomerOutstandingSummary(company: company.text,date: reportDate.text));
+                }
               }
             },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
