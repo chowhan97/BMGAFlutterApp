@@ -146,22 +146,32 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
           ),
           FloatingActionButton(
           backgroundColor: blueAccent,
-          onPressed:() {
+          onPressed:() async{
             // Create for loop of item list
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            var owner = prefs.getString("owner");
             List itemcode = [];
             List orderlist = [];
+            List OrderBookingItemsV2 = [];
+            List Bookorderlist = [];
             itemcode.clear();
             orderlist.clear();
+            OrderBookingItemsV2.clear();
+            Bookorderlist.clear();
             print("length is==>>${oblist.length}");
             for(var i=0; i< oblist.length; i++){
               itemcode.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0))}));
               orderlist.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[i].text)}));
               print("item code====>>>>${itemcode}");
               print("orderlist====>>>>${orderlist}");
+              OrderBookingItemsV2.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"quantity_booked":int.parse(quantitycontrollerlist[i].text),"amount":int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0))}));
+              print("OrderBookingItemsV2====>>>>${OrderBookingItemsV2}");
+              Bookorderlist.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"__checked":0,"quantity_booked":quantitycontrollerlist[i].text,"amount":int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0))}));
+              print("Bookorderlist====>>>>${Bookorderlist}");
             }
-            pushScreen(context,OrderBookingForm4(itemcode: itemcode,orderlist: orderlist));
-        },
-        child: Icon(
+            pushScreen(context,OrderBookingForm4(itemcode: itemcode,orderlist: orderlist,OrderBookingItemsV2: OrderBookingItemsV2,bookOrderList: Bookorderlist));
+         },
+         child: Icon(
           Icons.arrow_forward,
           color: whiteColor,
         ),
@@ -315,6 +325,7 @@ class _OBItemsFormState extends State<OBItemsForm>
       prefscust_type  = prefs.getString("cust_type");
       print("prefscust_type????????$prefscust_type");
     });
+    print("itemCode==>>${itemCode + prefscust_type + company + prefscustomer}");
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     quantityavailablecontrollerlist[index].text = orderDetails["message"]["available_qty"].toString();
     lastbatchpricecontrollerlist[index].text = orderDetails["message"]["price_details"]["price"].toString();

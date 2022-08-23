@@ -3,6 +3,7 @@ import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
+import 'package:ebuzz/customer_outstanding/customer_outstanding.dart';
 import 'package:ebuzz/item/ui/item_ui.dart';
 import 'package:ebuzz/leavebalance/ui/leave_balance_ui.dart';
 import 'package:ebuzz/logout/service/logout_api_service.dart';
@@ -151,7 +152,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           .add(LabelList(label: 'Order Booking', route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
       widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
-      widgetsList.add(LabelList(label: 'Sales Person-Wise Transaction Summary', route: TransactionHistory()));
+      widgetsList.add(LabelList(label: 'Order booking Summary', route: TransactionHistory()));
+      widgetsList.add(LabelList(label: 'Customer OutStanding', route: CustomerOutStanding()));
     print(widgetsList.length);
     setState(() {});
   }

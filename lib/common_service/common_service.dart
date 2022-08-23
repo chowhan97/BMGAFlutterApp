@@ -62,7 +62,7 @@ class CommonService {
       final String so = CustomerTypeUrl(customer: customer);
       final response = await _dio.get(so);
       var data = response.data;
-      customerType = data['message']['pch_customer_type'];
+      customerType = data['message']['customer_type']['pch_customer_type'];
       return customerType;
     } catch (e) {
       exception(e, context);

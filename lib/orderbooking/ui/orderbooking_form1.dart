@@ -268,6 +268,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
 
   getCustomerType({suggestion}) async {
     var customerType = await CommonService().getCustomerType(context,customer: suggestion);
+    print("cust type is===>>$customerType");
     CustomerTypeField.text = customerType;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("cust_type", CustomerTypeField.text);
