@@ -38,6 +38,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   List<String> companyList = [];
   List<String> customerList = [];
   List<String> warehouseList = [];
+  List<String> custId = [];
 
   
 
@@ -45,6 +46,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   TextEditingController companyController = TextEditingController();
   TextEditingController warehouseController = TextEditingController();
   TextEditingController CustomerTypeField = TextEditingController();
+  TextEditingController CreditlimitField = TextEditingController();
+  TextEditingController UnpaidField = TextEditingController();
   // TextEditingController customer_typeController = TextEditingController();
   
 
@@ -59,8 +62,10 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
 
   getCustomerAndCompanyList() async {
     companyList = await CommonService().getCompanyList(context);
-    customerList = await CommonService().getCustomerList(context);
-    // customer_typeList = await 
+    // customerList = await CommonService().getCustomerList(context);
+    customerList = await CommonService().getCustomerName(context);
+    custId = await CommonService().getCustomerList(context);
+    // customer_typeList = await
     print(customerList.length);
     print(companyList.length);
     setState(() {});
@@ -125,6 +130,9 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
                     SizedBox(height: 15),
                     customerTypeField(),
                     SizedBox(height: 15),
+                    creditlimitField(),
+                    SizedBox(height: 15),
+                    unpaidAmountField(),
                     // SizedBox(height: 15),
                   ],
                 ),
@@ -144,6 +152,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         SizedBox(height: 8),
         TextFormField(
           controller: CustomerTypeField,
+          readOnly: true,
           decoration: InputDecoration(
             labelStyle: TextStyle(color: blackColor),
             fillColor: greyColor,
@@ -159,29 +168,58 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         ),
       ],
     );
-    // return CustomDropDown(
-    //   value: customertype,
-    //   decoration: BoxDecoration(
-    //       color: greyColor, borderRadius: BorderRadius.circular(5)),
-    //   items:  customerTypeList.map<DropdownMenuItem<String>>((value) {
-    //     return DropdownMenuItem<String>(
-    //       value: value,
-    //       child: Text(
-    //         value.toString(),
-    //         style: TextStyle(fontSize: 14),
-    //       ),
-    //     );
-    //   }).toList(),
-    //   alignment: CrossAxisAlignment.start,
-    //   onChanged: (String? newValue) {
-    //     setState(() {
-    //       customertype = newValue!;
-    //     });
-    //   },
-    //   label: 'Customer Type',
-    //   labelStyle: TextStyle(fontSize: 14),
-    //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-    // );
+  }
+
+  Widget creditlimitField(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Credit limit",style: TextStyle(fontWeight: FontWeight.bold),),
+        SizedBox(height: 8),
+        TextFormField(
+          controller: CreditlimitField,
+          readOnly: true,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(color: blackColor),
+            fillColor: greyColor,
+            filled: true,
+            isDense: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            hintText: 'Select Credit limit',
+            hintStyle: TextStyle(fontSize: 14,),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget unpaidAmountField(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Unpaid Amount",style: TextStyle(fontWeight: FontWeight.bold)),
+        SizedBox(height: 8),
+        TextFormField(
+          controller: UnpaidField,
+          readOnly: true,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(color: blackColor),
+            fillColor: greyColor,
+            filled: true,
+            isDense: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            hintText: 'Select Unpaid amount',
+            hintStyle: TextStyle(fontSize: 14,),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget companyField() {
@@ -236,9 +274,11 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
           ),
-        hintText: 'Select Customer',
+        // hintText: 'Select Customer',
+        hintText: 'Select Customer name',
       ),
-      label: 'Customer',
+      // label: 'Customer',
+      label: 'Customer Name',
       labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
       required: true,
       style: TextStyle(fontSize: 14, color: blackColor),
@@ -249,10 +289,15 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         customerController.text = suggestion;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         setState(() {
-          prefs.setString("customer", customerController.text);
+          // prefs.setString("customer", customerController.text);
+          // var cust = prefs.getString("customer");
+          // print("cust????????$cust");
+          print(customerList.indexOf(suggestion));
+          print(custId[customerList.indexOf(suggestion)]);
+          getCustomerType(suggestion: custId[customerList.indexOf(suggestion)]);
+          prefs.setString("customer", custId[customerList.indexOf(suggestion)]);
           var cust = prefs.getString("customer");
           print("cust????????$cust");
-          getCustomerType(suggestion: suggestion);
         });
       },
       suggestionsCallback: (pattern) {
@@ -269,7 +314,9 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   getCustomerType({suggestion}) async {
     var customerType = await CommonService().getCustomerType(context,customer: suggestion);
     print("cust type is===>>$customerType");
-    CustomerTypeField.text = customerType;
+    CustomerTypeField.text = customerType[0][0]['cust_type'].toString();
+    UnpaidField.text = customerType[0][0]['unpaid_amount'].toString();
+    CreditlimitField.text = customerType[0][0]['credit_limit'].toString();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("cust_type", CustomerTypeField.text);
     var cust_type = prefs.getString("cust_type");

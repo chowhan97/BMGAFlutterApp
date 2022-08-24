@@ -111,7 +111,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     };
     var request = http.Request(
         'POST',
-        Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${widget.itemcode.toString()}&customer_type=$prefscust_type&company=${company}&order_list=${widget.orderlist.toString()}&customer=$prefscustomer'));
+          Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${widget.itemcode.toString()}&customer_type=$prefscust_type&company=${company}&order_list=${widget.orderlist.toString()}&customer=$prefscustomer'));
 
     request.headers.addAll(headers);
 

@@ -24,8 +24,10 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
 
   List<String> companyList = [];
   List<String> customerList = [];
+  List<String> customerName = [];
   TextEditingController company = TextEditingController();
   TextEditingController customer = TextEditingController();
+  TextEditingController customername = TextEditingController();
   TextEditingController reportDate = TextEditingController();
   TextEditingController range1 = TextEditingController();
   TextEditingController range2 = TextEditingController();
@@ -37,6 +39,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
   getCustomerAndCompanyList() async {
     companyList = await CommonService().getCompanyList(context);
     customerList = await CommonService().getCustomerList(context);
+    customerName = await CommonService().getCustomerName(context);
     print(companyList.length);
     setState(() {});
   }
@@ -180,6 +183,11 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                   },
                   onSuggestionSelected: (suggestion) async {
                     customer.text = suggestion;
+                    print("this is index===>>>>${customerList.indexOf(suggestion)}");
+                    print("this is name===>>>${customerName[customerList.indexOf(suggestion)]}");
+                    setState(() {
+                      customername.text = customerName[customerList.indexOf(suggestion)];
+                    });
                   },
                   suggestionsCallback: (pattern) {
                     return TypeAheadWidgets.getSuggestions(pattern, customerList);
@@ -320,22 +328,29 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
         padding: const EdgeInsets.all(10.0),
         child: MaterialButton(
             onPressed: () {
-              if (customer.text.isEmpty || company.text.isEmpty) {
-                fluttertoast(
-                    whiteColor,
-                    redColor,
-                    company.text.isEmpty
-                        ? "Please choose company!!!"
-                        : "Please choose customer!!!"
-                      );
-              }
-              else {
-                if(accountReceivableSummary == true){
-                  pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text));
+              if(accountReceivableSummary == true){
+                if(customer.text.isEmpty || company.text.isEmpty){
+                  fluttertoast(whiteColor, redColor, company.text.isEmpty ? "Please choose company!!!" : "Please choose customer!!!");
+                }else{
+                  pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text,customer: customer.text, customerName: customername.text));
+                }
+              }else{
+                if(company.text.isEmpty){
+                  fluttertoast(whiteColor, redColor, "Please choose company!!!");
                 }else{
                   pushScreen(context, CustomerOutstandingSummary(company: company.text,date: reportDate.text));
                 }
               }
+              // if (customer.text.isEmpty || company.text.isEmpty) {
+              //   fluttertoast(whiteColor, redColor, company.text.isEmpty ? "Please choose company!!!" : "Please choose customer!!!");
+              // }
+              // else {
+              //   if(accountReceivableSummary == true){
+              //     pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text,customer: customer.text, customerName: customername.text));
+              //   }else{
+              //     pushScreen(context, CustomerOutstandingSummary(company: company.text,date: reportDate.text));
+              //   }
+              // }
             },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             color: Colors.blue,

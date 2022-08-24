@@ -56,18 +56,22 @@ class CommonService {
   }
 
   Future getCustomerType(BuildContext context, {customer}) async{
-    var customerType;
+    // var customerType;
+    List custData = [];
     try {
       Dio _dio = await BaseDio().getBaseDio();
       final String so = CustomerTypeUrl(customer: customer);
       final response = await _dio.get(so);
       var data = response.data;
-      customerType = data['message']['customer_type']['pch_customer_type'];
-      return customerType;
+      // customerType = data['message']['customer_type']['pch_customer_type'];
+      custData.add([{"cust_type":data['message']['customer_type']['pch_customer_type'],"unpaid_amount":data['message']['unpaid_amount'],"credit_limit":data['message']['credit_limit']}]);
+      return custData;
+      // return customerType;
     } catch (e) {
       exception(e, context);
     }
-    return customerType;
+    // return customerType;
+    return custData;
   }
 
   // Future<Customer> getCustomerDetail(
@@ -124,6 +128,27 @@ class CommonService {
     }
     return customerlist;
   }
+
+  Future<List<String>> getCustomerName(BuildContext context) async {
+    List<String> customername = [];
+    List list;
+    try {
+      Dio _dio = await BaseDio().getBaseDio();
+      final String so = customerListUrl();
+      final response = await _dio.get(so);
+      var data = response.data;
+      list = data['data'];
+      for (var listJson in list) {
+        customername.add(listJson['customer_name']);
+      }
+      return customername;
+    } catch (e) {
+      exception(e, context);
+    }
+    return customername;
+  }
+
+
 
   //for fetching delivery note string list
   Future<List<String>> getDeliveryNoteListFromRefernce(

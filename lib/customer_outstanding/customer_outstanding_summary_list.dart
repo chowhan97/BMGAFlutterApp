@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
+import 'package:ebuzz/common/navigations.dart';
+import 'package:ebuzz/customer_outstanding/customer_outstanding_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,6 +24,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
 
   Future getTableData() async {
     print("call");
+    log('data:call');
     var company = jsonEncode(widget.company);
     var fromDate = jsonEncode(widget.date);
     print(company);
@@ -230,9 +234,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("121-above Total",
-                              style: TextStyle(
-                                  color: Colors.black)),
+                          Text("121-above Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
                           head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[11] == "" ? "0.0" : header.last[11]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
@@ -250,50 +252,55 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                 itemBuilder: (BuildContext context, index) {
                   return Padding(
                     padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            listText(
-                                heading: "Customer",
-                                val:
-                                "${accountReceivableSummary[index]['party']}"),
-                            SizedBox(height: 8),
-                            listText(
-                                heading: "Customer name",
-                                val:
-                                "${accountReceivableSummary[index]['party_name']}"),
-                            SizedBox(height: 8),
-                            listText(
-                                heading: "Customer group",
-                                val:
-                                "${accountReceivableSummary[index]['customer_group']}"),
-                            SizedBox(height: 8),
-                            listText(
-                                heading: "Territory",
-                                val:
-                                "${accountReceivableSummary[index]['territory']}"),
-                            SizedBox(height: 8),
-                            listText(
-                                heading: "Due amount",
-                                val:
-                                "${accountReceivableSummary[index]['total_due']}"),
-                            SizedBox(height: 8),
-                            listText(
-                                heading: "Invoice amount",
-                                val:
-                                "${accountReceivableSummary[index]['invoiced']}"),
-                            SizedBox(height: 8),
-                            listText(
-                                heading: "Outstanding amount",
-                                val:
-                                "${accountReceivableSummary[index]['outstanding']}"),
-                          ],
+                    child: InkWell(
+                      onTap: (){
+                        pushScreen(context, CustomerOutStandingList(company: "Bharath Medical & General Agencies",date: "2022-08-22",customer: accountReceivableSummary[index]['party'], customerName: accountReceivableSummary[index]['party_name']));
+                      },
+                      child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              listText(
+                                  heading: "Customer",
+                                  val:
+                                  "${accountReceivableSummary[index]['party']}"),
+                              SizedBox(height: 8),
+                              listText(
+                                  heading: "Customer name",
+                                  val:
+                                  "${accountReceivableSummary[index]['party_name']}"),
+                              SizedBox(height: 8),
+                              listText(
+                                  heading: "Customer group",
+                                  val:
+                                  "${accountReceivableSummary[index]['customer_group']}"),
+                              SizedBox(height: 8),
+                              listText(
+                                  heading: "Territory",
+                                  val:
+                                  "${accountReceivableSummary[index]['territory']}"),
+                              SizedBox(height: 8),
+                              listText(
+                                  heading: "Due amount",
+                                  val:
+                                  "${accountReceivableSummary[index]['total_due']}"),
+                              SizedBox(height: 8),
+                              listText(
+                                  heading: "Invoice amount",
+                                  val:
+                                  "${accountReceivableSummary[index]['invoiced']}"),
+                              SizedBox(height: 8),
+                              listText(
+                                  heading: "Outstanding amount",
+                                  val:
+                                  "${accountReceivableSummary[index]['outstanding']}"),
+                            ],
+                          ),
                         ),
                       ),
                     ),

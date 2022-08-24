@@ -430,11 +430,28 @@ class _OBItemsFormState extends State<OBItemsForm>
               child: deleteWidget(),
             ),
             Padding(
+              padding: EdgeInsets.only(top: 140,right: 10),
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  child: MaterialButton(onPressed: (){
+                    showDialog(context: context, builder: (BuildContext context){
+                      return AlertDialog(
+                        title: Text("Show Offer"),
+                        content: Column(
+                          children: [
+
+                          ],
+                        ),
+                      );
+                    });
+                  },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: blueAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
+            ),
+            Padding(
               padding: EdgeInsets.only(bottom: 10, left: 8, right: 8, top: 25),
               child: Column(
                 children: [
                   itemCodeField(),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -451,7 +468,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Quantity Available : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Text("Quantity Available : ",style: TextStyle(fontWeight: FontWeight.bold)),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.5,
                         child: Text(
