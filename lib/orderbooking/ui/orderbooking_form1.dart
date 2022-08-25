@@ -100,6 +100,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
             pushScreen(context,
                 OrderBookingForm2(
                   company: companyController.text,
+                  // customer: customerController.text,
                   customer: customerController.text,
                   customertype: customertype,
                 ),
@@ -286,7 +287,6 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         return TypeAheadWidgets.itemUi(item);
       },
       onSuggestionSelected: (suggestion) async {
-        customerController.text = suggestion;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         setState(() {
           // prefs.setString("customer", customerController.text);
@@ -296,6 +296,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           print(custId[customerList.indexOf(suggestion)]);
           getCustomerType(suggestion: custId[customerList.indexOf(suggestion)]);
           prefs.setString("customer", custId[customerList.indexOf(suggestion)]);
+          customerController.text = custId[customerList.indexOf(suggestion)];
           var cust = prefs.getString("customer");
           print("cust????????$cust");
         });

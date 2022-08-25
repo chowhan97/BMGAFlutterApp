@@ -326,6 +326,7 @@ class _OBItemsFormState extends State<OBItemsForm>
     });
     print("itemCode==>>${itemCode + prefscust_type + company + prefscustomer}");
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
+    print("orderDetails is=====>>>>>${orderDetails}");
     quantityavailablecontrollerlist[index].text = orderDetails["message"]["available_qty"].toString();
     lastbatchpricecontrollerlist[index].text = orderDetails["message"]["price_details"]["price"].toString();
     ratecontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["rate_contract_check"].toString();
@@ -412,6 +413,375 @@ class _OBItemsFormState extends State<OBItemsForm>
     }
     return Product();
   }
+  bool fetchPromo1 = false;
+  bool fetchPromo2 = false;
+  bool fetchPromo3 = false;
+  bool fetchPromo5 = false;
+  var promo1Res;
+  var promo2Res;
+  var promo3Res;
+  var promo5Res;
+
+  Future promoType1({itemCode}) async {
+    print("call");
+    var P1 = jsonEncode(itemCode);
+    fetchPromo1 = true;
+    var headers = {
+      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    };
+    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+
+    request.fields.addAll({
+      'doctype': 'Sales Promos',
+      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+      'filters': '[["Promo Type 1","bought_item","=",$P1]]',
+      'order_by': '`tabSales Promos`.`modified` desc',
+      'start': '0',
+      'page_length': '20',
+      'view': 'List',
+      'group_by': '`tabSales Promos`.`name`',
+      'with_comment_count': 'true'
+    });
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      promoType2(itemCode: P1);
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        promo1Res = json.decode(data);
+        fetchPromo1 = false;
+        print("promo type 1 success");
+        print("promo type 1 res====>>>$promo1Res");
+        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+        // print("transactionModel====>>$customerOutstandingModel");
+      });
+    } else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        fetchPromo1 = false;
+      });
+    }
+  }
+
+  Future promoType2({itemCode}) async {
+    print("call");
+    fetchPromo2 = true;
+    var headers = {
+      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    };
+    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+
+    request.fields.addAll({
+      'doctype': 'Sales Promos',
+      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+      'filters': '[["Promo Type 2","bought_item","=",$itemCode]]',
+      'order_by': '`tabSales Promos`.`modified` desc',
+      'start': '0',
+      'page_length': '20',
+      'view': 'List',
+      'group_by': '`tabSales Promos`.`name`',
+      'with_comment_count': 'true'
+    });
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      promoType3(itemCode: itemCode);
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        promo2Res = json.decode(data);
+        fetchPromo2 = false;
+        print("promo type 2 success");
+        print("promo type 2 res====>>>$promo2Res");
+        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+        // print("transactionModel====>>$customerOutstandingModel");
+      });
+    } else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        fetchPromo2 = false;
+      });
+    }
+  }
+
+  Future promoType3({itemCode}) async {
+    print("call");
+    fetchPromo3 = true;
+    var headers = {
+      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    };
+    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+
+    request.fields.addAll({
+      'doctype': 'Sales Promos',
+      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+      'filters': '[["Promo Type 3","bought_item","=",$itemCode]]',
+      'order_by': '`tabSales Promos`.`modified` desc',
+      'start': '0',
+      'page_length': '20',
+      'view': 'List',
+      'group_by': '`tabSales Promos`.`name`',
+      'with_comment_count': 'true'
+    });
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      promoType5(itemCode: itemCode);
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        promo3Res = json.decode(data);
+        fetchPromo3 = false;
+        print("promo type 3 success");
+        print("promo type 3 res====>>>$promo3Res");
+        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+        // print("transactionModel====>>$customerOutstandingModel");
+      });
+    } else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        fetchPromo3 = false;
+      });
+    }
+  }
+
+  Future promoType5({itemCode}) async {
+    print("call");
+    fetchPromo5 = true;
+    var headers = {
+      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    };
+    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+
+    request.fields.addAll({
+      'doctype': 'Sales Promos',
+      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+      'filters': '[["Promo Type 5","bought_item","=",$itemCode]]',
+      'order_by': '`tabSales Promos`.`modified` desc',
+      'start': '0',
+      'page_length': '20',
+      'view': 'List',
+      'group_by': '`tabSales Promos`.`name`',
+      'with_comment_count': 'true'
+    });
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        promo5Res = json.decode(data);
+        fetchPromo5 = false;
+        print("promo type 5 success");
+        print("promo type 5 res====>>>$promo5Res");
+        showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res));
+        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+        // print("transactionModel====>>$customerOutstandingModel");
+      });
+    } else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        fetchPromo5 = false;
+      });
+    }
+  }
+
+   // Call the Dialog.
+
+  _onTapImage(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              fetchPromo1 == true ? CircularProgressIndicator() :
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.apartment ,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.person,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              // if(promo2Res['message'].isNotEmpty)
+              //   Card(
+              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              //     elevation: 5,
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Column(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.apartment ,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.person,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // if(promo3Res['message'].isNotEmpty)
+              //   Card(
+              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              //     elevation: 5,
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Column(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.apartment ,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.person,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // if(promo5Res['message'].isNotEmpty)
+              //   Card(
+              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              //     elevation: 5,
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Column(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.apartment ,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.person,color: Colors.grey,),
+              //                 SizedBox(width: 5,),
+              //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context){
@@ -433,17 +803,192 @@ class _OBItemsFormState extends State<OBItemsForm>
               padding: EdgeInsets.only(top: 140,right: 10),
               child: Align(
                   alignment: Alignment.centerRight,
-                  child: MaterialButton(onPressed: (){
-                    showDialog(context: context, builder: (BuildContext context){
-                      return AlertDialog(
-                        title: Text("Show Offer"),
-                        content: Column(
-                          children: [
-
-                          ],
-                        ),
-                      );
-                    });
+                  child: fetchPromo5 == true ? CircularProgressIndicator() : MaterialButton(onPressed: (){
+                    print(itemcodecontrollerlist[widget.i].text);
+                    promoType1(itemCode: itemcodecontrollerlist[widget.i].text);
+                    // showDialog(context: context, builder: (BuildContext context){
+                    //   return StatefulBuilder(
+                    //     builder: (context, setState) {
+                    //       return SingleChildScrollView(
+                    //         child: AlertDialog(backgroundColor: Color(0xffcfd6e7),
+                    //           title: Text("Show Offer"),
+                    //           content: Column(
+                    //             children: [
+                    //             if(promo1Res['message'].isNotEmpty)
+                    //             Card(
+                    //             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    //             elevation: 5,
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(8.0),
+                    //               child: Column(
+                    //                 children: [
+                    //                   Padding(
+                    //                     padding: const EdgeInsets.all(5.0),
+                    //                     child: Row(
+                    //                       children: [
+                    //                         Icon(Icons.apartment ,color: Colors.grey,),
+                    //                         SizedBox(width: 5,),
+                    //                         Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                   Padding(
+                    //                     padding: const EdgeInsets.all(5.0),
+                    //                     child: Row(
+                    //                       children: [
+                    //                         Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                    //                         SizedBox(width: 5,),
+                    //                         Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                   Padding(
+                    //                     padding: const EdgeInsets.all(5.0),
+                    //                     child: Row(
+                    //                       children: [
+                    //                         Icon(Icons.person,color: Colors.grey,),
+                    //                         SizedBox(width: 5,),
+                    //                         Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //             ),
+                    //             if(promo2Res['message'].isNotEmpty)
+                    //             Card(
+                    //                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    //                 elevation: 5,
+                    //                 child: Padding(
+                    //                   padding: const EdgeInsets.all(8.0),
+                    //                   child: Column(
+                    //                     children: [
+                    //                       Padding(
+                    //                         padding: const EdgeInsets.all(5.0),
+                    //                         child: Row(
+                    //                           children: [
+                    //                             Icon(Icons.apartment ,color: Colors.grey,),
+                    //                             SizedBox(width: 5,),
+                    //                             Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                       Padding(
+                    //                         padding: const EdgeInsets.all(5.0),
+                    //                         child: Row(
+                    //                           children: [
+                    //                             Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                    //                             SizedBox(width: 5,),
+                    //                             Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                       Padding(
+                    //                         padding: const EdgeInsets.all(5.0),
+                    //                         child: Row(
+                    //                           children: [
+                    //                             Icon(Icons.person,color: Colors.grey,),
+                    //                             SizedBox(width: 5,),
+                    //                             Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             if(promo3Res['message'].isNotEmpty)
+                    //             Card(
+                    //                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    //                 elevation: 5,
+                    //                 child: Padding(
+                    //                   padding: const EdgeInsets.all(8.0),
+                    //                   child: Column(
+                    //                     children: [
+                    //                       Padding(
+                    //                         padding: const EdgeInsets.all(5.0),
+                    //                         child: Row(
+                    //                           children: [
+                    //                             Icon(Icons.apartment ,color: Colors.grey,),
+                    //                             SizedBox(width: 5,),
+                    //                             Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                       Padding(
+                    //                         padding: const EdgeInsets.all(5.0),
+                    //                         child: Row(
+                    //                           children: [
+                    //                             Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                    //                             SizedBox(width: 5,),
+                    //                             Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                       Padding(
+                    //                         padding: const EdgeInsets.all(5.0),
+                    //                         child: Row(
+                    //                           children: [
+                    //                             Icon(Icons.person,color: Colors.grey,),
+                    //                             SizedBox(width: 5,),
+                    //                             Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             if(promo5Res['message'].isNotEmpty)
+                    //             Card(
+                    //                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    //                   elevation: 5,
+                    //                   child: Padding(
+                    //                     padding: const EdgeInsets.all(8.0),
+                    //                     child: Column(
+                    //                       children: [
+                    //                         Padding(
+                    //                           padding: const EdgeInsets.all(5.0),
+                    //                           child: Row(
+                    //                             children: [
+                    //                               Icon(Icons.apartment ,color: Colors.grey,),
+                    //                               SizedBox(width: 5,),
+                    //                               Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                         Padding(
+                    //                           padding: const EdgeInsets.all(5.0),
+                    //                           child: Row(
+                    //                             children: [
+                    //                               Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                    //                               SizedBox(width: 5,),
+                    //                               Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                         Padding(
+                    //                           padding: const EdgeInsets.all(5.0),
+                    //                           child: Row(
+                    //                             children: [
+                    //                               Icon(Icons.person,color: Colors.grey,),
+                    //                               SizedBox(width: 5,),
+                    //                               Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }
+                    //   );
+                    // });
                   },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: blueAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
             ),
             Padding(
@@ -627,4 +1172,322 @@ class _OBItemsFormState extends State<OBItemsForm>
   @override
   bool get wantKeepAlive => true;
 }
+
+class CustomDialogue extends StatefulWidget {
+  var promo1res,promo2res,promo3res,promo5res;
+  CustomDialogue({this.promo1res,this.promo2res,this.promo3res,this.promo5res});
+
+  @override
+  State<CustomDialogue> createState() => _CustomDialogueState();
+}
+
+class _CustomDialogueState extends State<CustomDialogue> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                widget.promo1res['message'].isEmpty ? Container() : Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.apartment ,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.person,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                widget.promo2res['message'].isEmpty ? Container() : Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.apartment ,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.person,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                widget.promo3res['message'].isEmpty ? Container() : Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.apartment ,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.person,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                widget.promo5res['message'].isEmpty ? Container() : Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.apartment ,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.person,color: Colors.grey,),
+                              SizedBox(width: 5,),
+                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // if(promo2Res['message'].isNotEmpty)
+                //   Card(
+                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                //     elevation: 5,
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: Column(
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.apartment ,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.person,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // if(promo3Res['message'].isNotEmpty)
+                //   Card(
+                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                //     elevation: 5,
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: Column(
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.apartment ,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.person,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // if(promo5Res['message'].isNotEmpty)
+                //   Card(
+                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                //     elevation: 5,
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: Column(
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.apartment ,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(5.0),
+                //             child: Row(
+                //               children: [
+                //                 Icon(Icons.person,color: Colors.grey,),
+                //                 SizedBox(width: 5,),
+                //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
