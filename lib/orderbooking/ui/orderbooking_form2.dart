@@ -10,6 +10,7 @@ import 'package:ebuzz/exception/custom_exception.dart';
 import 'package:ebuzz/network/base_dio.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
+import 'package:ebuzz/orderbooking/ui/offer_model.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form3.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form4.dart';
 import 'package:ebuzz/salesorder/ui/sales_order_form2.dart';
@@ -587,6 +588,13 @@ class _OBItemsFormState extends State<OBItemsForm>
         fetchPromo5 = false;
         print("promo type 5 success");
         print("promo type 5 res====>>>$promo5Res");
+        var n1 = promo1Res['message']['values'][0][0];
+        var n2 = promo2Res['message']['values'][0][0];
+        var n3 = promo3Res['message']['values'][0][0];
+        var n5 = promo5Res['message']['values'][0][0];
+        List n = [];
+        n.add([n1,n2,n3,n5]);
+        print("n is===>>>>$n");
         showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res));
         // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
         // print("transactionModel====>>$customerOutstandingModel");
@@ -599,189 +607,6 @@ class _OBItemsFormState extends State<OBItemsForm>
     }
   }
 
-   // Call the Dialog.
-
-  _onTapImage(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              fetchPromo1 == true ? CircularProgressIndicator() :
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.apartment ,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              // if(promo2Res['message'].isNotEmpty)
-              //   Card(
-              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              //     elevation: 5,
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Column(
-              //         children: [
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.apartment ,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.person,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // if(promo3Res['message'].isNotEmpty)
-              //   Card(
-              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              //     elevation: 5,
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Column(
-              //         children: [
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.apartment ,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.person,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // if(promo5Res['message'].isNotEmpty)
-              //   Card(
-              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              //     elevation: 5,
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Column(
-              //         children: [
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.apartment ,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.all(5.0),
-              //             child: Row(
-              //               children: [
-              //                 Icon(Icons.person,color: Colors.grey,),
-              //                 SizedBox(width: 5,),
-              //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context){
@@ -1182,311 +1007,659 @@ class CustomDialogue extends StatefulWidget {
 }
 
 class _CustomDialogueState extends State<CustomDialogue> {
+  bool showoffer = false;
+  OfferModel? offerModel;
+
+  Future showOffer({id}) async {
+    print("call");
+    showoffer = true;
+    var headers = {
+      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    };
+
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=SAP-0016&_=1661330362628'));
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        // promo3Res = json.decode(data);
+        showoffer = false;
+        print("show offer success");
+        offerModel = OfferModel.fromJson(json.decode(data));
+        print("transactionModel====>>${offerModel!.docs![0].freeItemForEligibleQuantity}");
+      });
+    } else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        showoffer = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    showOffer();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Stack(
+      backgroundColor: Color(0xffcfd6e7),
+      insetPadding: EdgeInsets.all(5),
+      child: showoffer == true ? Container(height: 500,alignment: Alignment.center,child: Container(height: 30,width: 30,child: CircularProgressIndicator(color: Colors.white))) : Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                widget.promo1res['message'].isEmpty ? Container() : Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.apartment ,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                widget.promo2res['message'].isEmpty ? Container() : Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.apartment ,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                widget.promo3res['message'].isEmpty ? Container() : Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.apartment ,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                widget.promo5res['message'].isEmpty ? Container() : Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.apartment ,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person,color: Colors.grey,),
-                              SizedBox(width: 5,),
-                              Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // if(promo2Res['message'].isNotEmpty)
-                //   Card(
-                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                //     elevation: 5,
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.apartment ,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.person,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // if(promo3Res['message'].isNotEmpty)
-                //   Card(
-                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                //     elevation: 5,
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.apartment ,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.person,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // if(promo5Res['message'].isNotEmpty)
-                //   Card(
-                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                //     elevation: 5,
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.apartment ,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(5.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(Icons.person,color: Colors.grey,),
-                //                 SizedBox(width: 5,),
-                //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-              ],
+          Container(
+            height: 500,
+            color: Color(0xffcfd6e7),
+            margin: EdgeInsets.all(5),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!.isEmpty
+                      ? Container()
+                      : Text("Quantity Based Promo",
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!.isEmpty
+                      ? Container()
+                      : _createDataTable(),
+                  offerModel!.docs![0].promosTableOfSameItem!.isEmpty
+                      ? Container()
+                      : Text("Buy X of item and get Y of same item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  offerModel!.docs![0].promosTableOfSameItem!.isEmpty
+                      ? Container()
+                      :  _createPromosDataTable(),
+                  offerModel!.docs![0].promosTableOfDifferentItems!.isEmpty
+                      ? Container()
+                      : Text("Buy X of item and get Y of different item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  offerModel!.docs![0].promosTableOfDifferentItems!.isEmpty
+                      ? Container()
+                      : _createPromosDiscountDataTable(),
+                  offerModel!.docs![0].freeItemForEligibleQuantity!.isEmpty
+                      ? Container()
+                      : Text("Free Item for Eligible Quantity, Discount for Ineligible Quantity", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  offerModel!.docs![0].freeItemForEligibleQuantity!.isEmpty
+                      ? Container()
+                      : _createTable(),
+                ],
+              ),
             ),
           ),
+          // SingleChildScrollView(
+          //   child: Padding(
+          //     padding: EdgeInsets.all(8.0),
+          //     child: Column(
+          //       children: [
+          //         // Card(
+          //         //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //         //   elevation: 5,
+          //         //   child: Padding(
+          //         //     padding: const EdgeInsets.all(8.0),
+          //         //     child: Column(
+          //         //       children: [
+          //         //         Padding(
+          //         //           padding: const EdgeInsets.all(5.0),
+          //         //           child: Row(
+          //         //             children: [
+          //         //               Text("Name:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //         //               SizedBox(width: 5),
+          //         //               Expanded(child: Text("${widget.promo1res['message']['values'][0][0]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               // Text("Name:-"),
+          //         //               // SizedBox(width: 5),
+          //         //               // Expanded(child: Text(widget.promo1res['message']['values'][0][0],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //             ],
+          //         //           ),
+          //         //         ),
+          //         //         Padding(
+          //         //           padding: const EdgeInsets.all(5.0),
+          //         //           child: Row(
+          //         //             children: [
+          //         //               Text("Owner:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //         //               SizedBox(width: 5),
+          //         //               Expanded(child: Text("${widget.promo1res['message']['values'][0][1]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               // Text("Owner:-"),
+          //         //               // SizedBox(width: 5),
+          //         //               // Expanded(child: Text(widget.promo1res['message']['values'][0][1],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //             ],
+          //         //           ),
+          //         //         ),
+          //         //         Padding(
+          //         //           padding: const EdgeInsets.all(5.0),
+          //         //           child: Row(
+          //         //             children: [
+          //         //               Text("Modified:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //         //               SizedBox(width: 5),
+          //         //               Expanded(child: Text("${widget.promo1res['message']['values'][0][3]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               // Text("Modified:-"),
+          //         //               // SizedBox(width: 5,),
+          //         //               // Expanded(child: Text(widget.promo1res['message']['values'][0][3],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //             ],
+          //         //           ),
+          //         //         ),
+          //         //       ],
+          //         //     ),
+          //         //   ),
+          //         // ),
+          //         offerModel!.docs![0].freeItemForEligibleQuantity!.isEmpty
+          //                 ? Container()
+          //                 : Container(
+          //                   child: ListView(
+          //                     scrollDirection: Axis.horizontal,
+          //                     children: [
+          //                       _createDataTable(),
+          //                     ],
+          //                   ),height: 100,
+          //                 ),
+          //         widget.promo2res['message'].isEmpty ? Container() : Card(
+          //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //           elevation: 5,
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Column(
+          //               children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Name:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo2res['message']['values'][0][0]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Name:-"),
+          //                       // SizedBox(width: 5),
+          //                       // Expanded(child: Text(widget.promo2res['message']['values'][0][0],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Owner:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo2res['message']['values'][0][1]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Owner:-"),
+          //                       // SizedBox(width: 5),
+          //                       // Expanded(child: Text(widget.promo2res['message']['values'][0][1],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Modified:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo2res['message']['values'][0][3]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Modified:-"),
+          //                       // SizedBox(width: 5,),
+          //                       // Expanded(child: Text(widget.promo2res['message']['values'][0][3],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //         widget.promo3res['message'].isEmpty ? Container() : Card(
+          //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //           elevation: 5,
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Column(
+          //               children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Name:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo3res['message']['values'][0][0]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Name:-"),
+          //                       // SizedBox(width: 5),
+          //                       // Expanded(child: Text(widget.promo3res['message']['values'][0][0],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Owner:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo3res['message']['values'][0][1]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Owner:-"),
+          //                       // SizedBox(width: 5),
+          //                       // Expanded(child: Text(widget.promo3res['message']['values'][0][1],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Modified:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo3res['message']['values'][0][3]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Modified:-"),
+          //                       // SizedBox(width: 5,),
+          //                       // Expanded(child: Text(widget.promo3res['message']['values'][0][3],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //         widget.promo5res['message'].isEmpty ? Container() : Card(
+          //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //           elevation: 5,
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Column(
+          //               children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Name:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo5res['message']['values'][0][0]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Name:-"),
+          //                       // SizedBox(width: 5),
+          //                       // Expanded(child: Text(widget.promo5res['message']['values'][0][0],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Owner:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo5res['message']['values'][0][1]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Owner:-"),
+          //                       // SizedBox(width: 5),
+          //                       // Expanded(child: Text(widget.promo5res['message']['values'][0][1],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //                 Padding(
+          //                   padding: const EdgeInsets.all(5.0),
+          //                   child: Row(
+          //                     children: [
+          //                       Text("Modified:-",style: TextStyle(fontWeight: FontWeight.bold)),
+          //                       SizedBox(width: 5),
+          //                       Expanded(child: Text("${widget.promo5res['message']['values'][0][3]}",style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                       // Text("Modified:-"),
+          //                       // SizedBox(width: 5,),
+          //                       // Expanded(child: Text(widget.promo5res['message']['values'][0][3],maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //         // if(promo2Res['message'].isNotEmpty)
+          //         //   Card(
+          //         //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //         //     elevation: 5,
+          //         //     child: Padding(
+          //         //       padding: const EdgeInsets.all(8.0),
+          //         //       child: Column(
+          //         //         children: [
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.apartment ,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.person,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //         ],
+          //         //       ),
+          //         //     ),
+          //         //   ),
+          //         // if(promo3Res['message'].isNotEmpty)
+          //         //   Card(
+          //         //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //         //     elevation: 5,
+          //         //     child: Padding(
+          //         //       padding: const EdgeInsets.all(8.0),
+          //         //       child: Column(
+          //         //         children: [
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.apartment ,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.person,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //         ],
+          //         //       ),
+          //         //     ),
+          //         //   ),
+          //         // if(promo5Res['message'].isNotEmpty)
+          //         //   Card(
+          //         //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          //         //     elevation: 5,
+          //         //     child: Padding(
+          //         //       padding: const EdgeInsets.all(8.0),
+          //         //       child: Column(
+          //         //         children: [
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.apartment ,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //           Padding(
+          //         //             padding: const EdgeInsets.all(5.0),
+          //         //             child: Row(
+          //         //               children: [
+          //         //                 Icon(Icons.person,color: Colors.grey,),
+          //         //                 SizedBox(width: 5,),
+          //         //                 Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
+          //         //               ],
+          //         //             ),
+          //         //           ),
+          //         //         ],
+          //         //       ),
+          //         //     ),
+          //         //   ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
+  }
+
+  DataTable _createDataTable() {
+    return DataTable(
+        columns: _createColumns(),
+        rows: _createRows(),
+        border: TableBorder.all(color: Colors.black));
+  }
+  DataTable _createPromosDataTable() {
+    return DataTable(
+        columns: _createpromosColumns(),
+        rows: _createPromosRows(),
+        border: TableBorder.all(color: Colors.black));
+  }
+  DataTable _createPromosDiscountDataTable() {
+    return DataTable(
+        columns: _createpromosDiscountColumns(),
+        rows: _createPromosDiscountRows(),
+        border: TableBorder.all(color: Colors.black));
+  }
+  DataTable _createTable() {
+    return DataTable(
+        columns: _createtableColumns(),
+        rows: _createtableRows(),
+        border: TableBorder.all(color: Colors.black));
+  }
+
+
+  List<DataColumn> _createColumns() {
+    return [
+      DataColumn(label: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Quantity'),
+          Text('Bought'),
+        ],
+       ),
+      ),
+      DataColumn(label: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Discount'),
+          Text('Slab'),
+        ],
+      )),
+    ];
+  }
+
+  List<DataRow> _createRows() {
+    return offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!
+        .map(
+          (book) => DataRow(
+        cells: [
+          DataCell(Text(book.name.toString())),
+          DataCell(Text(book.discount.toString())),
+        ],
+      ),
+    ).toList();
+  }
+
+  List<DataColumn> _createpromosColumns() {
+    return [
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Item'),
+          Text('Bought'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Free'),
+          Text('Item'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Eligible'),
+          Text('Quantity'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Free'),
+          Text('Quantity'),
+        ],
+      ),),),
+    ];
+  }
+
+  List<DataRow> _createPromosRows() {
+    return offerModel!.docs![0].promosTableOfSameItem!
+        .map((book) => DataRow(cells: [
+      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
+      DataCell(Expanded(child: Text(book.wQty.toString()))),
+      DataCell(Expanded(child: Text(book.promoItem.toString()))),
+      DataCell(Expanded(child: Text(book.qty.toString()))),
+    ]))
+        .toList();
+  }
+
+  List<DataColumn> _createpromosDiscountColumns() {
+    return [
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Item'),
+          Text('Bought'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Free'),
+          Text('item'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Eligible'),
+          Text('Quantity'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            children: [
+              Text('Free'),
+              Text('Quantity'),
+            ],
+          ),
+        ],
+      ))),
+    ];
+  }
+
+  List<DataRow> _createPromosDiscountRows() {
+    return offerModel!.docs![0].promosTableOfDifferentItems!
+        .map((book) => DataRow(cells: [
+      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
+      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
+      DataCell(
+          Expanded(child: Text(book.discount.toString()))),
+      DataCell(Expanded(child: Text(book.forEveryQuantityThatIsBought.toString()))),
+    ]))
+        .toList();
+  }
+
+  List<DataColumn> _createtableColumns() {
+    return [
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Item'),
+          Text('Bought'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Free'),
+          Text('item'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Eligible'),
+          Text('Quantity'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Free'),
+          Text('Quantity'),
+        ],
+      ))),
+      DataColumn(label: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Discount'),
+        ],
+      ))),
+    ];
+  }
+
+  List<DataRow> _createtableRows() {
+    return offerModel!.docs![0].freeItemForEligibleQuantity!
+        .map((book) => DataRow(cells: [
+      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
+      DataCell(Expanded(child: Text(book.promoBasedOn.toString()))),
+      DataCell(Expanded(child: Text(book.discount.toString()))),
+      DataCell(Expanded(child: Text(book.quantity.toString()))),
+      DataCell(Expanded(child: Text(book.discount.toString()))),
+    ]))
+        .toList();
   }
 }
 

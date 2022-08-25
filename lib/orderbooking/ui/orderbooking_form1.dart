@@ -101,7 +101,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
                 OrderBookingForm2(
                   company: companyController.text,
                   // customer: customerController.text,
-                  customer: customerController.text,
+                  customer: custId[customerList.indexOf(customerController.text)],
                   customertype: customertype,
                 ),
             );
@@ -296,7 +296,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           print(custId[customerList.indexOf(suggestion)]);
           getCustomerType(suggestion: custId[customerList.indexOf(suggestion)]);
           prefs.setString("customer", custId[customerList.indexOf(suggestion)]);
-          customerController.text = custId[customerList.indexOf(suggestion)];
+          customerController.text = suggestion;
+          print(custId[customerList.indexOf(suggestion)]);
           var cust = prefs.getString("customer");
           print("cust????????$cust");
         });

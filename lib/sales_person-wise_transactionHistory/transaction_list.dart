@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:ebuzz/common/navigations.dart';
+import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_detail_screen.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:ebuzz/common/colors.dart';
@@ -41,7 +43,7 @@ class _TransactionListState extends State<TransactionList> {
           '["`tabSales Invoice`.`name`","`tabSales Invoice`.`docstatus`","`tabSales Invoice`.`title`","`tabSales Invoice`.`customer`","`tabSales Invoice`.`company`","`tabSales Invoice`.`grand_total`","`tabSales Invoice`.`status`","`tabSales Invoice`.`currency`","`tabSales Invoice`.`customer_name`","`tabSales Invoice`.`base_grand_total`","`tabSales Invoice`.`outstanding_amount`","`tabSales Invoice`.`due_date`","`tabSales Invoice`.`is_return`"]',
       'distinct': 'false'
     });
-
+    print("request.fields ${request.fields}");
     request.headers.addAll(headers);
 
     var streamedResponse = await request.send();
@@ -177,12 +179,24 @@ class _TransactionListState extends State<TransactionList> {
     return [
       DataColumn(
           label: Expanded(
+              child: Container(
+                  width: 80,
+                  child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Invoice'),
+                          Text('Id'),
+                        ],
+                      ))))),
+      DataColumn(
+          label: Expanded(
               child:
                   Container(width: 110, child: Center(child: Text('Name'))))),
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 70,
+                  width: 60,
                   child: Center(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -194,7 +208,7 @@ class _TransactionListState extends State<TransactionList> {
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 90,
+                  width: 80,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -228,6 +242,104 @@ class _TransactionListState extends State<TransactionList> {
             DataCell(
                 Expanded(
                     child: Center(
+                      child: Container(
+                        width: 80,
+                        child: Center(
+                            child: Text(
+                              book[0]['name'].toString(),
+                              textAlign: TextAlign.center,
+                            )),
+                      ),
+                    )), onTap: () {
+              pushScreen(
+                  context,
+                  TransactionDetail(
+                    invoiceId: book[0]['name'].toString(),
+                  )
+              );
+              // showDialog(
+              //   context: context,
+              //   builder: (BuildContext context) {
+              //     return AlertDialog(
+              //       contentPadding: EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(15),
+              //       ),
+              //       content: Container(
+              //         height: MediaQuery.of(context).size.height * 0.5,
+              //         child: Center(
+              //           child: SingleChildScrollView(
+              //             child: Column(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               crossAxisAlignment: CrossAxisAlignment.start,
+              //               children: [
+              //                 listText(
+              //                     heading: "Name",
+              //                     val: "${book[0]['name'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Doc Status",
+              //                     val: "${book[0]['docstatus'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Title",
+              //                     val: "${book[0]['title'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Customer Id",
+              //                     val: "${book[0]['customer'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText1(
+              //                     heading: "Company Name",
+              //                     val: "${book[0]['company'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Grand Total",
+              //                     val: "${book[0]['grand_total'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Status",
+              //                     val: "${book[0]['status'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Currency",
+              //                     val: "${book[0]['currency'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText1(
+              //                     heading: "Customer Name",
+              //                     val:
+              //                     "${book[0]['customer_name'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Base Grand Total",
+              //                     val:
+              //                     "${book[0]['base_grand_total'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Outstanding Amount",
+              //                     val:
+              //                     "${book[0]['outstanding_amount'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Due Date",
+              //                     val: "${book[0]['due_date'].toString()}"),
+              //                 SizedBox(height: 8),
+              //                 listText(
+              //                     heading: "Is Return",
+              //                     val: "${book[0]['is_return'].toString()}"),
+              //                 SizedBox(height: 8),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // );
+            }),
+            DataCell(
+                Expanded(
+                    child: Center(
                   child: Container(
                     width: 110,
                     child: Center(
@@ -236,270 +348,53 @@ class _TransactionListState extends State<TransactionList> {
                       textAlign: TextAlign.center,
                     )),
                   ),
-                )), onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    contentPadding: EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    content: Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              listText(
-                                  heading: "Name",
-                                  val: "${book[0]['name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Doc Status",
-                                  val: "${book[0]['docstatus'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Title",
-                                  val: "${book[0]['title'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Customer Id",
-                                  val: "${book[0]['customer'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Company Name",
-                                  val: "${book[0]['company'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Grand Total",
-                                  val: "${book[0]['grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Status",
-                                  val: "${book[0]['status'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Currency",
-                                  val: "${book[0]['currency'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Customer Name",
-                                  val:
-                                      "${book[0]['customer_name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Base Grand Total",
-                                  val:
-                                      "${book[0]['base_grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Outstanding Amount",
-                                  val:
-                                      "${book[0]['outstanding_amount'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Due Date",
-                                  val: "${book[0]['due_date'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Is Return",
-                                  val: "${book[0]['is_return'].toString()}"),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                )),
+                onTap: () {
+                  pushScreen(
+                      context,
+                      TransactionDetail(
+                        invoiceId: book[0]['name'].toString(),
+
+                      )
                   );
-                },
-              );
             }),
             DataCell(
                 Expanded(
                     child: Center(
                   child: Container(
-                      width: 70,
+                      width: 60,
                       child: Center(
                           child: Text(
                         book[0]['status'].toString(),
                         textAlign: TextAlign.center,
                       ))),
                 )), onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    contentPadding: EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    content: Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              listText(
-                                  heading: "Name",
-                                  val: "${book[0]['name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Doc Status",
-                                  val: "${book[0]['docstatus'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Title",
-                                  val: "${book[0]['title'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Customer Id",
-                                  val: "${book[0]['customer'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Company Name",
-                                  val: "${book[0]['company'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Grand Total",
-                                  val: "${book[0]['grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Status",
-                                  val: "${book[0]['status'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Currency",
-                                  val: "${book[0]['currency'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Customer Name",
-                                  val:
-                                      "${book[0]['customer_name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Base Grand Total",
-                                  val:
-                                      "${book[0]['base_grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Outstanding Amount",
-                                  val:
-                                      "${book[0]['outstanding_amount'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Due Date",
-                                  val: "${book[0]['due_date'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Is Return",
-                                  val: "${book[0]['is_return'].toString()}"),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              pushScreen(
+                  context,
+                  TransactionDetail(
+                    invoiceId: book[0]['name'].toString(),
+                  )
               );
             }),
             DataCell(
                 Expanded(
                     child: Center(
                   child: Container(
-                      width: 90,
+                      width: 80,
                       child: Center(child: Text(book[0]['outstanding_amount'].toString()))),
                 )), onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    contentPadding: EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    content: Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              listText(
-                                  heading: "Name",
-                                  val: "${book[0]['name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Doc Status",
-                                  val: "${book[0]['docstatus'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Title",
-                                  val: "${book[0]['title'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Customer Id",
-                                  val: "${book[0]['customer'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Company Name",
-                                  val: "${book[0]['company'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Grand Total",
-                                  val: "${book[0]['grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Status",
-                                  val: "${book[0]['status'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Currency",
-                                  val: "${book[0]['currency'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Customer Name",
-                                  val:
-                                      "${book[0]['customer_name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Base Grand Total",
-                                  val:
-                                      "${book[0]['base_grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Outstanding Amount",
-                                  val:
-                                      "${book[0]['outstanding_amount'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Due Date",
-                                  val: "${book[0]['due_date'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Is Return",
-                                  val: "${book[0]['is_return'].toString()}"),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              pushScreen(
+                  context,
+                  TransactionDetail(
+                    invoiceId: book[0]['name'].toString(),
+                  )
               );
             }),
             DataCell(
                 Expanded(
                   child: Center(
                     child: Container(
-                      width: 80,
+                      width: 70,
                       child: Center(
                         child: Text(book[0]['grand_total'].toString(),
                             style: TextStyle(fontWeight: FontWeight.bold)),
@@ -507,84 +402,11 @@ class _TransactionListState extends State<TransactionList> {
                     ),
                   ),
                 ), onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    contentPadding: EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    content: Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              listText(
-                                  heading: "Name",
-                                  val: "${book[0]['name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Doc Status",
-                                  val: "${book[0]['docstatus'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Title",
-                                  val: "${book[0]['title'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Customer Id",
-                                  val: "${book[0]['customer'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Company Name",
-                                  val: "${book[0]['company'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Grand Total",
-                                  val: "${book[0]['grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Status",
-                                  val: "${book[0]['status'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Currency",
-                                  val: "${book[0]['currency'].toString()}"),
-                              SizedBox(height: 8),
-                              listText1(
-                                  heading: "Customer Name",
-                                  val:
-                                      "${book[0]['customer_name'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Base Grand Total",
-                                  val:
-                                      "${book[0]['base_grand_total'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Outstanding Amount",
-                                  val:
-                                      "${book[0]['outstanding_amount'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Due Date",
-                                  val: "${book[0]['due_date'].toString()}"),
-                              SizedBox(height: 8),
-                              listText(
-                                  heading: "Is Return",
-                                  val: "${book[0]['is_return'].toString()}"),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              pushScreen(
+                  context,
+                  TransactionDetail(
+                    invoiceId: book[0]['name'].toString(),
+                  )
               );
             }),
           ],
