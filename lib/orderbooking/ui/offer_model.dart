@@ -250,9 +250,9 @@ class Doc {
   DateTime? endDate;
   String? promoType;
   String? doctype;
-  List<dynamic>? promoTableForQuantityamountBasedDiscount;
-  List<dynamic>? promosTableOfSameItem;
-  List<dynamic>? promosTableOfDifferentItems;
+  List<PromoTableForQuantityamountBasedDiscount>? promoTableForQuantityamountBasedDiscount;
+  List<PromosTableOfSameItem>? promosTableOfSameItem;
+  List<PromosTableOfDifferentItems>? promosTableOfDifferentItems;
   List<FreeItemForEligibleQuantity>? freeItemForEligibleQuantity;
 
   factory Doc.fromJson(Map<String, dynamic> json) => Doc(
@@ -268,9 +268,9 @@ class Doc {
     endDate: DateTime.parse(json["end_date"]),
     promoType: json["promo_type"],
     doctype: json["doctype"],
-    promoTableForQuantityamountBasedDiscount: List<dynamic>.from(json["promo_table_for_quantityamount_based_discount"].map((x) => x)),
-    promosTableOfSameItem: List<dynamic>.from(json["promos_table_of_same_item"].map((x) => x)),
-    promosTableOfDifferentItems: List<dynamic>.from(json["promos_table_of_different_items"].map((x) => x)),
+    promoTableForQuantityamountBasedDiscount: List<PromoTableForQuantityamountBasedDiscount>.from(json["promo_table_for_quantityamount_based_discount"].map((x) => PromoTableForQuantityamountBasedDiscount.fromJson(x))),
+    promosTableOfSameItem: List<PromosTableOfSameItem>.from(json["promos_table_of_same_item"].map((x) => PromosTableOfSameItem.fromJson(x))),
+    promosTableOfDifferentItems: List<PromosTableOfDifferentItems>.from(json["promos_table_of_different_items"].map((x) => PromosTableOfDifferentItems.fromJson(x))),
     freeItemForEligibleQuantity: List<FreeItemForEligibleQuantity>.from(json["free_item_for_eligible_quantity"].map((x) => FreeItemForEligibleQuantity.fromJson(x))),
   );
 
@@ -377,3 +377,257 @@ class FreeItemForEligibleQuantity {
     "doctype": doctype,
   };
 }
+
+class PromosTableOfDifferentItems{
+  PromosTableOfDifferentItems({
+    this.name,
+    this.owner,
+    this.creation,
+    this.modified,
+    this.modifiedBy,
+    this.parent,
+    this.parentfield,
+    this.parenttype,
+    this.idx,
+    this.docstatus,
+    this.promoBasedOn,
+    this.boughtItem,
+    this.forEveryQuantityThatIsBought,
+    this.quantityOfFreeItemsThatsGiven,
+    this.discount,
+    this.type,
+    this.quantity,
+    this.doctype,
+  });
+
+  String? name;
+  String? owner;
+  DateTime? creation;
+  DateTime? modified;
+  String? modifiedBy;
+  String? parent;
+  String? parentfield;
+  String? parenttype;
+  int? idx;
+  int? docstatus;
+  String? promoBasedOn;
+  String? boughtItem;
+  int? forEveryQuantityThatIsBought;
+  int? quantityOfFreeItemsThatsGiven;
+  dynamic discount;
+  String? type;
+  int? quantity;
+  String? doctype;
+
+  factory PromosTableOfDifferentItems.fromJson(Map<String, dynamic> json) => PromosTableOfDifferentItems(
+    name: json["name"],
+    owner: json["owner"],
+    creation: DateTime.parse(json["creation"]),
+    modified: DateTime.parse(json["modified"]),
+    modifiedBy: json["modified_by"],
+    parent: json["parent"],
+    parentfield: json["parentfield"],
+    parenttype: json["parenttype"],
+    idx: json["idx"],
+    docstatus: json["docstatus"],
+    promoBasedOn: json["promo_based_on"],
+    boughtItem: json["bought_item"],
+    forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"],
+    quantityOfFreeItemsThatsGiven: json["quantity_of_free_items_thats_given"],
+    discount: json["discount"],
+    type: json["type"],
+    quantity: json["quantity"],
+    doctype: json["doctype"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "owner": owner,
+    "creation": creation!.toIso8601String(),
+    "modified": modified!.toIso8601String(),
+    "modified_by": modifiedBy,
+    "parent": parent,
+    "parentfield": parentfield,
+    "parenttype": parenttype,
+    "idx": idx,
+    "docstatus": docstatus,
+    "promo_based_on": promoBasedOn,
+    "bought_item": boughtItem,
+    "for_every_quantity_that_is_bought": forEveryQuantityThatIsBought,
+    "quantity_of_free_items_thats_given": quantityOfFreeItemsThatsGiven,
+    "discount": discount,
+    "type": type,
+    "quantity": quantity,
+    "doctype": doctype,
+  };
+}
+
+class PromosTableOfSameItem{
+  PromosTableOfSameItem({
+    this.name,
+    this.owner,
+    this.creation,
+    this.modified,
+    this.modifiedBy,
+    this.parent,
+    this.parentfield,
+    this.parenttype,
+    this.idx,
+    this.docstatus,
+    this.promoBasedOn,
+    this.boughtItem,
+    this.forEveryQuantityThatIsBought,
+    this.quantityOfFreeItemsThatsGiven,
+    this.discount,
+    this.type,
+    this.quantity,
+    this.doctype,
+  });
+
+  String? name;
+  String? owner;
+  DateTime? creation;
+  DateTime? modified;
+  String? modifiedBy;
+  String? parent;
+  String? parentfield;
+  String? parenttype;
+  int? idx;
+  int? docstatus;
+  String? promoBasedOn;
+  String? boughtItem;
+  int? forEveryQuantityThatIsBought;
+  int? quantityOfFreeItemsThatsGiven;
+  dynamic discount;
+  String? type;
+  int? quantity;
+  String? doctype;
+
+  factory PromosTableOfSameItem.fromJson(Map<String, dynamic> json) => PromosTableOfSameItem(
+    name: json["name"],
+    owner: json["owner"],
+    creation: DateTime.parse(json["creation"]),
+    modified: DateTime.parse(json["modified"]),
+    modifiedBy: json["modified_by"],
+    parent: json["parent"],
+    parentfield: json["parentfield"],
+    parenttype: json["parenttype"],
+    idx: json["idx"],
+    docstatus: json["docstatus"],
+    promoBasedOn: json["promo_based_on"],
+    boughtItem: json["bought_item"],
+    forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"],
+    quantityOfFreeItemsThatsGiven: json["quantity_of_free_items_thats_given"],
+    discount: json["discount"],
+    type: json["type"],
+    quantity: json["quantity"],
+    doctype: json["doctype"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "owner": owner,
+    "creation": creation!.toIso8601String(),
+    "modified": modified!.toIso8601String(),
+    "modified_by": modifiedBy,
+    "parent": parent,
+    "parentfield": parentfield,
+    "parenttype": parenttype,
+    "idx": idx,
+    "docstatus": docstatus,
+    "promo_based_on": promoBasedOn,
+    "bought_item": boughtItem,
+    "for_every_quantity_that_is_bought": forEveryQuantityThatIsBought,
+    "quantity_of_free_items_thats_given": quantityOfFreeItemsThatsGiven,
+    "discount": discount,
+    "type": type,
+    "quantity": quantity,
+    "doctype": doctype,
+  };
+}
+
+class PromoTableForQuantityamountBasedDiscount{
+  PromoTableForQuantityamountBasedDiscount({
+    this.name,
+    this.owner,
+    this.creation,
+    this.modified,
+    this.modifiedBy,
+    this.parent,
+    this.parentfield,
+    this.parenttype,
+    this.idx,
+    this.docstatus,
+    this.promoBasedOn,
+    this.boughtItem,
+    this.forEveryQuantityThatIsBought,
+    this.quantityOfFreeItemsThatsGiven,
+    this.discount,
+    this.type,
+    this.quantity,
+    this.doctype,
+  });
+
+  String? name;
+  String? owner;
+  DateTime? creation;
+  DateTime? modified;
+  String? modifiedBy;
+  String? parent;
+  String? parentfield;
+  String? parenttype;
+  int? idx;
+  int? docstatus;
+  String? promoBasedOn;
+  String? boughtItem;
+  int? forEveryQuantityThatIsBought;
+  int? quantityOfFreeItemsThatsGiven;
+  dynamic discount;
+  String? type;
+  int? quantity;
+  String? doctype;
+
+  factory PromoTableForQuantityamountBasedDiscount.fromJson(Map<String, dynamic> json) => PromoTableForQuantityamountBasedDiscount(
+    name: json["name"],
+    owner: json["owner"],
+    creation: DateTime.parse(json["creation"]),
+    modified: DateTime.parse(json["modified"]),
+    modifiedBy: json["modified_by"],
+    parent: json["parent"],
+    parentfield: json["parentfield"],
+    parenttype: json["parenttype"],
+    idx: json["idx"],
+    docstatus: json["docstatus"],
+    promoBasedOn: json["promo_based_on"],
+    boughtItem: json["bought_item"],
+    forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"],
+    quantityOfFreeItemsThatsGiven: json["quantity_of_free_items_thats_given"],
+    discount: json["discount"],
+    type: json["type"],
+    quantity: json["quantity"],
+    doctype: json["doctype"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "owner": owner,
+    "creation": creation!.toIso8601String(),
+    "modified": modified!.toIso8601String(),
+    "modified_by": modifiedBy,
+    "parent": parent,
+    "parentfield": parentfield,
+    "parenttype": parenttype,
+    "idx": idx,
+    "docstatus": docstatus,
+    "promo_based_on": promoBasedOn,
+    "bought_item": boughtItem,
+    "for_every_quantity_that_is_bought": forEveryQuantityThatIsBought,
+    "quantity_of_free_items_thats_given": quantityOfFreeItemsThatsGiven,
+    "discount": discount,
+    "type": type,
+    "quantity": quantity,
+    "doctype": doctype,
+  };
+}
+
+

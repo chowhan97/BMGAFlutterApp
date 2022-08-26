@@ -6,6 +6,7 @@ import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class CustomerOutstandingSummary extends StatefulWidget {
   var company, date;
@@ -21,12 +22,17 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
   List accountReceivableSummary = [];
   List header = [];
   bool head = false;
+  String formatted = "";
 
   Future getTableData() async {
     print("call");
     log('data:call');
     var company = jsonEncode(widget.company);
     var fromDate = jsonEncode(widget.date);
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    formatted = formatter.format(now);
+    print(formatted); // something like 2013-04-20
     print(company);
     fetch = true;
     head = true;
@@ -37,7 +43,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
 
     request.fields.addAll({
       'report_name': 'Accounts Receivable Summary',
-      'filters': '{"company":${company},"report_date":"2022-08-22","ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120}',
+      'filters': '{"company":${company},"report_date":${jsonEncode(formatted)},"ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120}',
       '_': '1661140719612'
     });
 
@@ -254,7 +260,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                     padding: EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: InkWell(
                       onTap: (){
-                        pushScreen(context, CustomerOutStandingList(company: "Bharath Medical & General Agencies",date: "2022-08-22",customer: accountReceivableSummary[index]['party'], customerName: accountReceivableSummary[index]['party_name']));
+                        pushScreen(context, CustomerOutStandingList(company: "Bharath Medical & General Agencies",date: formatted,customer: accountReceivableSummary[index]['party'], customerName: accountReceivableSummary[index]['party_name']));
                       },
                       child: Card(
                         elevation: 5,

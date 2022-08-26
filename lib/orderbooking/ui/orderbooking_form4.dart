@@ -290,6 +290,37 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     [{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":52,"quantity":20,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":20,"quantity":4,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":"Demo Item 4","quantity_available":52,"quantity":2,"average":136,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"BMGA Test Warehouse - BMGA"}];
   }
 
+  bool isSubmitLoad = false;
+  Future submit() async{
+    var doc = {"name":saveModel!.docs![0].name,"owner":saveModel!.docs![0].owner,"creation":saveModel!.docs![0].creation,"modified":saveModel!.docs![0].modified,"modified_by":saveModel!.docs![0].modifiedBy,"idx":saveModel!.docs![0].idx,"docstatus":saveModel!.docs![0].docstatus,"workflow_state":saveModel!.docs![0].workflowState,"company":saveModel!.docs![0].company,"customer":saveModel!.docs![0].customer,"customer_type":saveModel!.docs![0].customerType,"customer_name":saveModel!.docs![0].customerName,"unpaid_amount":saveModel!.docs![0].unpaidAmount,"credit_limit":saveModel!.docs![0].creditLimit,"total_amount":saveModel!.docs![0].totalAmount,"doctype":saveModel!.docs![0].doctype,"order_booking_items_v2":[{"name":saveModel!.docs![0].orderBookingItemsV2![0].name,"owner":saveModel!.docs![0].orderBookingItemsV2![0].owner,"creation":saveModel!.docs![0].orderBookingItemsV2![0].creation,"modified":saveModel!.docs![0].orderBookingItemsV2![0].modified,"modified_by":saveModel!.docs![0].orderBookingItemsV2![0].modifiedBy,"parent":saveModel!.docs![0].orderBookingItemsV2![0].parent,"parentfield":saveModel!.docs![0].orderBookingItemsV2![0].parentfield,"parenttype":saveModel!.docs![0].orderBookingItemsV2![0].parenttype,"idx":saveModel!.docs![0].orderBookingItemsV2![0].idx,"docstatus":saveModel!.docs![0].orderBookingItemsV2![0].docstatus,"item_code":saveModel!.docs![0].orderBookingItemsV2![0].itemCode,"free_items":saveModel!.docs![0].orderBookingItemsV2![0].freeItems,"stock_uom":saveModel!.docs![0].orderBookingItemsV2![0].stockUom,"quantity_available":saveModel!.docs![0].orderBookingItemsV2![0].quantityAvailable,"quantity_booked":saveModel!.docs![0].orderBookingItemsV2![0].quantityBooked,"average_price":saveModel!.docs![0].orderBookingItemsV2![0].averagePrice,"amount":saveModel!.docs![0].orderBookingItemsV2![0].amount,"gst_rate":saveModel!.docs![0].orderBookingItemsV2![0].gstRate,"amount_after_gst":saveModel!.docs![0].orderBookingItemsV2![0].amountAfterGst,"rate_contract":saveModel!.docs![0].orderBookingItemsV2![0].rateContract,"rate_contract_check":saveModel!.docs![0].orderBookingItemsV2![0].rateContractCheck,"brand_name":saveModel!.docs![0].orderBookingItemsV2![0].brandName,"doctype":saveModel!.docs![0].orderBookingItemsV2![0].doctype}],"sales_order_preview":saveModel!.docs![0].salesOrderPreview,"promos":saveModel!.docs![0].promos,"promos_discount":saveModel!.docs![0].promosDiscount};
+    isSubmitLoad = true;
+    var headers = {
+      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    };
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow?doc=$doc&action=Submit'));
+    request.headers.addAll(headers);
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        // isNotEditableLoad = false;
+        print("submit table call");
+        // saveModel = SaveModel.fromJson(json.decode(data));
+        // print("${saveModel!.docs}");
+        isSubmitLoad = false;
+        fluttertoast(whiteColor, redColor, "Submit Successful!!!");
+      });
+    } else {
+      setState(() {
+        isSubmitLoad = false;
+      });
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -343,7 +374,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                 // 'free_promos': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":4,"warehouse_quantity":20,"promo_type":"Buy x get same and discount for ineligible qty"}]',
                 // 'promo_dis': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_item":"Demo Item 4","quantity":2,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":272}]',
                 // 'sales_order': '[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":52,"quantity":20,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":20,"quantity":4,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":"Demo Item 4","quantity_available":52,"quantity":2,"average":136,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"BMGA Test Warehouse - BMGA"}]'
-                getOrderBooking();
+                // getOrderBooking();
+                submit();
               });
               //pushReplacementScreen(context, OrderBookingUi());
               // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);

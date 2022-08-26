@@ -206,10 +206,27 @@ class _TransactionDetailState extends State<TransactionDetail> {
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.date_range,color: Colors.grey,),
-                    SizedBox(width: 5,),
-                    Expanded(child: Text(transactionDetailModel!.docs![0].dueDate.toString(),maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Due Date",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                        SizedBox(height: 5),
+                        Text(transactionDetailModel!.docs![0].dueDate.toString(),maxLines: 1,overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Sales Invoice Date",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                        SizedBox(height: 5),
+                        Text(transactionDetailModel!.docs![0].postingDate.toString(),maxLines: 1,overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
+                    // Icon(Icons.date_range,color: Colors.grey),
+                    // SizedBox(width: 5,),
+                    // Expanded(child: Text(transactionDetailModel!.docs![0].dueDate.toString(),maxLines: 1,overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),

@@ -14,6 +14,7 @@ import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_history.d
 import 'package:ebuzz/salesorder/ui/sales_order_list_ui.dart';
 import 'package:ebuzz/settings/ui/settings.dart';
 import 'package:ebuzz/stockentry/ui/stock_entry_list.dart';
+import 'package:ebuzz/test_api.dart';
 import 'package:ebuzz/util/doctype_names.dart';
 import 'package:ebuzz/util/preference.dart';
 import 'package:ebuzz/workorder/ui/workorder_ui.dart';
@@ -148,14 +149,14 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         labels.contains(DoctypeNames.company) &&
         labels.contains(DoctypeNames.customer) &&
         labels.contains(DoctypeNames.warehouse))
-      widgetsList
-          .add(LabelList(label: 'Order Booking', route: OrderBookingUi()));
+      widgetsList.add(LabelList(label: 'Order Booking', route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
       widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
       widgetsList.add(LabelList(label: 'Order booking Summary', route: TransactionHistory()));
       widgetsList.add(LabelList(label: 'Customer OutStanding', route: CustomerOutStanding()));
-    print(widgetsList.length);
-    setState(() {});
+      widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));
+      print(widgetsList.length);
+      setState(() {});
   }
 
   @override

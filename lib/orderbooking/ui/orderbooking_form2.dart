@@ -422,6 +422,7 @@ class _OBItemsFormState extends State<OBItemsForm>
   var promo2Res;
   var promo3Res;
   var promo5Res;
+  List ids = [];
 
   Future promoType1({itemCode}) async {
     print("call");
@@ -457,6 +458,11 @@ class _OBItemsFormState extends State<OBItemsForm>
         fetchPromo1 = false;
         print("promo type 1 success");
         print("promo type 1 res====>>>$promo1Res");
+        if(promo1Res['message'].isNotEmpty){
+          Id id = Id(p1: promo1Res['message']['values'][0][0]);
+          print("??????P1??????===>>${id.p1}");
+          ids.add(id.p1);
+        }
         // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
         // print("transactionModel====>>$customerOutstandingModel");
       });
@@ -501,6 +507,11 @@ class _OBItemsFormState extends State<OBItemsForm>
         fetchPromo2 = false;
         print("promo type 2 success");
         print("promo type 2 res====>>>$promo2Res");
+        if(promo2Res['message'].isNotEmpty){
+          Id id = Id(p2: promo2Res['message']['values'][0][0]);
+          print("??????P1??????===>>${id.p2}");
+          ids.add(id.p2);
+        }
         // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
         // print("transactionModel====>>$customerOutstandingModel");
       });
@@ -545,6 +556,11 @@ class _OBItemsFormState extends State<OBItemsForm>
         fetchPromo3 = false;
         print("promo type 3 success");
         print("promo type 3 res====>>>$promo3Res");
+        if(promo3Res['message'].isNotEmpty){
+          Id id = Id(p3: promo3Res['message']['values'][0][0]);
+          print("??????P1??????===>>${id.p3}");
+          ids.add(id.p3);
+        }
         // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
         // print("transactionModel====>>$customerOutstandingModel");
       });
@@ -588,14 +604,30 @@ class _OBItemsFormState extends State<OBItemsForm>
         fetchPromo5 = false;
         print("promo type 5 success");
         print("promo type 5 res====>>>$promo5Res");
+        if(promo5Res['message'].isNotEmpty){
+          Id id = Id(p5: promo5Res['message']['values'][0][0]);
+          print("??????P1??????===>>${id.p5}");
+          ids.add(id.p5);
+        }
         // var n1 = promo1Res['message']['values'][0][0];
         // var n2 = promo2Res['message']['values'][0][0];
         // var n3 = promo3Res['message']['values'][0][0];
         // var n5 = promo5Res['message']['values'][0][0];
         // List n = [];
-        // n.add([n1,n2,n3,n5]);
-        // print("n is===>>>>$n");
-        showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res));
+        // if(id.p1 != null){
+        //   n.add(id.p1);
+        // }
+        // if(id.p2 != null){
+        //   n.add(id.p2);
+        // }
+        // if(id.p3 != null){
+        //   n.add(id.p3);
+        // }
+        // if(id.p5 != null){
+        //   n.add(id.p5);
+        // }
+        print("n is====>>>${ids}");
+        showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res,ids: ids));
         // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
         // print("transactionModel====>>$customerOutstandingModel");
       });
@@ -630,6 +662,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   alignment: Alignment.centerRight,
                   child: fetchPromo5 == true ? CircularProgressIndicator() : MaterialButton(onPressed: (){
                     print(itemcodecontrollerlist[widget.i].text);
+                    ids.clear();
                     promoType1(itemCode: itemcodecontrollerlist[widget.i].text);
                     // showDialog(context: context, builder: (BuildContext context){
                     //   return StatefulBuilder(
@@ -999,8 +1032,8 @@ class _OBItemsFormState extends State<OBItemsForm>
 }
 
 class CustomDialogue extends StatefulWidget {
-  var promo1res,promo2res,promo3res,promo5res;
-  CustomDialogue({this.promo1res,this.promo2res,this.promo3res,this.promo5res});
+  var promo1res,promo2res,promo3res,promo5res,ids;
+  CustomDialogue({this.promo1res,this.promo2res,this.promo3res,this.promo5res,this.ids});
 
   @override
   State<CustomDialogue> createState() => _CustomDialogueState();
@@ -1010,6 +1043,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   bool showoffer = false;
   OfferModel? offerModel;
 
+
   Future showOffer({id}) async {
     print("call");
     showoffer = true;
@@ -1017,7 +1051,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
       'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
     };
 
-    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=SAP-0016&_=1661330362628'));
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=${widget.ids[0]}&_=1661330362628'));
 
     request.headers.addAll(headers);
 
@@ -1044,6 +1078,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   @override
   void initState() {
     showOffer();
+    print("ids is===>>>${widget.ids[0]}");
     super.initState();
   }
   @override
@@ -1068,22 +1103,22 @@ class _CustomDialogueState extends State<CustomDialogue> {
                           style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!.isEmpty
-                      ? Container()
-                      : _createDataTable(),
+                      ? Container() :
+                  _createDataTable(),
                   offerModel!.docs![0].promosTableOfSameItem!.isEmpty
                       ? Container()
                       : Text("Buy X of item and get Y of same item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   offerModel!.docs![0].promosTableOfSameItem!.isEmpty
-                      ? Container()
-                      :  _createPromosDataTable(),
+                      ? Container() :
+                  _createPromosDataTable(),
                   offerModel!.docs![0].promosTableOfDifferentItems!.isEmpty
                       ? Container()
                       : Text("Buy X of item and get Y of different item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   offerModel!.docs![0].promosTableOfDifferentItems!.isEmpty
-                      ? Container()
-                      : _createPromosDiscountDataTable(),
+                      ? Container() :
+                  _createPromosDiscountDataTable(),
                   offerModel!.docs![0].freeItemForEligibleQuantity!.isEmpty
                       ? Container()
                       : Text("Free Item for Eligible Quantity, Discount for Ineligible Quantity", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
@@ -1473,33 +1508,38 @@ class _CustomDialogueState extends State<CustomDialogue> {
 
   List<DataColumn> _createColumns() {
     return [
-      DataColumn(label: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Quantity'),
-          Text('Bought'),
-        ],
-       ),
+      DataColumn(label: Expanded(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Quantity'),
+              Text('Bought'),
+            ],
+           ),
+        ),
       ),
-      DataColumn(label: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Discount'),
-          Text('Slab'),
-        ],
+      ),
+      DataColumn(label: Expanded(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Discount'),
+              Text('Slab'),
+            ],
+          ),
+        ),
       )),
     ];
   }
 
   List<DataRow> _createRows() {
     return offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!
-        .map(
-          (book) => DataRow(
+        .map((book) => DataRow(
         cells: [
-          DataCell(Text(book.name.toString())),
-          DataCell(Text(book.discount.toString())),
+          DataCell(Container(width: 170,child: Center(child: Text(book.boughtItem.toString())))),
+          DataCell(Container(width: 200,child: Center(child: Text("${book.discount.toString()}%")))),
         ],
       ),
     ).toList();
@@ -1507,37 +1547,41 @@ class _CustomDialogueState extends State<CustomDialogue> {
 
   List<DataColumn> _createpromosColumns() {
     return [
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Item'),
-          Text('Bought'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Item'),
+            Text('Bought'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Free'),
-          Text('Item'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Free'),
+            Text('Item'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Eligible'),
-          Text('Quantity'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Eligible'),
+            Text('Quantity'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Free'),
-          Text('Quantity'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Free'),
+            Text('Quantity'),
+          ],
+        ),
       ),),),
     ];
   }
@@ -1545,51 +1589,55 @@ class _CustomDialogueState extends State<CustomDialogue> {
   List<DataRow> _createPromosRows() {
     return offerModel!.docs![0].promosTableOfSameItem!
         .map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-      DataCell(Expanded(child: Text(book.wQty.toString()))),
-      DataCell(Expanded(child: Text(book.promoItem.toString()))),
-      DataCell(Expanded(child: Text(book.qty.toString()))),
+      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.boughtItem.toString()))))),
+      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.promoBasedOn.toString()))))),
+      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
+      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
     ]))
         .toList();
   }
 
   List<DataColumn> _createpromosDiscountColumns() {
     return [
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Item'),
-          Text('Bought'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Item'),
+            Text('Bought'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Free'),
-          Text('item'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Free'),
+            Text('item'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Eligible'),
-          Text('Quantity'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Eligible'),
+            Text('Quantity'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              Text('Free'),
-              Text('Quantity'),
-            ],
-          ),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                Text('Free'),
+                Text('Quantity'),
+              ],
+            ),
+          ],
+        ),
       ))),
     ];
   }
@@ -1597,55 +1645,59 @@ class _CustomDialogueState extends State<CustomDialogue> {
   List<DataRow> _createPromosDiscountRows() {
     return offerModel!.docs![0].promosTableOfDifferentItems!
         .map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-      DataCell(
-          Expanded(child: Text(book.discount.toString()))),
-      DataCell(Expanded(child: Text(book.forEveryQuantityThatIsBought.toString()))),
+      DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.boughtItem.toString(),textAlign: TextAlign.center))))),
+      DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.promoBasedOn.toString(),textAlign: TextAlign.center))))),
+      DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
+      DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
     ]))
         .toList();
   }
 
   List<DataColumn> _createtableColumns() {
     return [
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Item'),
-          Text('Bought'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Item'),
+            Text('Bought'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Free'),
-          Text('item'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Free'),
+            Text('item'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Eligible'),
-          Text('Quantity'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Eligible'),
+            Text('Quantity'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Free'),
-          Text('Quantity'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Free'),
+            Text('Quantity'),
+          ],
+        ),
       ))),
-      DataColumn(label: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Discount'),
-        ],
+      DataColumn(label: Expanded(child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Discount'),
+          ],
+        ),
       ))),
     ];
   }
@@ -1653,14 +1705,36 @@ class _CustomDialogueState extends State<CustomDialogue> {
   List<DataRow> _createtableRows() {
     return offerModel!.docs![0].freeItemForEligibleQuantity!
         .map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-      DataCell(Expanded(child: Text(book.promoBasedOn.toString()))),
-      DataCell(Expanded(child: Text(book.discount.toString()))),
-      DataCell(Expanded(child: Text(book.quantity.toString()))),
-      DataCell(Expanded(child: Text(book.discount.toString()))),
-    ]))
-        .toList();
+      DataCell(Center(child: Container(width: 80,child: Text(book.boughtItem.toString(),textAlign: TextAlign.center)))),
+      DataCell(Expanded(child: Container(width: 60,child: Center(child: Text(book.promoBasedOn.toString(),textAlign: TextAlign.center))))),
+      DataCell(Expanded(child: Container(width: 65,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
+      DataCell(Expanded(child: Container(width: 65,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
+      DataCell(Expanded(child: Container(width: 70,child: Center(child: Text("${book.discount.toString()}%"))))),
+    ])).toList();
   }
+}
+
+class Id{
+  Id({this.p1,this.p2,this.p3,this.p5});
+
+  dynamic p1;
+  dynamic p2;
+  dynamic p3;
+  dynamic p5;
+
+  factory Id.fromJson(Map<String, dynamic> json) => Id(
+    p1: json['p1'],
+    p2: json['p2'],
+    p3: json['p3'],
+    p5: json['p5'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "p1": p1,
+    "p2": p2,
+    "p3": p3,
+    "p5": p5
+  };
 }
 
 

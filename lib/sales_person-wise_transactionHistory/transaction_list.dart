@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_detail_screen.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_model.dart';
@@ -120,12 +121,12 @@ class _TransactionListState extends State<TransactionList> {
                     ? Container()
                     : Expanded(
                         child: ListView(
-                          // scrollDirection: Axis.horizontal,
+                          scrollDirection: Axis.horizontal,
                           children: [
                             _createDataTable(),
-                          ],
-                        ),
-                      ),
+                      ],
+                   ),
+                 ),
               ],
             ),
 
@@ -180,53 +181,49 @@ class _TransactionListState extends State<TransactionList> {
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 80,
+                  // width: 80,
+                  width: 50,
                   child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Invoice'),
-                          Text('Id'),
+                          Text('Invoice',style: TextStyle(fontSize: 12)),
+                          Text('Id',style: TextStyle(fontSize: 12)),
                         ],
                       ))))),
-      DataColumn(
-          label: Expanded(
-              child:
-                  Container(width: 110, child: Center(child: Text('Name'))))),
+      DataColumn(label: Expanded(child: Container(width: 90, child: Center(child: Text('Name',style: TextStyle(fontSize: 12)))))),
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 60,
+                  width: 50,
                   child: Center(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Doc'),
-                      Text('Status'),
+                      Text('Doc',style: TextStyle(fontSize: 12)),
+                      Text('Status',style: TextStyle(fontSize: 12)),
                     ],
                   ))))),
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 80,
+                  width: 90,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Outstanding'),
-                      Text('Amount'),
+                      Text('Outstanding',style: TextStyle(fontSize: 12)),
+                      Text('Amount',style: TextStyle(fontSize: 12)),
                     ],
                   )))),
       DataColumn(
           label: Expanded(
         child: Container(
-            width: 80,
+            width: 60,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Invoice',
-                ),
-                Text('Amount')
+                Text('Invoice',style: TextStyle(fontSize: 12)),
+                Text('Amount',style: TextStyle(fontSize: 12))
               ],
             )),
       ))
@@ -243,11 +240,11 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                       child: Container(
-                        width: 80,
+                        width: 70,
                         child: Center(
                             child: Text(
                               book[0]['name'].toString(),
-                              textAlign: TextAlign.center,
+                              textAlign: TextAlign.center,style: TextStyle(fontSize: 12),
                             )),
                       ),
                     )), onTap: () {
@@ -341,11 +338,11 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                   child: Container(
-                    width: 110,
+                    width: 90,
                     child: Center(
                         child: Text(
                       book[0]['title'].toString(),
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 12),
                     )),
                   ),
                 )),
@@ -362,11 +359,11 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                   child: Container(
-                      width: 60,
+                      width: 50,
                       child: Center(
                           child: Text(
                         book[0]['status'].toString(),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,style: TextStyle(fontSize: 12),
                       ))),
                 )), onTap: () {
               pushScreen(
@@ -380,8 +377,8 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                   child: Container(
-                      width: 80,
-                      child: Center(child: Text(book[0]['outstanding_amount'].toString()))),
+                      width: 90,
+                      child: Center(child: Text(book[0]['outstanding_amount'].toString(),style: TextStyle(fontSize: 12)))),
                 )), onTap: () {
               pushScreen(
                   context,
@@ -394,10 +391,10 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                   child: Center(
                     child: Container(
-                      width: 70,
+                      width: 60,
                       child: Center(
                         child: Text(book[0]['grand_total'].toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12)),
                       ),
                     ),
                   ),

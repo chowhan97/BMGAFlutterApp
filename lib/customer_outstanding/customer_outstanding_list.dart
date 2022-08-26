@@ -51,7 +51,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
     //       '{"company":${company},"report_date":"2022-08-22","ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120}',
     //   '_': '1661140719561'
     // });
-    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run?report_name=Accounts Receivable&filters={"company":"Bharath Medical %26 General Agencies","report_date":"2022-08-24","customer":$customer,"ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120,"customer_name":$customername,"payment_terms":"12 Days"}&_=1661313206364'));
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run?report_name=Accounts Receivable&filters={"company":"Bharath Medical %26 General Agencies","report_date":$fromDate,"customer":$customer,"ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120,"customer_name":$customername,"payment_terms":"12 Days"}&_=1661313206364'));
 
     request.headers.addAll(headers);
 
@@ -62,7 +62,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
         print(response.body);
         String data = response.body;
         responce = json.decode(data);
-        print("${responce['message']['result'][0]['voucher_type']}");
+        // print("${responce['message']['result'][0]['voucher_type']}");
         fetch = false;
         print("table call");
         for (var i = 0; i < responce['message']['result'].length - 1; i++) {

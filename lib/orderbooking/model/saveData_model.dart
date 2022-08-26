@@ -246,6 +246,10 @@ class Doc {
     this.promos,
     this.promosDiscount,
     this.localname,
+    this.unpaidAmount,
+    this.creditLimit,
+    this.totalAmount,
+    this.workflowState
   });
 
   String? name;
@@ -270,6 +274,10 @@ class Doc {
   List<Promo>? promos;
   List<dynamic>? promosDiscount;
   String? localname;
+  dynamic unpaidAmount;
+  dynamic creditLimit;
+  dynamic totalAmount;
+  String? workflowState;
 
   factory Doc.fromJson(Map<String, dynamic> json) => Doc(
     name: json["name"],
@@ -294,6 +302,10 @@ class Doc {
     promos: List<Promo>.from(json["promos"].map((x) => Promo.fromJson(x))),
     promosDiscount: List<dynamic>.from(json["promos_discount"].map((x) => x)),
     localname: json["localname"],
+    unpaidAmount: json['unpaid_amount'],
+    creditLimit: json['credit_limit'],
+    totalAmount: json['total_amount'],
+    workflowState: json['workflow_state']
   );
 
   Map<String, dynamic> toJson() => {
@@ -319,6 +331,10 @@ class Doc {
     "promos": List<dynamic>.from(promos!.map((x) => x.toJson())),
     "promos_discount": List<dynamic>.from(promosDiscount!.map((x) => x)),
     "localname": localname,
+    "unpaid_amount": unpaidAmount,
+    "credit_limit": creditLimit,
+    "total_amount": totalAmount,
+    "workflow_state": workflowState
   };
 }
 
