@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_detail_screen.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_model.dart';
@@ -9,9 +8,9 @@ import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class TransactionList extends StatefulWidget {
-  var fromdate, todate;
-
-  TransactionList({this.fromdate, this.todate});
+  // var fromdate, todate;
+  final fromdate, todate;
+  TransactionList({this.fromdate,this.todate});
 
   @override
   State<TransactionList> createState() => _TransactionListState();
@@ -351,7 +350,6 @@ class _TransactionListState extends State<TransactionList> {
                       context,
                       TransactionDetail(
                         invoiceId: book[0]['name'].toString(),
-
                       )
                   );
             }),

@@ -11,20 +11,16 @@ import 'package:ebuzz/network/base_dio.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/orderbooking/ui/offer_model.dart';
-import 'package:ebuzz/orderbooking/ui/orderbooking_form3.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form4.dart';
-import 'package:ebuzz/salesorder/ui/sales_order_form2.dart';
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:ebuzz/widgets/custom_card.dart';
 import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import 'package:collection/collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// final ValueNotifier<String> _notify = ValueNotifier<String>("");
+
 var item = [{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}].toString();
 var customerType = "Retail";
 var companies = "Bharath+Medical+%26+General+Agencies";
@@ -63,7 +59,7 @@ class OrderBookingForm2 extends StatefulWidget {
 }
 
 class _OrderBookingForm2State extends State<OrderBookingForm2> {
-  bool _postButtonDisabled = false;
+  // bool _postButtonDisabled = false;
 
   @override
   void initState() {
@@ -239,9 +235,9 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
     );
     print(orderBookingModel);
     if (!mounted) return;
-    setState(() {
-      _postButtonDisabled = true;
-    });
+    // setState(() {
+    //     //   _postButtonDisabled = true;
+    //     // });
     // await OrderBookingService().post(orderBookingModel, context);
     // if (!mounted) return;
     // setState(() {
@@ -1003,9 +999,9 @@ class _OBItemsFormState extends State<OBItemsForm>
           prefs.setString("item_code", item_codeString);
           prefs.setString("order_list", order_listString);
           prefs.setString("order_booking_items_v2", order_booking_items_String);
-          var getitem_code = prefs.getString("item_code");
-          var getorder_list = prefs.getString("order_list");
-          var getorder_booking_items_v2 = prefs.getString("order_booking_items_v2");
+          // var getitem_code = prefs.getString("item_code");
+          // var getorder_list = prefs.getString("order_list");
+          // var getorder_booking_items_v2 = prefs.getString("order_booking_items_v2");
           // print("========get?????=========$getitem_code");
           // print("========get?????=========$getorder_list");
           // print("========get?????=========$getorder_booking_items_v2");
@@ -1032,7 +1028,8 @@ class _OBItemsFormState extends State<OBItemsForm>
 }
 
 class CustomDialogue extends StatefulWidget {
-  var promo1res,promo2res,promo3res,promo5res,ids;
+  // var promo1res,promo2res,promo3res,promo5res,ids;
+  final promo1res,promo2res,promo3res,promo5res,ids;
   CustomDialogue({this.promo1res,this.promo2res,this.promo3res,this.promo5res,this.ids});
 
   @override
@@ -1047,27 +1044,21 @@ class _CustomDialogueState extends State<CustomDialogue> {
   Future showOffer({id}) async {
     print("call");
     showoffer = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
-
-    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=${widget.ids[0]}&_=1661330362628'));
-
-    request.headers.addAll(headers);
-
+    var request = http.Request('GET',Uri.parse(showOfferApi(name: widget.ids[0])));
+    request.headers.addAll(commonHeaders);
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     if (response.statusCode == 200) {
       setState(() {
         print(response.body);
         String data = response.body;
-        // promo3Res = json.decode(data);
         showoffer = false;
         print("show offer success");
         offerModel = OfferModel.fromJson(json.decode(data));
         print("transactionModel====>>${offerModel!.docs![0].freeItemForEligibleQuantity}");
       });
-    } else {
+    }
+    else {
       print("error cause===>>${response.reasonPhrase}");
       setState(() {
         showoffer = false;

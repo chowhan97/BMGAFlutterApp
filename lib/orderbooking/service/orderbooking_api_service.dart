@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_toast.dart';
@@ -9,9 +7,6 @@ import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/orderbooking/model/table_model.dart';
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 

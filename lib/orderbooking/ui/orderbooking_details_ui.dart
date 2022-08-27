@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ebuzz/orderbooking/model/order_booking.dart';
-import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 
 class OrderBookingDetails extends StatefulWidget {
 

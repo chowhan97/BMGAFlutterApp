@@ -5,8 +5,11 @@ import 'package:ebuzz/customer_outstanding/customer_outstanding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../util/apiurls.dart';
+
 class CustomerOutStandingList extends StatefulWidget {
-  var company, date, customer, customerName;
+  // var company, date, customer, customerName;
+  final company, date, customer, customerName;
 
   CustomerOutStandingList({this.company, this.date, this.customer, this.customerName});
 
@@ -36,9 +39,9 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
     //   'Cookie':
     //       'full_name=Vishal%20Patel; sid=52023a9eff5496c6f3997afe3503df636fa06d3560dc2fd0a4416ee9; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
     // };
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
+    // var headers = {
+    //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    // };
     // var request = http.MultipartRequest(
     //     'GET',
     //     Uri.parse(
@@ -51,9 +54,10 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
     //       '{"company":${company},"report_date":"2022-08-22","ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120}',
     //   '_': '1661140719561'
     // });
-    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run?report_name=Accounts Receivable&filters={"company":"Bharath Medical %26 General Agencies","report_date":$fromDate,"customer":$customer,"ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120,"customer_name":$customername,"payment_terms":"12 Days"}&_=1661313206364'));
+    // var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run?report_name=Accounts Receivable&filters={"company":"Bharath Medical %26 General Agencies","report_date":$fromDate,"customer":$customer,"ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120,"customer_name":$customername,"payment_terms":"12 Days"}&_=1661313206364'));
+    var request = http.Request('GET', Uri.parse(account_receivable(customer: customer,customername: customername,fromDate: fromDate)));
 
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);

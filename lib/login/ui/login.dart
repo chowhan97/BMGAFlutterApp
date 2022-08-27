@@ -1,16 +1,12 @@
-
 import 'dart:convert';
-
 import 'package:ebuzz/common/circular_progress.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/display_helper.dart';
 import 'package:ebuzz/common/round_button.dart';
 import 'package:ebuzz/login/service/login_api_service.dart';
-import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/util/preference.dart';
 import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //Login class contains ui of login form
 class Login extends StatefulWidget {

@@ -73,9 +73,9 @@ class Docinfo {
   List<dynamic>? energyPointLogs;
   List<dynamic>? additionalTimelineContent;
   List<dynamic>? milestones;
-  dynamic? isDocumentFollowed;
+  dynamic isDocumentFollowed;
   String? tags;
-  dynamic? documentEmail;
+  dynamic documentEmail;
 
   factory Docinfo.fromJson(Map<String, dynamic> json) => Docinfo(
     attachments: List<dynamic>.from(json["attachments"].map((x) => x)),

@@ -74,7 +74,7 @@ class _ItemUiState extends State<ItemUi> {
   //For fetching item data
   fetchItem() async {
     try {
-      final String? cookie = await getCookie();
+      // final String? cookie = await getCookie();
       Map<String, String> requestHeaders = {
         'Content-type': 'application/json',
         'Accept': 'application/json',

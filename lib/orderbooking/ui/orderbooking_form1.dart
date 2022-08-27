@@ -4,12 +4,9 @@ import 'package:ebuzz/common/display_helper.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form2.dart';
-import 'package:ebuzz/widgets/custom_dropdown.dart';
-import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderBookingForm1 extends StatefulWidget {

@@ -408,3 +408,27 @@ String orderBooking(){
   return '/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_order_container';
 }
 
+String showOfferApi({name}){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=${name}&_=1661330362628';
+}
+
+String getTableApi({itemcode,customer_type,company,order_list,customer}){
+  return 'https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${itemcode}&customer_type=${customer_type}&company=${company}&order_list=${order_list}&customer=${customer}';
+}
+
+String saveOrder(){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.save.savedocs';
+}
+
+String account_receivable({fromDate,customer,customername}){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run?report_name=Accounts Receivable&filters={"company":"Bharath Medical %26 General Agencies","report_date":$fromDate,"customer":$customer,"ageing_based_on":"Due Date","range1":30,"range2":60,"range3":90,"range4":120,"customer_name":$customername,"payment_terms":"12 Days"}&_=1661313206364';
+}
+
+String account_receivable_summary(){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run';
+}
+
+var commonHeaders = {
+  'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+};
+

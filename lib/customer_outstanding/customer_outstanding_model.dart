@@ -319,11 +319,11 @@ class CustomerOutstandingModel {
 class Message {
   List<Result>? result;
   List<Columns>? columns;
-  Null? message;
+  Null message;
   Chart? chart;
-  Null? reportSummary;
+  Null reportSummary;
   int? skipTotalRow;
-  Null? status;
+  Null status;
   double? executionTime;
   bool? addTotalRow;
 
@@ -388,7 +388,7 @@ class Result {
   String? partyAccount;
   String? postingDate;
   String? accountCurrency;
-  Null? remarks;
+  Null remarks;
   double? invoiced;
   double? paid;
   double? creditNote;

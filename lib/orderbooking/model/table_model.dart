@@ -728,7 +728,7 @@ class SalesPromo {
 
   List<dynamic>? promoSales;
   List<dynamic>? promos;
-  dynamic? salesData;
+  dynamic salesData;
 
   factory SalesPromo.fromJson(Map<String, dynamic> json) => SalesPromo(
     promoSales: List<dynamic>.from(json["Promo_sales"].map((x) => x)),

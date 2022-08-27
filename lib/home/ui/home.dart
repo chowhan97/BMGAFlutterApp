@@ -94,13 +94,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.bom))
       widgetsList.add(LabelList(label: 'BOM', route: BomUi()));
 
-    if (labels.contains(DoctypeNames.item) &&
-        labels.contains(DoctypeNames.stockLedger))
-      widgetsList.add(LabelList(label: 'Item', route: ItemUi()));
+    if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
+       widgetsList.add(LabelList(label: 'Item', route: ItemUi()));
     if (labels.contains(DoctypeNames.purchaseOrder) &&
         labels.contains(DoctypeNames.purchaseReceipt))
-      widgetsList
-          .add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
+      widgetsList.add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
     // if(labels.contains(DoctypeNames.leaveLedgerEntry))
     widgetsList.add(LabelList(label: 'Leave Balance', route: LeaveUi()));
     if (labels.contains(DoctypeNames.leaveApplication))

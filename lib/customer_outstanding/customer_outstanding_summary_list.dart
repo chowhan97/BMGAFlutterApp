@@ -4,12 +4,14 @@ import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding_list.dart';
+import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class CustomerOutstandingSummary extends StatefulWidget {
-  var company, date;
+  // var company, date;
+  final company, date;
   CustomerOutstandingSummary({this.company, this.date});
 
   @override
@@ -28,18 +30,18 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
     print("call");
     log('data:call');
     var company = jsonEncode(widget.company);
-    var fromDate = jsonEncode(widget.date);
+    // var fromDate = jsonEncode(widget.date);
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     formatted = formatter.format(now);
-    print(formatted); // something like 2013-04-20
+    print(formatted); //
     print(company);
     fetch = true;
     head = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
-    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run'));
+    // var headers = {
+    //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    // };
+    var request = http.MultipartRequest('GET', Uri.parse(account_receivable_summary()));
 
     request.fields.addAll({
       'report_name': 'Accounts Receivable Summary',
@@ -47,7 +49,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
       '_': '1661140719612'
     });
 
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);

@@ -1,28 +1,9 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
-import 'package:ebuzz/common/display_helper.dart';
-import 'package:ebuzz/common/ui_reusable_widget.dart';
-import 'package:ebuzz/common_models/product.dart';
-import 'package:ebuzz/common_service/common_service.dart';
-import 'package:ebuzz/config/color_palette.dart';
-import 'package:ebuzz/exception/custom_exception.dart';
-import 'package:ebuzz/network/base_dio.dart';
 import 'package:ebuzz/orderbooking/model/notEditable_model.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
-// import 'package:ebuzz/orderbooking/model/table_model.dart';
-import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
-import 'package:ebuzz/orderbooking/ui/orderbooking_form2.dart';
-import 'package:ebuzz/orderbooking/ui/orderbooking_form3.dart';
 import 'package:ebuzz/salesorder/model/sales_order.dart';
-import 'package:ebuzz/salesorder/service/sales_order_service.dart';
-import 'package:ebuzz/util/apiurls.dart';
-import 'package:ebuzz/widgets/custom_card.dart';
-import 'package:ebuzz/widgets/custom_textformformfield.dart';
-import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
-import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -275,88 +256,88 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
         ),
     );
   }
-  DataTable _createDataTable() {
-    return DataTable(columns: _createColumns(), rows: _createRows(),border: TableBorder.all(color: Colors.black));
-  }
-  DataTable _createPromosDataTable() {
-    return DataTable(columns: _createpromosColumns(), rows: _createPromosRows(),border: TableBorder.all(color: Colors.black));
-  }
-  DataTable _createPromosDiscountDataTable() {
-    return DataTable(columns: _createpromosDiscountColumns(), rows: _createPromosDiscountRows(),border: TableBorder.all(color: Colors.black));
-  }
+  // DataTable _createDataTable() {
+  //   return DataTable(columns: _createColumns(), rows: _createRows(),border: TableBorder.all(color: Colors.black));
+  // }
+  // DataTable _createPromosDataTable() {
+  //   return DataTable(columns: _createpromosColumns(), rows: _createPromosRows(),border: TableBorder.all(color: Colors.black));
+  // }
+  // DataTable _createPromosDiscountDataTable() {
+  //   return DataTable(columns: _createpromosDiscountColumns(), rows: _createPromosDiscountRows(),border: TableBorder.all(color: Colors.black));
+  // }
   // DataTable _createPromosDiscDataTable() {
   //   return DataTable(columns: _createpromosDiscColumns(), rows: _createPromosDiscRows(),border: TableBorder.all(color: Colors.black));
   // }
-  List<DataColumn> _createColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Item Code'))),
-      DataColumn(label: Expanded(child: Text('stock Uom'))),
-      DataColumn(label: Expanded(child: Text('Quantity Available'))),
-      DataColumn(label: Expanded(child: Text('Quantity Booked'))),
-      DataColumn(label: Expanded(child: Text('Latest Base Price'))),
-      DataColumn(label: Expanded(child: Text('Amount'))),
-      DataColumn(label: Expanded(child: Text('GST Rate'))),
-      DataColumn(label: Expanded(child: Text('MRP'))),
-    ];
-  }
-  List<DataRow> _createRows() {
-    return notEditable!.docs![0].orderBookingItemsV2!.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.itemCode.toString()))),
-      DataCell(Expanded(child: Text(book.stockUom.toString()))),
-      DataCell(Expanded(child: Text(book.quantityAvailable.toString()))),
-      DataCell(Expanded(child: Text(book.quantityBooked.toString()))),
-      DataCell(Expanded(child: Text(book.averagePrice.toString()))),
-      DataCell(Expanded(child: Text(book.amount.toString()))),
-      DataCell(Expanded(child: Text(book.gstRate.toString()))),
-      DataCell(Expanded(child: Text(book.amountAfterGst.toString()))),
-    ],
-    ),
-    ).toList();
-  }
-  List<DataColumn>  _createpromosColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Item Code'))),
-      DataColumn(label: Expanded(child: Text('Quantity Available'))),
-      DataColumn(label: Expanded(child: Text('Quantity Booked'))),
-      DataColumn(label: Expanded(child: Text('Latest Base Price'))),
-      DataColumn(label: Expanded(child: Text('Warehouse'))),
-      DataColumn(label: Expanded(child: Text('Promo Type'))),
-    ];
-  }
-  List<DataRow> _createPromosRows() {
-    return notEditable!.docs![0].salesOrderPreview!.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.itemCode.toString()))),
-      DataCell(Expanded(child: Text(book.quantityAvailable.toString()))),
-      DataCell(Expanded(child: Text(book.quantity.toString()))),
-      DataCell(Expanded(child: Text(book.average.toString()))),
-      DataCell(Expanded(child: Text(book.warehouse.toString()))),
-      DataCell(Expanded(child: Text(book.promoType.toString()))),
-    ])).toList();
-  }
-  List<DataColumn> _createpromosDiscountColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Bought Item'))),
-      DataColumn(label: Expanded(child: Text('Warehouse Quantity'))),
-      DataColumn(label: Expanded(child: Text('Free items'))),
-      DataColumn(label: Expanded(child: Text('Quantity'))),
-    ];
-  }
-  List<DataRow> _createPromosDiscountRows() {
-    return notEditable!.docs![0].promos!.map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Text(book.boughtItem.toString()))),
-      DataCell(Expanded(child: Text(book.warehouseQuantity.toString()))),
-      DataCell(Expanded(child: Text(book.freeItems.toString()))),
-      DataCell(Expanded(child: Text(book.quantity.toString()))),
-    ])).toList();
-  }
-  List<DataColumn> _createpromosDiscColumns() {
-    return [
-      DataColumn(label: Expanded(child: Text('Bought Item'))),
-      DataColumn(label: Expanded(child: Text('Free Item'))),
-      DataColumn(label: Expanded(child: Text('Discounted Price'))),
-      DataColumn(label: Expanded(child: Text('Quantity'))),
-    ];
-  }
+  // List<DataColumn> _createColumns() {
+  //   return [
+  //     DataColumn(label: Expanded(child: Text('Item Code'))),
+  //     DataColumn(label: Expanded(child: Text('stock Uom'))),
+  //     DataColumn(label: Expanded(child: Text('Quantity Available'))),
+  //     DataColumn(label: Expanded(child: Text('Quantity Booked'))),
+  //     DataColumn(label: Expanded(child: Text('Latest Base Price'))),
+  //     DataColumn(label: Expanded(child: Text('Amount'))),
+  //     DataColumn(label: Expanded(child: Text('GST Rate'))),
+  //     DataColumn(label: Expanded(child: Text('MRP'))),
+  //   ];
+  // }
+  // List<DataRow> _createRows() {
+  //   return notEditable!.docs![0].orderBookingItemsV2!.map((book) => DataRow(cells: [
+  //     DataCell(Expanded(child: Text(book.itemCode.toString()))),
+  //     DataCell(Expanded(child: Text(book.stockUom.toString()))),
+  //     DataCell(Expanded(child: Text(book.quantityAvailable.toString()))),
+  //     DataCell(Expanded(child: Text(book.quantityBooked.toString()))),
+  //     DataCell(Expanded(child: Text(book.averagePrice.toString()))),
+  //     DataCell(Expanded(child: Text(book.amount.toString()))),
+  //     DataCell(Expanded(child: Text(book.gstRate.toString()))),
+  //     DataCell(Expanded(child: Text(book.amountAfterGst.toString()))),
+  //   ],
+  //   ),
+  //   ).toList();
+  // }
+  // List<DataColumn>  _createpromosColumns() {
+  //   return [
+  //     DataColumn(label: Expanded(child: Text('Item Code'))),
+  //     DataColumn(label: Expanded(child: Text('Quantity Available'))),
+  //     DataColumn(label: Expanded(child: Text('Quantity Booked'))),
+  //     DataColumn(label: Expanded(child: Text('Latest Base Price'))),
+  //     DataColumn(label: Expanded(child: Text('Warehouse'))),
+  //     DataColumn(label: Expanded(child: Text('Promo Type'))),
+  //   ];
+  // }
+  // List<DataRow> _createPromosRows() {
+  //   return notEditable!.docs![0].salesOrderPreview!.map((book) => DataRow(cells: [
+  //     DataCell(Expanded(child: Text(book.itemCode.toString()))),
+  //     DataCell(Expanded(child: Text(book.quantityAvailable.toString()))),
+  //     DataCell(Expanded(child: Text(book.quantity.toString()))),
+  //     DataCell(Expanded(child: Text(book.average.toString()))),
+  //     DataCell(Expanded(child: Text(book.warehouse.toString()))),
+  //     DataCell(Expanded(child: Text(book.promoType.toString()))),
+  //   ])).toList();
+  // }
+  // List<DataColumn> _createpromosDiscountColumns() {
+  //   return [
+  //     DataColumn(label: Expanded(child: Text('Bought Item'))),
+  //     DataColumn(label: Expanded(child: Text('Warehouse Quantity'))),
+  //     DataColumn(label: Expanded(child: Text('Free items'))),
+  //     DataColumn(label: Expanded(child: Text('Quantity'))),
+  //   ];
+  // }
+  // List<DataRow> _createPromosDiscountRows() {
+  //   return notEditable!.docs![0].promos!.map((book) => DataRow(cells: [
+  //     DataCell(Expanded(child: Text(book.boughtItem.toString()))),
+  //     DataCell(Expanded(child: Text(book.warehouseQuantity.toString()))),
+  //     DataCell(Expanded(child: Text(book.freeItems.toString()))),
+  //     DataCell(Expanded(child: Text(book.quantity.toString()))),
+  //   ])).toList();
+  // }
+  // List<DataColumn> _createpromosDiscColumns() {
+  //   return [
+  //     DataColumn(label: Expanded(child: Text('Bought Item'))),
+  //     DataColumn(label: Expanded(child: Text('Free Item'))),
+  //     DataColumn(label: Expanded(child: Text('Discounted Price'))),
+  //     DataColumn(label: Expanded(child: Text('Quantity'))),
+  //   ];
+  // }
   // List<DataRow> _createPromosDiscRows() {
   //   return notEditable!.docs![0].promosDiscount!.map((book) => DataRow(cells: [
   //     DataCell(Expanded(child: Text(book.boughtItem.toString()))),
