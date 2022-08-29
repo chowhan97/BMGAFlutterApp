@@ -289,15 +289,15 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
   bool isSubmitLoad = false;
   Future submit() async{
-    var doc = jsonEncode({"name":saveModel!.docs![0].name,"owner":saveModel!.docs![0].owner,"creation":saveModel!.docs![0].creation,"modified":saveModel!.docs![0].modified,"modified_by":saveModel!.docs![0].modifiedBy,"idx":saveModel!.docs![0].idx,"docstatus":saveModel!.docs![0].docstatus,"workflow_state":saveModel!.docs![0].workflowState,"company":saveModel!.docs![0].company,"customer":saveModel!.docs![0].customer,"customer_type":saveModel!.docs![0].customerType,"customer_name":saveModel!.docs![0].customerName,"unpaid_amount":saveModel!.docs![0].unpaidAmount,"credit_limit":saveModel!.docs![0].creditLimit,"total_amount":saveModel!.docs![0].totalAmount,"doctype":saveModel!.docs![0].doctype,"order_booking_items_v2":[{"name":saveModel!.docs![0].orderBookingItemsV2![0].name,"owner":saveModel!.docs![0].orderBookingItemsV2![0].owner,"creation":saveModel!.docs![0].orderBookingItemsV2![0].creation,"modified":saveModel!.docs![0].orderBookingItemsV2![0].modified,"modified_by":saveModel!.docs![0].orderBookingItemsV2![0].modifiedBy,"parent":saveModel!.docs![0].orderBookingItemsV2![0].parent,"parentfield":saveModel!.docs![0].orderBookingItemsV2![0].parentfield,"parenttype":saveModel!.docs![0].orderBookingItemsV2![0].parenttype,"idx":saveModel!.docs![0].orderBookingItemsV2![0].idx,"docstatus":saveModel!.docs![0].orderBookingItemsV2![0].docstatus,"item_code":saveModel!.docs![0].orderBookingItemsV2![0].itemCode,"free_items":saveModel!.docs![0].orderBookingItemsV2![0].freeItems,"stock_uom":saveModel!.docs![0].orderBookingItemsV2![0].stockUom,"quantity_available":saveModel!.docs![0].orderBookingItemsV2![0].quantityAvailable,"quantity_booked":saveModel!.docs![0].orderBookingItemsV2![0].quantityBooked,"average_price":saveModel!.docs![0].orderBookingItemsV2![0].averagePrice,"amount":saveModel!.docs![0].orderBookingItemsV2![0].amount,"gst_rate":saveModel!.docs![0].orderBookingItemsV2![0].gstRate,"amount_after_gst":saveModel!.docs![0].orderBookingItemsV2![0].amountAfterGst,"rate_contract":saveModel!.docs![0].orderBookingItemsV2![0].rateContract,"rate_contract_check":saveModel!.docs![0].orderBookingItemsV2![0].rateContractCheck,"brand_name":saveModel!.docs![0].orderBookingItemsV2![0].brandName,"doctype":saveModel!.docs![0].orderBookingItemsV2![0].doctype}],"sales_order_preview":saveModel!.docs![0].salesOrderPreview,"promos":saveModel!.docs![0].promos,"promos_discount":saveModel!.docs![0].promosDiscount});
-    print("doc is====>>>$doc");
-    // {"name":"ORDRV20066","owner":"prithvichowhan97@gmail.com","creation":"2022-08-26 10:48:17.206007","modified":"2022-08-26 10:48:17.206007","modified_by":"prithvichowhan97@gmail.com","idx":0,"docstatus":0,"workflow_state":"Draft","company":"Bharath Medical %26 General Agencies","customer":"CUST-R-00002","customer_type":"Banashankari Medicals","customer_name":"Banashankari Medicals","unpaid_amount":-100,"credit_limit":200000,"total_amount":8370,"doctype":"Order Booking V2","order_booking_items_v2":[{"name":"7acaf28502","owner":"prithvichowhan97@gmail.com","creation":"2022-08-26 10:48:17.206007","modified":"2022-08-26 10:48:17.206007","modified_by":"prithvichowhan97@gmail.com","parent":"ORDRV20047","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"docstatus":0,"item_code":"Demo Item 1","free_items":0,"stock_uom":"Unit","quantity_available":1500,"quantity_booked":31,"average_price":300,"amount":9300,"gst_rate":12,"amount_after_gst":400,"rate_contract":"0","rate_contract_check":0,"brand_name":"Cipla","doctype":"Order Booking Items V2"}],"sales_order_preview":[],"promos":[],"promos_discount":[{"name":"2442da8538","owner":"prithvichowhan97@gmail.com","creation":"2022-08-26 10:48:17.206007","modified":"2022-08-26 10:48:17.206007","modified_by":"prithvichowhan97@gmail.com","parent":"ORDRV20047","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"docstatus":0,"bought_item":"Demo Item 1","free_item":"Demo Item 1","quantity":"31","discount":270,"amount":0,"promo_type":"Quantity based discount","doctype":"Order Booking V2 Sales Discount"}]}
+    String Orderbookingitemsv2 = jsonEncode(saveModel!.docs![0].orderBookingItemsV2);
+    String SalesOrderPreview = jsonEncode(saveModel!.docs![0].salesOrderPreview);
+    String Promos = jsonEncode(saveModel!.docs![0].promos);
+    String Promosdiscount = jsonEncode(saveModel!.docs![0].promosDiscount);
     isSubmitLoad = true;
     var headers = {
       'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
     };
-    // var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow?doc=${doc}&action=Submit'));
-    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow?doc={"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"workflow_state":${jsonEncode(saveModel!.docs![0].workflowState)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2":[{"name":"6ff5d29158","owner":"prithvichowhan97@gmail.com","creation":"2022-08-27 10:07:25.853557","modified":"2022-08-27 10:07:25.853557","modified_by":"prithvichowhan97@gmail.com","parent":"ORDRV20073","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"docstatus":0,"item_code":"Demo Item 4","free_items":0,"stock_uom":"Unit","quantity_available":1400,"quantity_booked":31,"average_price":170,"amount":5270,"gst_rate":12,"amount_after_gst":180,"rate_contract":"0","rate_contract_check":0,"brand_name":"Johnson %26 Johnson","doctype":"Order Booking Items V2"}],"sales_order_preview":[],"promos":[{"name":"b61ebe85bf","owner":"prithvichowhan97@gmail.com","creation":"2022-08-27 10:07:25.853557","modified":"2022-08-27 10:07:25.853557","modified_by":"prithvichowhan97@gmail.com","parent":"ORDRV20073","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"docstatus":0,"bought_item":"Demo Item 4","free_items":"Demo Item 4","quantity":"6","price":0,"warehouse_quantity":"480","promo_type":"Buy x get same and discount for ineligible qty","doctype":"Order Booking V2 Sales Promo","__unsaved":"1"}],"promos_discount":[{"name":"03d7ea3fc6","owner":"prithvichowhan97@gmail.com","creation":"2022-08-27 10:07:25.853557","modified":"2022-08-27 10:07:25.853557","modified_by":"prithvichowhan97@gmail.com","parent":"ORDRV20073","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"docstatus":0,"bought_item":"Demo Item 4","free_item":"Demo Item 4","quantity":"1","discount":136,"amount":136,"promo_type":"Buy x get same and discount for ineligible qty","doctype":"Order Booking V2 Sales Discount","__unsaved":"1"}]}&action=Submit'));
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow?doc={"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"workflow_state":${jsonEncode(saveModel!.docs![0].workflowState)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount}&action=Submit'));
     request.headers.addAll(headers);
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
@@ -327,8 +327,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
-          title: Text('Order booking Form V2',
-              style: TextStyle(color: whiteColor)),
+          title: Text('Order booking Form V2', style: TextStyle(color: whiteColor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
@@ -385,7 +384,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
               // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
               // print(salesPromos);
             },
-            child: isLoadbook == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Icon(
+            child: isSubmitLoad == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Icon(
               Icons.arrow_forward,
               color: whiteColor,
             ),
@@ -476,7 +475,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   //           ),
                   //   ],
                   // ),
-                child:      Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     tableModel!.message!.salesOrder!.salesOrder!.isEmpty
@@ -533,12 +532,12 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
-                        SizedBox(height: 2,),
+                        Text(list[index].itemCode.toString(),style: TextStyle(fontWeight: FontWeight.bold)),
+                        SizedBox(height: 2),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold)),
                             Container(
                               width: MediaQuery.of(context).size.width / 2.5,
                               child: Text(
@@ -557,10 +556,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                           ],
                         ),
                         // Text("PromoType : ${list[index].promoType}",style: TextStyle(color: Colors.grey),maxLines: 2,overflow: TextOverflow.ellipsis),
-                        SizedBox(height: 2,),
+                        SizedBox(height: 2),
                         Text(
                           "${list[index].qty} x ${list[index].averagePrice}",
-                          style: TextStyle(fontWeight: FontWeight.bold,),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
                     ),

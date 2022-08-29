@@ -394,7 +394,7 @@ class PromosTableOfDifferentItems{
     this.boughtItem,
     this.forEveryQuantityThatIsBought,
     this.quantityOfFreeItemsThatsGiven,
-    this.discount,
+    this.freeItem,
     this.type,
     this.quantity,
     this.doctype,
@@ -414,7 +414,7 @@ class PromosTableOfDifferentItems{
   String? boughtItem;
   int? forEveryQuantityThatIsBought;
   int? quantityOfFreeItemsThatsGiven;
-  dynamic discount;
+  String? freeItem;
   String? type;
   int? quantity;
   String? doctype;
@@ -434,7 +434,7 @@ class PromosTableOfDifferentItems{
     boughtItem: json["bought_item"],
     forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"],
     quantityOfFreeItemsThatsGiven: json["quantity_of_free_items_thats_given"],
-    discount: json["discount"],
+    freeItem: json["free_item"],
     type: json["type"],
     quantity: json["quantity"],
     doctype: json["doctype"],
@@ -455,7 +455,7 @@ class PromosTableOfDifferentItems{
     "bought_item": boughtItem,
     "for_every_quantity_that_is_bought": forEveryQuantityThatIsBought,
     "quantity_of_free_items_thats_given": quantityOfFreeItemsThatsGiven,
-    "discount": discount,
+    "free_item": freeItem,
     "type": type,
     "quantity": quantity,
     "doctype": doctype,
@@ -560,9 +560,8 @@ class PromoTableForQuantityamountBasedDiscount{
     this.docstatus,
     this.promoBasedOn,
     this.boughtItem,
-    this.forEveryQuantityThatIsBought,
-    this.quantityOfFreeItemsThatsGiven,
-    this.discount,
+    this.quantityBought,
+    this.discountPercentage,
     this.type,
     this.quantity,
     this.doctype,
@@ -580,9 +579,8 @@ class PromoTableForQuantityamountBasedDiscount{
   int? docstatus;
   String? promoBasedOn;
   String? boughtItem;
-  int? forEveryQuantityThatIsBought;
-  int? quantityOfFreeItemsThatsGiven;
-  dynamic discount;
+  dynamic quantityBought;
+  dynamic discountPercentage;
   String? type;
   int? quantity;
   String? doctype;
@@ -600,9 +598,8 @@ class PromoTableForQuantityamountBasedDiscount{
     docstatus: json["docstatus"],
     promoBasedOn: json["promo_based_on"],
     boughtItem: json["bought_item"],
-    forEveryQuantityThatIsBought: json["for_every_quantity_that_is_bought"],
-    quantityOfFreeItemsThatsGiven: json["quantity_of_free_items_thats_given"],
-    discount: json["discount"],
+    quantityBought: json['quantity_bought'],
+    discountPercentage: json['discount_percentage'],
     type: json["type"],
     quantity: json["quantity"],
     doctype: json["doctype"],
@@ -621,9 +618,8 @@ class PromoTableForQuantityamountBasedDiscount{
     "docstatus": docstatus,
     "promo_based_on": promoBasedOn,
     "bought_item": boughtItem,
-    "for_every_quantity_that_is_bought": forEveryQuantityThatIsBought,
-    "quantity_of_free_items_thats_given": quantityOfFreeItemsThatsGiven,
-    "discount": discount,
+    "quantity_bought": quantityBought,
+    "discount_percentage": discountPercentage,
     "type": type,
     "quantity": quantity,
     "doctype": doctype,

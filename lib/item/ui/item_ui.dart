@@ -84,6 +84,7 @@ class _ItemUiState extends State<ItemUi> {
       final String url = itemDataUrl(searchController.text);
       final String itemCodeUrl = baseurl! + url;
       var uri = Uri.parse(itemCodeUrl);
+      print("uri is=====>>>>>$uri");
       final response = await http.get(uri, headers: requestHeaders);
       final String itemName = specificItemNameSearchUrl(searchController.text);
       final String itemNameUrl = baseurl + itemName;
@@ -91,7 +92,7 @@ class _ItemUiState extends State<ItemUi> {
         searchButtonDisabled = true;
       });
       var itemNameUri = Uri.parse(itemNameUrl);
-
+      print("itemNameUri is=====>>>>>$itemNameUri");
       final itemNameResponse = await http.get(
         itemNameUri,
         headers: requestHeaders,
@@ -111,10 +112,9 @@ class _ItemUiState extends State<ItemUi> {
       }
       if (response.statusCode == 200) {
         itemCode = searchController.text;
-        warehouseName =
-            await CommonService().getWareHouseNameData(itemCode, context);
-        warehouseQty =
-            await CommonService().getWareHouseQtyData(itemCode, context);
+        print("itemcode======>>>$itemCode");
+        warehouseName = await CommonService().getWareHouseNameData(itemCode, context);
+        warehouseQty = await CommonService().getWareHouseQtyData(itemCode, context);
         apiCall = true;
         setState(() {});
       }

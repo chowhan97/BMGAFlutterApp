@@ -5,24 +5,20 @@ import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding.dart';
 import 'package:ebuzz/item/ui/item_ui.dart';
-import 'package:ebuzz/leavebalance/ui/leave_balance_ui.dart';
 import 'package:ebuzz/logout/service/logout_api_service.dart';
-import 'package:ebuzz/purchaseorder/ui/purchase_order_ui.dart';
-import 'package:ebuzz/qualityinspection/ui/quality_inspection_list_ui.dart';
-import 'package:ebuzz/quotation/ui/quotation_list_ui.dart';
+
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_history.dart';
-import 'package:ebuzz/salesorder/ui/sales_order_list_ui.dart';
+
 import 'package:ebuzz/settings/ui/settings.dart';
-import 'package:ebuzz/stockentry/ui/stock_entry_list.dart';
-import 'package:ebuzz/test_api.dart';
+
 import 'package:ebuzz/util/doctype_names.dart';
 import 'package:ebuzz/util/preference.dart';
-import 'package:ebuzz/workorder/ui/workorder_ui.dart';
+
 import 'package:flutter/material.dart';
-import 'package:ebuzz/bom/ui/bom_ui.dart';
+
 import 'package:ebuzz/orderbooking/ui/orderbooking_ui.dart';
 import 'package:ebuzz/common/display_helper.dart';
-import 'package:ebuzz/leavelist/ui/leave_list_ui.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 //Home class displays ui of different functionalities in form of cards
@@ -91,38 +87,38 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   }
 
   addLabelListToWidgetList() async {
-    if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.bom))
-      widgetsList.add(LabelList(label: 'BOM', route: BomUi()));
+    // if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.bom))
+    //   widgetsList.add(LabelList(label: 'BOM', route: BomUi()));
 
     if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
        widgetsList.add(LabelList(label: 'Item', route: ItemUi()));
-    if (labels.contains(DoctypeNames.purchaseOrder) &&
-        labels.contains(DoctypeNames.purchaseReceipt))
-      widgetsList.add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
-    // if(labels.contains(DoctypeNames.leaveLedgerEntry))
-    widgetsList.add(LabelList(label: 'Leave Balance', route: LeaveUi()));
-    if (labels.contains(DoctypeNames.leaveApplication))
-      widgetsList.add(LabelList(
-          label: 'Leave List', route: EmployeeLeaveUi(name: name ?? '')));
-    if (labels.contains(DoctypeNames.workOrder))
-      widgetsList.add(LabelList(label: 'Work Order', route: WorkOrderUi()));
-    if (labels.contains(DoctypeNames.qualityInspection) &&
-        labels.contains(DoctypeNames.qualityInspectionTemplate) &&
-        labels.contains(DoctypeNames.salesInvoice) &&
-        labels.contains(DoctypeNames.purchaseInvoice) &&
-        labels.contains(DoctypeNames.deliveryNote) &&
-        labels.contains(DoctypeNames.item) &&
-        labels.contains(DoctypeNames.batch))
-      widgetsList.add(LabelList(
-          label: 'Quality Inspection', route: QualityInspectionListUi()));
-    if (labels.contains(DoctypeNames.stockEntry))
-      widgetsList.add(LabelList(label: 'Stock Entry', route: StockEntryList()));
-    if (labels.contains(DoctypeNames.item) &&
-        labels.contains(DoctypeNames.salesOrder) &&
-        labels.contains(DoctypeNames.company) &&
-        labels.contains(DoctypeNames.customer) &&
-        labels.contains(DoctypeNames.warehouse))
-      widgetsList.add(LabelList(label: 'Sales Order', route: SalesOrderListUi()));
+    // if (labels.contains(DoctypeNames.purchaseOrder) &&
+    //     labels.contains(DoctypeNames.purchaseReceipt))
+    //   widgetsList.add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
+    // // if(labels.contains(DoctypeNames.leaveLedgerEntry))
+    // widgetsList.add(LabelList(label: 'Leave Balance', route: LeaveUi()));
+    // if (labels.contains(DoctypeNames.leaveApplication))
+    //   widgetsList.add(LabelList(
+    //       label: 'Leave List', route: EmployeeLeaveUi(name: name ?? '')));
+    // if (labels.contains(DoctypeNames.workOrder))
+    //   widgetsList.add(LabelList(label: 'Work Order', route: WorkOrderUi()));
+    // if (labels.contains(DoctypeNames.qualityInspection) &&
+    //     labels.contains(DoctypeNames.qualityInspectionTemplate) &&
+    //     labels.contains(DoctypeNames.salesInvoice) &&
+    //     labels.contains(DoctypeNames.purchaseInvoice) &&
+    //     labels.contains(DoctypeNames.deliveryNote) &&
+    //     labels.contains(DoctypeNames.item) &&
+    //     labels.contains(DoctypeNames.batch))
+    //   widgetsList.add(LabelList(
+    //       label: 'Quality Inspection', route: QualityInspectionListUi()));
+    // if (labels.contains(DoctypeNames.stockEntry))
+    //   widgetsList.add(LabelList(label: 'Stock Entry', route: StockEntryList()));
+    // if (labels.contains(DoctypeNames.item) &&
+    //     labels.contains(DoctypeNames.salesOrder) &&
+    //     labels.contains(DoctypeNames.company) &&
+    //     labels.contains(DoctypeNames.customer) &&
+    //     labels.contains(DoctypeNames.warehouse))
+    //   widgetsList.add(LabelList(label: 'Sales Order', route: SalesOrderListUi()));
     // widgetsList
     //     .add(LabelList(label: 'Evaluasi Staff', route: EvaluasiStaffFormUi()));
     // if (labels.contains(DoctypeNames.item) &&
@@ -149,10 +145,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         labels.contains(DoctypeNames.warehouse))
       widgetsList.add(LabelList(label: 'Order Booking', route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
-      widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
-      widgetsList.add(LabelList(label: 'Order booking Summary', route: TransactionHistory()));
-      widgetsList.add(LabelList(label: 'Customer OutStanding', route: CustomerOutStanding()));
-      widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));
+      // widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
+      widgetsList.add(LabelList(label: 'Order Booking Summary', route: TransactionHistory()));
+      widgetsList.add(LabelList(label: 'Customer Outstanding', route: CustomerOutStanding()));
+      // widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));
       print(widgetsList.length);
       setState(() {});
   }

@@ -1041,7 +1041,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   OfferModel? offerModel;
 
 
-  Future showOffer({id}) async {
+  Future showOffer() async {
     print("call");
     showoffer = true;
     var request = http.Request('GET',Uri.parse(showOfferApi(name: widget.ids[0])));
@@ -1529,8 +1529,8 @@ class _CustomDialogueState extends State<CustomDialogue> {
     return offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!
         .map((book) => DataRow(
         cells: [
-          DataCell(Container(width: 170,child: Center(child: Text(book.boughtItem.toString())))),
-          DataCell(Container(width: 200,child: Center(child: Text("${book.discount.toString()}%")))),
+          DataCell(Container(width: 170,child: Center(child: Text(book.quantityBought.toString())))),
+          DataCell(Container(width: 200,child: Center(child: Text("${book.discountPercentage.toString()}%")))),
         ],
       ),
     ).toList();
@@ -1637,7 +1637,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
     return offerModel!.docs![0].promosTableOfDifferentItems!
         .map((book) => DataRow(cells: [
       DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.boughtItem.toString(),textAlign: TextAlign.center))))),
-      DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.promoBasedOn.toString(),textAlign: TextAlign.center))))),
+      DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.freeItem.toString(),textAlign: TextAlign.center))))),
       DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
       DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
     ]))

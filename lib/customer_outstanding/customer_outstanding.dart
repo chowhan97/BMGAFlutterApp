@@ -106,7 +106,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                         height: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(color: accountReceivable == true ? Colors.blue : greyColor,borderRadius: BorderRadius.only(topRight:  Radius.circular(8),bottomRight:  Radius.circular(8))),
-                        child: Text('Account Receivable\nsummary', style: TextStyle(fontSize: 15,color: accountReceivable == true ?whiteColor : Colors.black),textAlign: TextAlign.center),
+                        child: Text('Account Receivable\nSummary', style: TextStyle(fontSize: 15,color: accountReceivable == true ?whiteColor : Colors.black),textAlign: TextAlign.center),
                       ),
                     ),
                   )
@@ -169,9 +169,9 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    hintText: 'Select Customer',
+                    hintText: 'Select Customer Name',
                   ),
-                  label: 'Customer',
+                  label: 'Customer Name',
                   labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
                   // required: true,
                   style: TextStyle(fontSize: 14, color: blackColor),
@@ -180,14 +180,14 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                   },
                   onSuggestionSelected: (suggestion) async {
                     customer.text = suggestion;
-                    print("this is index===>>>>${customerList.indexOf(suggestion)}");
-                    print("this is name===>>>${customerName[customerList.indexOf(suggestion)]}");
+                    print("this is index===>>>>${customerName.indexOf(suggestion)}");
+                    print("this is code===>>>${customerList[customerName.indexOf(suggestion)]}");
                     setState(() {
-                      customername.text = customerName[customerList.indexOf(suggestion)];
+                      customername.text = customerList[customerName.indexOf(suggestion)];
                     });
                   },
                   suggestionsCallback: (pattern) {
-                    return TypeAheadWidgets.getSuggestions(pattern, customerList);
+                    return TypeAheadWidgets.getSuggestions(pattern, customerName);
                   },
                   transitionBuilder: (context, suggestionsBox, controller) {
                     return suggestionsBox;
@@ -329,7 +329,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                 if(customer.text.isEmpty || company.text.isEmpty){
                   fluttertoast(whiteColor, redColor, company.text.isEmpty ? "Please choose company!!!" : "Please choose customer!!!");
                 }else{
-                  pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text,customer: customer.text, customerName: customername.text));
+                  pushScreen(context, CustomerOutStandingList(company: company.text,date: reportDate.text,customer: customername.text, customerName: customer.text));
                 }
               }else{
                 if(company.text.isEmpty){
