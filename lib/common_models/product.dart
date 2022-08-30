@@ -44,7 +44,6 @@ class Product {
       sampleSize: json['sample_quantity'] ?? 0,
       valuationRate: json['valuation_rate'] ?? 0,
       defaultUnitOfMeasure: json['stock_uom'] ?? 0
-
     );
   }
 }

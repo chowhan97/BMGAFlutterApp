@@ -120,7 +120,7 @@ class _TransactionListState extends State<TransactionList> {
                     ? Container()
                     : Expanded(
                         child: ListView(
-                          scrollDirection: Axis.horizontal,
+                          // scrollDirection: Axis.horizontal,
                           children: [
                             _createDataTable(),
                       ],
@@ -169,7 +169,7 @@ class _TransactionListState extends State<TransactionList> {
   DataTable _createDataTable() {
     return DataTable(
         headingRowHeight: 80,
-        dataRowHeight: 70,
+        dataRowHeight: 80,
         columns: _createColumns(),
         rows: _createRows(),
         border: TableBorder.all(color: Colors.black));
@@ -180,49 +180,57 @@ class _TransactionListState extends State<TransactionList> {
       DataColumn(
           label: Expanded(
               child: Container(
-                  // width: 80,
-                  width: 50,
+                  // width: 75,
+                width: MediaQuery.of(context).size.width * 0.1,
                   child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Invoice',style: TextStyle(fontSize: 12)),
-                          Text('Id',style: TextStyle(fontSize: 12)),
+                          Text('Invoice',style: TextStyle(fontSize: 11)),
+                          Text('Id',style: TextStyle(fontSize: 11)),
                         ],
                       ))))),
-      DataColumn(label: Expanded(child: Container(width: 90, child: Center(child: Text('Name',style: TextStyle(fontSize: 12)))))),
+      DataColumn(
+          label: Expanded(child:
+          Container(
+              // width: 90,
+              width: MediaQuery.of(context).size.width * 0.13,
+              child: Center(child: Text('Name',style: TextStyle(fontSize: 11)))))),
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 50,
+                  // width: 60,
+                  width: MediaQuery.of(context).size.width * 0.09,
                   child: Center(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Doc',style: TextStyle(fontSize: 12)),
-                      Text('Status',style: TextStyle(fontSize: 12)),
+                      Text('Doc',style: TextStyle(fontSize: 11)),
+                      Text('Status',style: TextStyle(fontSize: 11)),
                     ],
                   ))))),
       DataColumn(
           label: Expanded(
               child: Container(
-                  width: 90,
+                  // width: 90,
+                  width: MediaQuery.of(context).size.width * 0.13,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Outstanding',style: TextStyle(fontSize: 12)),
-                      Text('Amount',style: TextStyle(fontSize: 12)),
+                      Text('Outstanding',style: TextStyle(fontSize: 11)),
+                      Text('Amount',style: TextStyle(fontSize: 11)),
                     ],
                   )))),
-      DataColumn(
-          label: Expanded(
-        child: Container(
-            width: 60,
+           DataColumn(
+           label: Expanded(
+           child: Container(
+            // width: 70,
+            width: MediaQuery.of(context).size.width * 0.09,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Invoice',style: TextStyle(fontSize: 12)),
-                Text('Amount',style: TextStyle(fontSize: 12))
+                Text('Invoice',style: TextStyle(fontSize: 11)),
+                Text('Amount',style: TextStyle(fontSize: 11))
               ],
             )),
       ))
@@ -239,11 +247,12 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                       child: Container(
-                        width: 70,
+                        // width: 75,
+                        width: MediaQuery.of(context).size.width * 0.1,
                         child: Center(
                             child: Text(
                               book[0]['name'].toString(),
-                              textAlign: TextAlign.center,style: TextStyle(fontSize: 12),
+                              textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                             )),
                       ),
                     )), onTap: () {
@@ -337,11 +346,12 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                   child: Container(
-                    width: 90,
+                    // width: 90,
+                    width: MediaQuery.of(context).size.width * 0.13,
                     child: Center(
                         child: Text(
                       book[0]['title'].toString(),
-                      textAlign: TextAlign.center,style: TextStyle(fontSize: 12),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                     )),
                   ),
                 )),
@@ -357,13 +367,15 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                   child: Container(
-                      width: 50,
+                      // width: 60,
+                      width: MediaQuery.of(context).size.width * 0.09,
                       child: Center(
                           child: Text(
                         book[0]['status'].toString(),
-                        textAlign: TextAlign.center,style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                       ))),
-                )), onTap: () {
+                )),
+                onTap: () {
               pushScreen(
                   context,
                   TransactionDetail(
@@ -375,8 +387,9 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                     child: Center(
                   child: Container(
-                      width: 90,
-                      child: Center(child: Text(book[0]['outstanding_amount'].toString(),style: TextStyle(fontSize: 12)))),
+                      // width: 90,
+                      width: MediaQuery.of(context).size.width * 0.13,
+                      child: Center(child: Text(book[0]['outstanding_amount'].toString(),style: TextStyle(fontSize: 11)))),
                 )), onTap: () {
               pushScreen(
                   context,
@@ -389,10 +402,11 @@ class _TransactionListState extends State<TransactionList> {
                 Expanded(
                   child: Center(
                     child: Container(
-                      width: 60,
+                      // width: 70,
+                      width: MediaQuery.of(context).size.width * 0.09,
                       child: Center(
                         child: Text(book[0]['grand_total'].toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12)),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 11)),
                       ),
                     ),
                   ),

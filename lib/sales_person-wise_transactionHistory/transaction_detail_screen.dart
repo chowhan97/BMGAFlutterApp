@@ -278,21 +278,21 @@ class _TransactionDetailState extends State<TransactionDetail> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("SGST total tax Amount",style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text("SGST total tax Amount",style: TextStyle(color: Colors.grey)),
                     Text("₹ ${list[0].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("CGST total tax Amount",style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text("CGST total tax Amount",style: TextStyle(color: Colors.grey)),
                     Text("₹ ${list[1].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total value without tax",style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text("Total value without tax",style: TextStyle(color: Colors.grey)),
                     Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),

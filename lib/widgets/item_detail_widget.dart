@@ -12,6 +12,7 @@ class ItemDetailWidget extends StatelessWidget {
   const ItemDetailWidget({required this.snapshot,required this.apiurl});
   @override
   Widget build(BuildContext context) {
+    print("snapshot is====>>>>${snapshot.data}");
     return Column(
       children: [
         Stack(
@@ -20,7 +21,7 @@ class ItemDetailWidget extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: versionText(),
             ),
-            SingleChildScrollView(
+            snapshot.hasData ? SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 16),
                 child: Column(
@@ -30,28 +31,27 @@ class ItemDetailWidget extends StatelessWidget {
                     SizedBox(height: 15),
                     itemDetailWidget('Item Name',
                        snapshot.data?.itemName),
-                    SizedBox(height: 15),
-                    itemDetailWidget(
-                        'Item Group', snapshot.data?.itemGroup),
+                    // SizedBox(height: 15),
+                    // itemDetailWidget(
+                    //     'Item Group', snapshot.data?.itemGroup),
                     SizedBox(height: 15),
                     itemDetailWidget('HSN/SAC', snapshot.data?.hsn),
                     SizedBox(height: 15),
                     itemDetailWidget('Brand',
                         snapshot.data?.brand),
-                    SizedBox(height: 15),
-                    itemDetailWidget(
-                        'Decscription',
-                        snapshot.data?.description),
+                    // SizedBox(height: 15),
+                    // itemDetailWidget(
+                    //     'Decscription',
+                    //     snapshot.data?.description),
                     SizedBox(height: 15),
                     itemDetailWidget('Shell Life (Days)',
                        snapshot.data?.shellLife.toString()),
-                    
                     SizedBox(height: 15),
                     
                   ],
                 ),
               ),
-            ),
+            ) : CircularProgressIndicator(),
           ],
         ),
         

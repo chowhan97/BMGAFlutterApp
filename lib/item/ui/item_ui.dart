@@ -85,7 +85,13 @@ class _ItemUiState extends State<ItemUi> {
       final String itemCodeUrl = baseurl! + url;
       var uri = Uri.parse(itemCodeUrl);
       print("uri is=====>>>>>$uri");
-      final response = await http.get(uri, headers: requestHeaders);
+      // final response = await http.get(uri, headers: requestHeaders);
+      var response = http.MultipartRequest('GET', uri);
+      response.headers.addAll(commonHeaders);
+      var streamedResponseuri = await response.send();
+      var respUri = await http.Response.fromStream(streamedResponseuri);
+
+
       final String itemName = specificItemNameSearchUrl(searchController.text);
       final String itemNameUrl = baseurl + itemName;
       setState(() {
@@ -93,28 +99,57 @@ class _ItemUiState extends State<ItemUi> {
       });
       var itemNameUri = Uri.parse(itemNameUrl);
       print("itemNameUri is=====>>>>>$itemNameUri");
-      final itemNameResponse = await http.get(
-        itemNameUri,
-        headers: requestHeaders,
-      );
-      if (itemNameResponse.statusCode == 200) {
-        var data = jsonDecode(itemNameResponse.body);
-        var list = data['data'];
-        if (list.length == 1) {
-          itemCode = data['data'][0]['item_code'];
-          warehouseName =
-              await CommonService().getWareHouseNameData(itemCode, context);
-          warehouseQty =
-              await CommonService().getWareHouseQtyData(itemCode, context);
-          apiCall = true;
-          setState(() {});
-        }
+      var request = http.Request('GET', itemNameUri);
+
+      request.headers.addAll(commonHeaders);
+
+      var streamedResponse = await request.send();
+      var resp = await http.Response.fromStream(streamedResponse);
+
+      if (resp.statusCode == 200) {
+        var data = jsonDecode(resp.body);
+          var list = data['data'];
+          if (list.length == 1) {
+            itemCode = data['data'][0]['item_code'];
+            warehouseName = await CommonService().getWareHouseNameData(itemCode, context);
+            warehouseQty = await CommonService().getWareHouseQtyData(itemCode, context);
+            print("itemNameResponse itemcode===>>>$itemCode");
+            print("itemNameResponse warehouse name===>>>$warehouseName");
+            print("itemNameResponse warehouse qty===>>>$warehouseQty");
+            apiCall = true;
+            setState(() {});
+          }
       }
-      if (response.statusCode == 200) {
+      else {
+        print(resp.reasonPhrase);
+      }
+      // final itemNameResponse = await http.get(
+      //   itemNameUri,
+      //   headers: requestHeaders,
+      // );
+      // print("itemNameResponse ${itemNameResponse.statusCode}");
+      // print("response ${response.statusCode}");
+      // if (itemNameResponse.statusCode == 200) {
+      //   var data = jsonDecode(itemNameResponse.body);
+      //   var list = data['data'];
+      //   if (list.length == 1) {
+      //     itemCode = data['data'][0]['item_code'];
+      //     warehouseName = await CommonService().getWareHouseNameData(itemCode, context);
+      //     warehouseQty = await CommonService().getWareHouseQtyData(itemCode, context);
+      //     print("itemNameResponse warehouse name===>>>$warehouseName");
+      //     print("itemNameResponse warehouse qty===>>>$warehouseQty");
+      //     apiCall = true;
+      //     setState(() {});
+      //   }
+      // }
+      if (respUri.statusCode == 200) {
         itemCode = searchController.text;
         print("itemcode======>>>$itemCode");
         warehouseName = await CommonService().getWareHouseNameData(itemCode, context);
         warehouseQty = await CommonService().getWareHouseQtyData(itemCode, context);
+        print("response itemcode===>>>$itemCode");
+        print("response warehouse name===>>>$warehouseName");
+        print("response warehouse qty===>>>$warehouseQty");
         apiCall = true;
         setState(() {});
       }
@@ -201,8 +236,7 @@ class _ItemUiState extends State<ItemUi> {
                         ? FutureBuilder<Product>(
                             future: _itemApiService.getData(itemCode, context),
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
                                 return Container(
                                     height: displayHeight(context) * 0.55,
                                     child: CircularProgress());
@@ -223,8 +257,7 @@ class _ItemUiState extends State<ItemUi> {
                                       snapshot: snapshot,
                                       apiurl: apiurl!,
                                     ),
-                                    warehouseName.isEmpty ||
-                                            warehouseName.length == 0
+                                    warehouseName.isEmpty || warehouseName.length == 0
                                         ? Text('No Warehouse data found',
                                             style: TextStyle(
                                                 fontSize: 18,
