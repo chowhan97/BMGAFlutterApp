@@ -1,4 +1,5 @@
 import 'package:ebuzz/common/colors.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:flutter/material.dart';
 
 //It contains appbar which is used throughout the app
@@ -19,7 +20,8 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: blueAccent,
+      backgroundColor: Colors.transparent,
+      // backgroundColor: Constants.headerColor,
       actions: actions,
       leading: leading,
       automaticallyImplyLeading: automaticallyImplyLeading,

@@ -9,6 +9,7 @@ import 'package:ebuzz/common_models/product.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/exception/custom_exception.dart';
 import 'package:ebuzz/item/service/item_api_service.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/util/preference.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/item_detail_widget.dart';
@@ -329,7 +330,7 @@ class _ItemUiState extends State<ItemUi> {
         child:
             Text("Search", style: TextStyle(fontSize: 16, color: whiteColor)),
         onPressed: searchButtonDisabled ? null : search,
-        primaryColor: blueAccent,
+        primaryColor: Constants.buttonColor,
         onPrimaryColor: whiteColor,
       ),
     );

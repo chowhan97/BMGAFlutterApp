@@ -12,7 +12,7 @@ class ItemDetailWidget extends StatelessWidget {
   const ItemDetailWidget({required this.snapshot,required this.apiurl});
   @override
   Widget build(BuildContext context) {
-    print("snapshot is====>>>>${snapshot.data}");
+    print("snapshot is====>>>>${snapshot.data!.pchDevision}");
     return Column(
       children: [
         Stack(
@@ -44,8 +44,10 @@ class ItemDetailWidget extends StatelessWidget {
                     //     'Decscription',
                     //     snapshot.data?.description),
                     SizedBox(height: 15),
-                    itemDetailWidget('Shell Life (Days)',
-                       snapshot.data?.shellLife.toString()),
+                    // itemDetailWidget('Shell Life (Days)',
+                    //    snapshot.data?.shellLife.toString()),
+                    itemDetailWidget('PCH Division',
+                       snapshot.data?.pchDevision.toString()),
                     SizedBox(height: 15),
                     
                   ],

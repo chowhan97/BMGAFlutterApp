@@ -143,6 +143,7 @@ class CommonService {
       }
       return customername;
     } catch (e) {
+      print("catch");
       exception(e, context);
     }
     return customername;

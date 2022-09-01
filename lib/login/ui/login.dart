@@ -90,10 +90,9 @@ class _LoginState extends State<Login> {
                         children: [
                           // list == null || list == []
                           //     ?
-                          baseUrlTextField()
+                          // baseUrlTextField(),
 
                           // : baseUrlAutoCompleteTextField()
-                          ,
                           SizedBox(
                             height: displayHeight(context) * 0.02,
                           ),
@@ -117,7 +116,8 @@ class _LoginState extends State<Login> {
   }
 
   Widget logo() {
-    return Image.asset('assets/bharathrajesh.png');
+    // return Image.asset('assets/bharathrajesh.png');
+    return Container(height: 350,width: 350,child: Image.asset('assets/Applogo.png',fit: BoxFit.contain));
   }
 
   Widget ambibuzzText() {

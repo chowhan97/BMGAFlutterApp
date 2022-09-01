@@ -33,7 +33,7 @@ dependencies:
   flutter_email_sender: ^5.0.0
   permission_handler: ^9.1.0
   file_utils: ^1.0.0
-  downloads_path_provider: ^0.1.0
+#  downloads_path_provider: ^0.1.0
   google_fonts: ^3.0.1
   yaml: ^3.1.0
   analyzer: ^2.8.0

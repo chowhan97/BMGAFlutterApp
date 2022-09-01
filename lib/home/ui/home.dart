@@ -10,6 +10,7 @@ import 'package:ebuzz/logout/service/logout_api_service.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_history.dart';
 
 import 'package:ebuzz/settings/ui/settings.dart';
+import 'package:ebuzz/util/constants.dart';
 
 import 'package:ebuzz/util/doctype_names.dart';
 import 'package:ebuzz/util/preference.dart';
@@ -91,7 +92,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     //   widgetsList.add(LabelList(label: 'BOM', route: BomUi()));
 
     if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
-       widgetsList.add(LabelList(label: 'Item', route: ItemUi()));
+       widgetsList.add(LabelList(label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
     // if (labels.contains(DoctypeNames.purchaseOrder) &&
     //     labels.contains(DoctypeNames.purchaseReceipt))
     //   widgetsList.add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
@@ -143,11 +144,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         labels.contains(DoctypeNames.company) &&
         labels.contains(DoctypeNames.customer) &&
         labels.contains(DoctypeNames.warehouse))
-      widgetsList.add(LabelList(label: 'Order Booking', route: OrderBookingUi()));
+      widgetsList.add(LabelList(label: Text('Order Booking',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
       // widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
-      widgetsList.add(LabelList(label: 'Order Booking Summary', route: TransactionHistory()));
-      widgetsList.add(LabelList(label: 'Customer Outstanding', route: CustomerOutStanding()));
+      widgetsList.add(LabelList(label: Text('Order Booking Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: TransactionHistory()));
+    widgetsList.add(LabelList(label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
+      // widgetsList.add(LabelList(label: 'Customer Outstanding', route: CustomerOutStanding()));
       // widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));
       print(widgetsList.length);
       setState(() {});
@@ -298,7 +300,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   }
 
   //ui of particular card which is reusable
-  Widget cardUi(String text, Widget routeScreen) {
+  Widget cardUi(Widget text, Widget routeScreen) {
     return GestureDetector(
       onTap: () {
         pushScreen(context, routeScreen);
@@ -307,22 +309,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         width: displayWidth(context) * 0.45,
         height: displayWidth(context) * 0.45,
         child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 2,
           child: Stack(
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Text(
-                  text,
-                  maxLines: 3,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: blueAccent,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
+                child: text
               ),
             ],
           ),
@@ -339,7 +332,7 @@ class Choice {
 }
 
 class LabelList {
-  final String label;
+  final Widget label;
   final Widget route;
 
   LabelList({required this.label, required this.route});

@@ -285,6 +285,7 @@ exception(e, BuildContext context) {
           }
       }
     } else if (e is SocketException) {
+      print("socket exception here");
       customAlertDialog(
           context: context,
           content: Text(

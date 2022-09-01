@@ -5,6 +5,7 @@ import 'package:ebuzz/common/custom_toast.dart';
 import 'package:ebuzz/orderbooking/model/saveData_model.dart';
 import 'package:ebuzz/orderbooking/model/table_model.dart';
 import 'package:ebuzz/util/apiurls.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -350,7 +351,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            backgroundColor: blueAccent,
+            backgroundColor: Constants.buttonColor,
             onPressed: () {
               SaveData(context);
             },
@@ -363,7 +364,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
             height: 5,
           ),
           FloatingActionButton(
-            backgroundColor: blueAccent,
+            backgroundColor: Constants.buttonColor,
             onPressed: () {
               setState(() {
                 // 'customer': 'CUST-R-00002',

@@ -13,6 +13,7 @@ class Product {
   final int sampleSize;
   final double valuationRate;
   final String defaultUnitOfMeasure;
+  final String? pchDevision;
 
   Product({
     this.valuationRate=0,
@@ -26,7 +27,8 @@ class Product {
     this.description='',
     this.shellLife=0,
     this.sampleSize=0,
-    this.defaultUnitOfMeasure=''
+    this.defaultUnitOfMeasure='',
+    this.pchDevision='',
   });
 
   //For fetching json data from item api and storing it in Product model
@@ -43,7 +45,8 @@ class Product {
       image: json['image'],
       sampleSize: json['sample_quantity'] ?? 0,
       valuationRate: json['valuation_rate'] ?? 0,
-      defaultUnitOfMeasure: json['stock_uom'] ?? 0
+      defaultUnitOfMeasure: json['stock_uom'] ?? 0,
+      pchDevision: json['pch_division'] ?? '',
     );
   }
 }

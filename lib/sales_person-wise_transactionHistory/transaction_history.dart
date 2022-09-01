@@ -4,6 +4,7 @@ import 'package:ebuzz/common/custom_toast.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_list.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +148,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            color: Colors.blue,
+            color: Constants.buttonColor,
             height: 50,
             minWidth: double.infinity,
             child: Text("Fetch History",

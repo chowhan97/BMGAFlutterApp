@@ -13,6 +13,7 @@ import 'package:ebuzz/orderbooking/service/orderbooking_api_service.dart';
 import 'package:ebuzz/orderbooking/ui/offer_model.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form4.dart';
 import 'package:ebuzz/util/apiurls.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/widgets/custom_card.dart';
 import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
@@ -114,7 +115,7 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
         children: [
           FloatingActionButton(
             heroTag: 'Add Button',
-            backgroundColor: blueAccent,
+            backgroundColor: Constants.buttonColor,
             onPressed: () {
               oblist.add(OrderBookingItems(
                   amount: 0,
@@ -141,7 +142,7 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
             height: 5,
           ),
           FloatingActionButton(
-          backgroundColor: blueAccent,
+          backgroundColor: Constants.buttonColor,
           onPressed:() async{
             // Create for loop of item list
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -843,7 +844,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                     //     }
                     //   );
                     // });
-                  },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: blueAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
+                  },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: Constants.buttonColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 10, left: 8, right: 8, top: 25),
@@ -1500,24 +1501,26 @@ class _CustomDialogueState extends State<CustomDialogue> {
   List<DataColumn> _createColumns() {
     return [
       DataColumn(label: Expanded(
-        child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.47,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Quantity'),
-              Text('Bought'),
+              Text('Quantity',style: TextStyle(fontSize: 11)),
+              Text('Bought',style: TextStyle(fontSize: 11)),
             ],
            ),
         ),
       ),
       ),
       DataColumn(label: Expanded(
-        child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.47,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Discount'),
-              Text('Slab'),
+              Text('Discount',style: TextStyle(fontSize: 11)),
+              Text('Slab',style: TextStyle(fontSize: 11)),
             ],
           ),
         ),
@@ -1529,8 +1532,36 @@ class _CustomDialogueState extends State<CustomDialogue> {
     return offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!
         .map((book) => DataRow(
         cells: [
-          DataCell(Container(width: 170,child: Center(child: Text(book.quantityBought.toString())))),
-          DataCell(Container(width: 200,child: Center(child: Text("${book.discountPercentage.toString()}%")))),
+          DataCell(
+              Expanded(
+                  child: Center(
+                    child: Container(
+                      // width: 90,
+                      width: MediaQuery.of(context).size.width * 0.47,
+                      child: Center(
+                          child: Text(
+                            book.quantityBought.toString(),
+                            textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                          )),
+                    ),
+                  )),
+          ),
+          DataCell(
+            Expanded(
+                child: Center(
+                  child: Container(
+                    // width: 90,
+                    width: MediaQuery.of(context).size.width * 0.47,
+                    child: Center(
+                        child: Text(
+                          "${book.discountPercentage.toString()}%",
+                          textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                        )),
+                  ),
+                )),
+          ),
+          // DataCell(Container(color: Colors.yellow,width: MediaQuery.of(context).size.width * 0.5,child: Text(book.quantityBought.toString()))),
+          // DataCell(Container(color: Colors.green,width: MediaQuery.of(context).size.width * 0.5,child: Text("${book.discountPercentage.toString()}%"))),
         ],
       ),
     ).toList();
@@ -1538,108 +1569,313 @@ class _CustomDialogueState extends State<CustomDialogue> {
 
   List<DataColumn> _createpromosColumns() {
     return [
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Item'),
-            Text('Bought'),
-          ],
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Item',style: TextStyle(fontSize: 11)),
+              Text('Bought',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Free'),
-            Text('Item'),
-          ],
+      )),
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Free',style: TextStyle(fontSize: 11)),
+              Text('Item',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Eligible'),
-            Text('Quantity'),
-          ],
+      )),
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Eligible',style: TextStyle(fontSize: 11)),
+              Text('Quantity',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Free'),
-            Text('Quantity'),
-          ],
+      )),
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Free',style: TextStyle(fontSize: 11)),
+              Text('Quantity',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ),),),
+      )),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Item'),
+      //       Text('Bought'),
+      //     ],
+      //   ),
+      // ))),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Free'),
+      //       Text('Item'),
+      //     ],
+      //   ),
+      // ))),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Eligible'),
+      //       Text('Quantity'),
+      //     ],
+      //   ),
+      // ))),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Free'),
+      //       Text('Quantity'),
+      //     ],
+      //   ),
+      // ),),),
     ];
   }
 
   List<DataRow> _createPromosRows() {
     return offerModel!.docs![0].promosTableOfSameItem!
         .map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.boughtItem.toString()))))),
-      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.promoBasedOn.toString()))))),
-      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
-      DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
+      DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                    child: Text(
+                      book.boughtItem.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),
+      DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Center(
+                    child: Text(
+                      book.promoBasedOn.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),
+      DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                    child: Text(
+                      book.forEveryQuantityThatIsBought.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),
+      DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                    child: Text(
+                      book.quantityOfFreeItemsThatsGiven.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),
+      // DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.boughtItem.toString()))))),
+      // DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.promoBasedOn.toString()))))),
+      // DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
+      // DataCell(Expanded(child: Container(width: 85,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
     ]))
         .toList();
   }
 
   List<DataColumn> _createpromosDiscountColumns() {
     return [
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Item'),
-            Text('Bought'),
-          ],
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Item',style: TextStyle(fontSize: 11)),
+              Text('Bought',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Free'),
-            Text('item'),
-          ],
+      )),
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Free',style: TextStyle(fontSize: 11)),
+              Text('item',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Eligible'),
-            Text('Quantity'),
-          ],
+      )),
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Eligible',style: TextStyle(fontSize: 11)),
+              Text('Quantity',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
-      DataColumn(label: Expanded(child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              children: [
-                Text('Free'),
-                Text('Quantity'),
-              ],
-            ),
-          ],
+      )),
+      DataColumn(label: Expanded(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Free',style: TextStyle(fontSize: 11)),
+              Text('Quantity',style: TextStyle(fontSize: 11)),
+            ],
+          ),
         ),
-      ))),
+      )),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Item'),
+      //       Text('Bought'),
+      //     ],
+      //   ),
+      // ))),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Free'),
+      //       Text('item'),
+      //     ],
+      //   ),
+      // ))),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Eligible'),
+      //       Text('Quantity'),
+      //     ],
+      //   ),
+      // ))),
+      // DataColumn(label: Expanded(child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Column(
+      //         children: [
+      //           Text('Free'),
+      //           Text('Quantity'),
+      //         ],
+      //       ),
+      //     ],
+      //   ),
+      // ))),
     ];
   }
 
   List<DataRow> _createPromosDiscountRows() {
     return offerModel!.docs![0].promosTableOfDifferentItems!
         .map((book) => DataRow(cells: [
-      DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.boughtItem.toString(),textAlign: TextAlign.center))))),
-      DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.freeItem.toString(),textAlign: TextAlign.center))))),
-      DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
-      DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
+      DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                    child: Text(
+                      book.boughtItem.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ), DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                    child: Text(
+                      book.freeItem.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Center(
+                    child: Text(
+                      book.forEveryQuantityThatIsBought.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),DataCell(
+        Expanded(
+            child: Center(
+              child: Container(
+                // width: 90,
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                    child: Text(
+                      book.quantityOfFreeItemsThatsGiven.toString(),
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
+                    )),
+              ),
+            )),
+      ),
+      // DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.boughtItem.toString(),textAlign: TextAlign.center))))),
+      // DataCell(Expanded(child: Container(width: 80,child: Center(child: Text(book.freeItem.toString(),textAlign: TextAlign.center))))),
+      // DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
+      // DataCell(Expanded(child: Container(width: 90,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
     ]))
         .toList();
   }

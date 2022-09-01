@@ -5,6 +5,7 @@ import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding_list.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding_summary_list.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                       child: Container(
                         height: 65,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(color: accountReceivableSummary == true ? Colors.blue : greyColor,borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8))),
+                        decoration: BoxDecoration(color: accountReceivableSummary == true ? Constants.buttonColor : greyColor,borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8))),
                         child: Text('Account Receivable', style: TextStyle(fontSize: 15,color: accountReceivableSummary == true ?whiteColor : Colors.black),textAlign: TextAlign.center),
                       ),
                     ),
@@ -105,7 +106,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                       child: Container(
                         height: 65,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(color: accountReceivable == true ? Colors.blue : greyColor,borderRadius: BorderRadius.only(topRight:  Radius.circular(8),bottomRight:  Radius.circular(8))),
+                        decoration: BoxDecoration(color: accountReceivable == true ? Constants.buttonColor : greyColor,borderRadius: BorderRadius.only(topRight:  Radius.circular(8),bottomRight:  Radius.circular(8))),
                         child: Text('Account Receivable\nSummary', style: TextStyle(fontSize: 15,color: accountReceivable == true ?whiteColor : Colors.black),textAlign: TextAlign.center),
                       ),
                     ),
@@ -350,7 +351,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
               // }
             },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            color: Colors.blue,
+            color: Constants.buttonColor,
             height: 50,
             minWidth: double.infinity,
             child: Text("Fetch Account", style: TextStyle(fontSize: 18, color: whiteColor))),

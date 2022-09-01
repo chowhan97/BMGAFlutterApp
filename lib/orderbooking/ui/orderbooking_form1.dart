@@ -4,6 +4,7 @@ import 'package:ebuzz/common/display_helper.dart';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/common_service/common_service.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form2.dart';
+import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
     companyList = await CommonService().getCompanyList(context);
     // customerList = await CommonService().getCustomerList(context);
     customerList = await CommonService().getCustomerName(context);
+    print("customerList????===========?????${customerList}");
     custId = await CommonService().getCustomerList(context);
     // customer_typeList = await
     print(customerList.length);
@@ -91,7 +93,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: blueAccent,
+        backgroundColor: Constants.buttonColor,
         onPressed: () {
           if (customerController.text.isNotEmpty && companyController.text.isNotEmpty) {
             pushScreen(context,
