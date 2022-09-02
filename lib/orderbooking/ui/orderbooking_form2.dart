@@ -297,6 +297,7 @@ class _OBItemsFormState extends State<OBItemsForm>
   var prefscompany;
   var prefscustomer;
   var prefscust_type;
+  bool isOfferAvaibale = false;
   @override
   void initState() {
     super.initState();
@@ -324,12 +325,17 @@ class _OBItemsFormState extends State<OBItemsForm>
     });
     print("itemCode==>>${itemCode + prefscust_type + company + prefscustomer}");
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
+    orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     print("orderDetails is=====>>>>>${orderDetails}");
     quantityavailablecontrollerlist[index].text = orderDetails["message"]["available_qty"].toString();
     lastbatchpricecontrollerlist[index].text = orderDetails["message"]["price_details"]["price"].toString();
     ratecontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["rate_contract_check"].toString();
     mrpcontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["mrp"].toString();
     brandcontractcontrollerlist[index].text = orderDetails["message"]["brand_name"]["brand_name"].toString();
+    print("is offer???????${orderDetails['message']['promo_check']}");
+    setState(() {
+      orderDetails['message']['promo_check'] == 1 ? isOfferAvaibale = true : isOfferAvaibale = false;
+    });
     //=============
     var owner = prefs.getString("owner");
     var Bookorderlist = [{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[index].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[index].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[index].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[index].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[index].text,"__checked":0,"quantity_booked":quantitycontrollerlist[index].text,"amount":int.parse(quantitycontrollerlist[index].text) * int.parse(double.parse(lastbatchpricecontrollerlist[index].text).toStringAsFixed(0))}];
@@ -420,20 +426,31 @@ class _OBItemsFormState extends State<OBItemsForm>
   var promo3Res;
   var promo5Res;
   List ids = [];
+  // var idx = 1;
 
-  Future promoType1({itemCode}) async {
+  Future promoType1({itemCode,promoType,idx}) async {
     print("call");
-    var P1 = jsonEncode(itemCode);
+    // var P1 = jsonEncode(itemCode);
+    // print("P1 is===>>>$P1");
+    // String pType = jsonEncode(promoType);
+    // print("pType is===>>>$pType");
+    if(idx == 1)
     fetchPromo1 = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
+    if(idx == 2)
+      fetchPromo2 = true;
+    if(idx == 3)
+      fetchPromo3 = true;
+    if(idx == 5)
+      fetchPromo5 = true;
+    // var headers = {
+    //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    // };
     var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
 
     request.fields.addAll({
       'doctype': 'Sales Promos',
       'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-      'filters': '[["Promo Type 1","bought_item","=",$P1]]',
+      'filters': '[[${jsonEncode(promoType)},"bought_item","=",${jsonEncode(itemCode)}]]',
       'order_by': '`tabSales Promos`.`modified` desc',
       'start': '0',
       'page_length': '20',
@@ -442,27 +459,84 @@ class _OBItemsFormState extends State<OBItemsForm>
       'with_comment_count': 'true'
     });
 
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     if (response.statusCode == 200) {
-      promoType2(itemCode: P1);
-      setState(() {
-        print(response.body);
-        String data = response.body;
-        promo1Res = json.decode(data);
-        fetchPromo1 = false;
-        print("promo type 1 success");
-        print("promo type 1 res====>>>$promo1Res");
-        if(promo1Res['message'].isNotEmpty){
-          Id id = Id(p1: promo1Res['message']['values'][0][0]);
-          print("??????P1??????===>>${id.p1}");
-          ids.add(id.p1);
-        }
-        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-        // print("transactionModel====>>$customerOutstandingModel");
-      });
+      // promoType1(itemCode: P1,promoType: "Promo Type 3");
+      // promoType1(itemCode: P1,promoType: "Promo Type 5");
+      // promoType2(itemCode: P1);
+      if(idx == 1){
+        setState(() {
+          print(response.body);
+          String data = response.body;
+          promo1Res = json.decode(data);
+          fetchPromo1 = false;
+          print("promo type 1 success");
+          print("promo type 1 res====>>>$promo1Res");
+          if(promo1Res['message'].isNotEmpty){
+            Id id = Id(p1: promo1Res['message']['values'][0][0]);
+            print("??????P1??????===>>${id.p1}");
+            ids.add(id.p1);
+          }
+          promoType1(itemCode: "${itemCode}",promoType: "Promo Type 2",idx: 2);
+          // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+          // print("transactionModel====>>$customerOutstandingModel");
+        });
+      }else if(idx == 2){
+        setState(() {
+          print(response.body);
+          String data = response.body;
+          promo2Res = json.decode(data);
+          fetchPromo2 = false;
+          print("promo type 2 success");
+          print("promo type 2 res====>>>$promo2Res");
+          if(promo2Res['message'].isNotEmpty){
+            Id id = Id(p2: promo2Res['message']['values'][0][0]);
+            print("??????P1??????===>>${id.p2}");
+            ids.add(id.p2);
+          }
+          promoType1(itemCode: "${itemCode}",promoType: "Promo Type 3",idx: 3);
+          // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+          // print("transactionModel====>>$customerOutstandingModel");
+        });
+      }else if(idx == 3){
+        setState(() {
+          print(response.body);
+          String data = response.body;
+          promo3Res = json.decode(data);
+          fetchPromo3 = false;
+          print("promo type 3 success");
+          print("promo type 3 res====>>>$promo3Res");
+          if(promo3Res['message'].isNotEmpty){
+            Id id = Id(p3: promo3Res['message']['values'][0][0]);
+            print("??????P1??????===>>${id.p3}");
+            ids.add(id.p3);
+          }
+          promoType1(itemCode: "${itemCode}",promoType: "Promo Type 5",idx: 5);
+          // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+          // print("transactionModel====>>$customerOutstandingModel");
+        });
+      }else if(idx == 5){
+        setState(() {
+          print(response.body);
+          String data = response.body;
+          promo5Res = json.decode(data);
+          fetchPromo5 = false;
+          print("promo type 5 success");
+          print("promo type 5 res====>>>$promo5Res");
+          if(promo5Res['message'].isNotEmpty){
+            Id id = Id(p5: promo5Res['message']['values'][0][0]);
+            print("??????P1??????===>>${id.p5}");
+            ids.add(id.p5);
+          }
+          print("n is====>>>${ids}");
+          showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res,ids: ids));
+          // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+          // print("transactionModel====>>$customerOutstandingModel");
+        });
+      }
     } else {
       print("error cause===>>${response.reasonPhrase}");
       setState(() {
@@ -471,170 +545,170 @@ class _OBItemsFormState extends State<OBItemsForm>
     }
   }
 
-  Future promoType2({itemCode}) async {
-    print("call");
-    fetchPromo2 = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
-    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
-
-    request.fields.addAll({
-      'doctype': 'Sales Promos',
-      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-      'filters': '[["Promo Type 2","bought_item","=",$itemCode]]',
-      'order_by': '`tabSales Promos`.`modified` desc',
-      'start': '0',
-      'page_length': '20',
-      'view': 'List',
-      'group_by': '`tabSales Promos`.`name`',
-      'with_comment_count': 'true'
-    });
-
-    request.headers.addAll(headers);
-
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    if (response.statusCode == 200) {
-      promoType3(itemCode: itemCode);
-      setState(() {
-        print(response.body);
-        String data = response.body;
-        promo2Res = json.decode(data);
-        fetchPromo2 = false;
-        print("promo type 2 success");
-        print("promo type 2 res====>>>$promo2Res");
-        if(promo2Res['message'].isNotEmpty){
-          Id id = Id(p2: promo2Res['message']['values'][0][0]);
-          print("??????P1??????===>>${id.p2}");
-          ids.add(id.p2);
-        }
-        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-        // print("transactionModel====>>$customerOutstandingModel");
-      });
-    } else {
-      print("error cause===>>${response.reasonPhrase}");
-      setState(() {
-        fetchPromo2 = false;
-      });
-    }
-  }
-
-  Future promoType3({itemCode}) async {
-    print("call");
-    fetchPromo3 = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
-    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
-
-    request.fields.addAll({
-      'doctype': 'Sales Promos',
-      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-      'filters': '[["Promo Type 3","bought_item","=",$itemCode]]',
-      'order_by': '`tabSales Promos`.`modified` desc',
-      'start': '0',
-      'page_length': '20',
-      'view': 'List',
-      'group_by': '`tabSales Promos`.`name`',
-      'with_comment_count': 'true'
-    });
-
-    request.headers.addAll(headers);
-
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    if (response.statusCode == 200) {
-      promoType5(itemCode: itemCode);
-      setState(() {
-        print(response.body);
-        String data = response.body;
-        promo3Res = json.decode(data);
-        fetchPromo3 = false;
-        print("promo type 3 success");
-        print("promo type 3 res====>>>$promo3Res");
-        if(promo3Res['message'].isNotEmpty){
-          Id id = Id(p3: promo3Res['message']['values'][0][0]);
-          print("??????P1??????===>>${id.p3}");
-          ids.add(id.p3);
-        }
-        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-        // print("transactionModel====>>$customerOutstandingModel");
-      });
-    } else {
-      print("error cause===>>${response.reasonPhrase}");
-      setState(() {
-        fetchPromo3 = false;
-      });
-    }
-  }
-
-  Future promoType5({itemCode}) async {
-    print("call");
-    fetchPromo5 = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
-    var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
-
-    request.fields.addAll({
-      'doctype': 'Sales Promos',
-      'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-      'filters': '[["Promo Type 5","bought_item","=",$itemCode]]',
-      'order_by': '`tabSales Promos`.`modified` desc',
-      'start': '0',
-      'page_length': '20',
-      'view': 'List',
-      'group_by': '`tabSales Promos`.`name`',
-      'with_comment_count': 'true'
-    });
-
-    request.headers.addAll(headers);
-
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    if (response.statusCode == 200) {
-      setState(() {
-        print(response.body);
-        String data = response.body;
-        promo5Res = json.decode(data);
-        fetchPromo5 = false;
-        print("promo type 5 success");
-        print("promo type 5 res====>>>$promo5Res");
-        if(promo5Res['message'].isNotEmpty){
-          Id id = Id(p5: promo5Res['message']['values'][0][0]);
-          print("??????P1??????===>>${id.p5}");
-          ids.add(id.p5);
-        }
-        // var n1 = promo1Res['message']['values'][0][0];
-        // var n2 = promo2Res['message']['values'][0][0];
-        // var n3 = promo3Res['message']['values'][0][0];
-        // var n5 = promo5Res['message']['values'][0][0];
-        // List n = [];
-        // if(id.p1 != null){
-        //   n.add(id.p1);
-        // }
-        // if(id.p2 != null){
-        //   n.add(id.p2);
-        // }
-        // if(id.p3 != null){
-        //   n.add(id.p3);
-        // }
-        // if(id.p5 != null){
-        //   n.add(id.p5);
-        // }
-        print("n is====>>>${ids}");
-        showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res,ids: ids));
-        // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-        // print("transactionModel====>>$customerOutstandingModel");
-      });
-    } else {
-      print("error cause===>>${response.reasonPhrase}");
-      setState(() {
-        fetchPromo5 = false;
-      });
-    }
-  }
+  // Future promoType2({itemCode}) async {
+  //   print("call");
+  //   fetchPromo2 = true;
+  //   // var headers = {
+  //   //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+  //   // };
+  //   var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+  //
+  //   request.fields.addAll({
+  //     'doctype': 'Sales Promos',
+  //     'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+  //     'filters': '[["Promo Type 2","bought_item","=",$itemCode]]',
+  //     'order_by': '`tabSales Promos`.`modified` desc',
+  //     'start': '0',
+  //     'page_length': '20',
+  //     'view': 'List',
+  //     'group_by': '`tabSales Promos`.`name`',
+  //     'with_comment_count': 'true'
+  //   });
+  //
+  //   request.headers.addAll(commonHeaders);
+  //
+  //   var streamedResponse = await request.send();
+  //   var response = await http.Response.fromStream(streamedResponse);
+  //   if (response.statusCode == 200) {
+  //     promoType3(itemCode: itemCode);
+  //     setState(() {
+  //       print(response.body);
+  //       String data = response.body;
+  //       promo2Res = json.decode(data);
+  //       fetchPromo2 = false;
+  //       print("promo type 2 success");
+  //       print("promo type 2 res====>>>$promo2Res");
+  //       if(promo2Res['message'].isNotEmpty){
+  //         Id id = Id(p2: promo2Res['message']['values'][0][0]);
+  //         print("??????P1??????===>>${id.p2}");
+  //         ids.add(id.p2);
+  //       }
+  //       // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+  //       // print("transactionModel====>>$customerOutstandingModel");
+  //     });
+  //   } else {
+  //     print("error cause===>>${response.reasonPhrase}");
+  //     setState(() {
+  //       fetchPromo2 = false;
+  //     });
+  //   }
+  // }
+  //
+  // Future promoType3({itemCode}) async {
+  //   print("call");
+  //   fetchPromo3 = true;
+  //   // var headers = {
+  //   //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+  //   // };
+  //   var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+  //
+  //   request.fields.addAll({
+  //     'doctype': 'Sales Promos',
+  //     'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+  //     'filters': '[["Promo Type 3","bought_item","=",$itemCode]]',
+  //     'order_by': '`tabSales Promos`.`modified` desc',
+  //     'start': '0',
+  //     'page_length': '20',
+  //     'view': 'List',
+  //     'group_by': '`tabSales Promos`.`name`',
+  //     'with_comment_count': 'true'
+  //   });
+  //
+  //   request.headers.addAll(commonHeaders);
+  //
+  //   var streamedResponse = await request.send();
+  //   var response = await http.Response.fromStream(streamedResponse);
+  //   if (response.statusCode == 200) {
+  //     promoType5(itemCode: itemCode);
+  //     setState(() {
+  //       print(response.body);
+  //       String data = response.body;
+  //       promo3Res = json.decode(data);
+  //       fetchPromo3 = false;
+  //       print("promo type 3 success");
+  //       print("promo type 3 res====>>>$promo3Res");
+  //       if(promo3Res['message'].isNotEmpty){
+  //         Id id = Id(p3: promo3Res['message']['values'][0][0]);
+  //         print("??????P1??????===>>${id.p3}");
+  //         ids.add(id.p3);
+  //       }
+  //       // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+  //       // print("transactionModel====>>$customerOutstandingModel");
+  //     });
+  //   } else {
+  //     print("error cause===>>${response.reasonPhrase}");
+  //     setState(() {
+  //       fetchPromo3 = false;
+  //     });
+  //   }
+  // }
+  //
+  // Future promoType5({itemCode}) async {
+  //   print("call");
+  //   fetchPromo5 = true;
+  //   // var headers = {
+  //   //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+  //   // };
+  //   var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
+  //
+  //   request.fields.addAll({
+  //     'doctype': 'Sales Promos',
+  //     'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
+  //     'filters': '[["Promo Type 5","bought_item","=",$itemCode]]',
+  //     'order_by': '`tabSales Promos`.`modified` desc',
+  //     'start': '0',
+  //     'page_length': '20',
+  //     'view': 'List',
+  //     'group_by': '`tabSales Promos`.`name`',
+  //     'with_comment_count': 'true'
+  //   });
+  //
+  //   request.headers.addAll(commonHeaders);
+  //
+  //   var streamedResponse = await request.send();
+  //   var response = await http.Response.fromStream(streamedResponse);
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       print(response.body);
+  //       String data = response.body;
+  //       promo5Res = json.decode(data);
+  //       fetchPromo5 = false;
+  //       print("promo type 5 success");
+  //       print("promo type 5 res====>>>$promo5Res");
+  //       if(promo5Res['message'].isNotEmpty){
+  //         Id id = Id(p5: promo5Res['message']['values'][0][0]);
+  //         print("??????P1??????===>>${id.p5}");
+  //         ids.add(id.p5);
+  //       }
+  //       // var n1 = promo1Res['message']['values'][0][0];
+  //       // var n2 = promo2Res['message']['values'][0][0];
+  //       // var n3 = promo3Res['message']['values'][0][0];
+  //       // var n5 = promo5Res['message']['values'][0][0];
+  //       // List n = [];
+  //       // if(id.p1 != null){
+  //       //   n.add(id.p1);
+  //       // }
+  //       // if(id.p2 != null){
+  //       //   n.add(id.p2);
+  //       // }
+  //       // if(id.p3 != null){
+  //       //   n.add(id.p3);
+  //       // }
+  //       // if(id.p5 != null){
+  //       //   n.add(id.p5);
+  //       // }
+  //       print("n is====>>>${ids}");
+  //       showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res,ids: ids));
+  //       // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
+  //       // print("transactionModel====>>$customerOutstandingModel");
+  //     });
+  //   } else {
+  //     print("error cause===>>${response.reasonPhrase}");
+  //     setState(() {
+  //       fetchPromo5 = false;
+  //     });
+  //   }
+  // }
 
 
   @override
@@ -653,14 +727,14 @@ class _OBItemsFormState extends State<OBItemsForm>
               alignment: Alignment.topRight,
               child: deleteWidget(),
             ),
-            Padding(
+              isOfferAvaibale == true ? Padding(
               padding: EdgeInsets.only(top: 140,right: 10),
               child: Align(
                   alignment: Alignment.centerRight,
                   child: fetchPromo5 == true ? CircularProgressIndicator() : MaterialButton(onPressed: (){
                     print(itemcodecontrollerlist[widget.i].text);
                     ids.clear();
-                    promoType1(itemCode: itemcodecontrollerlist[widget.i].text);
+                    promoType1(itemCode: itemcodecontrollerlist[widget.i].text,promoType: "Promo Type 1",idx: 1);
                     // showDialog(context: context, builder: (BuildContext context){
                     //   return StatefulBuilder(
                     //     builder: (context, setState) {
@@ -845,7 +919,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                     //   );
                     // });
                   },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: Constants.buttonColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
-            ),
+            ) : Container(),
             Padding(
               padding: EdgeInsets.only(bottom: 10, left: 8, right: 8, top: 25),
               child: Column(
@@ -855,7 +929,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Brand Name : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Text("Brand Name : ",style: TextStyle(fontWeight: FontWeight.bold)),
                       Expanded(
                         child: Text(
                           "${brandcontractcontrollerlist[widget.i].text}",style: TextStyle(color: Colors.grey),

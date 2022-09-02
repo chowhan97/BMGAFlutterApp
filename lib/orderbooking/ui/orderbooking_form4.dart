@@ -295,11 +295,11 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     String Promos = jsonEncode(saveModel!.docs![0].promos);
     String Promosdiscount = jsonEncode(saveModel!.docs![0].promosDiscount);
     isSubmitLoad = true;
-    var headers = {
-      'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-    };
+    // var headers = {
+    //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+    // };
     var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow?doc={"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"workflow_state":${jsonEncode(saveModel!.docs![0].workflowState)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount}&action=Submit'));
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
 

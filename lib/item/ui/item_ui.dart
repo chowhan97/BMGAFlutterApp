@@ -76,11 +76,11 @@ class _ItemUiState extends State<ItemUi> {
   fetchItem() async {
     try {
       // final String? cookie = await getCookie();
-      Map<String, String> requestHeaders = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        // 'Cookie': cookie!
-      };
+      // Map<String, String> requestHeaders = {
+      //   'Content-type': 'application/json',
+      //   'Accept': 'application/json',
+      //   // 'Cookie': cookie!
+      // };
       String? baseurl = await getApiUrl();
       final String url = itemDataUrl(searchController.text);
       final String itemCodeUrl = baseurl! + url;
@@ -171,8 +171,7 @@ class _ItemUiState extends State<ItemUi> {
 
   //For scanning barcode and storing result of it as string
   scanBarCode() async {
-    String result = await FlutterBarcodeScanner.scanBarcode(
-        '#004297', 'Cancel', true, ScanMode.BARCODE);
+    String result = await FlutterBarcodeScanner.scanBarcode('#004297', 'Cancel', true, ScanMode.BARCODE);
     String itemCode =
         await CommonService().getItemCodeFromBarcode(result, context);
     searchController.text = itemCode;
@@ -252,6 +251,7 @@ class _ItemUiState extends State<ItemUi> {
                                     )));
                               }
                               if (snapshot.hasData) {
+                                print("aaa===>>>${snapshot.data!.pch_division}");
                                 return Column(
                                   children: [
                                     ItemDetailWidget(

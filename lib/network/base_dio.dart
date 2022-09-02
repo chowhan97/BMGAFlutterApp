@@ -13,9 +13,11 @@ class BaseDio {
     );
     Dio _dio = new Dio(options);
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options,handler)  {
+      // ignore: deprecated_member_use
       _dio.interceptors.requestLock.lock();
       options.headers["cookie"] = cookie;
       handler.next(options);
+      // ignore: deprecated_member_use
       _dio.interceptors.requestLock.unlock();}));
     return _dio;
   }

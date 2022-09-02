@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Constants{
    static const cartKey = 'cart';
-   static const appName= 'Ebuzz';
+   // static const appName= 'Ebuzz';
+   static const appName= 'ERP';
 
 
    static const commonTextColor = Color(0xFF333333);

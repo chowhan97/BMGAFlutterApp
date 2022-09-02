@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatelessWidget {
   final bool? login;
@@ -17,11 +16,12 @@ class App extends StatelessWidget {
         title: Constants.appName,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          textTheme: GoogleFonts.interTextTheme(
-            Theme.of(context).textTheme.apply(),
-          ),
-          disabledColor: Colors.black,
-          primaryColor: Colors.white, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
+          fontFamily: "Asul",
+          // textTheme: GoogleFonts.interTextTheme(
+          //   Theme.of(context).textTheme.apply(),
+          // ),
+          // disabledColor: Colors.black,
+          // primaryColor: Colors.white, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
         ),
         home: login == true ? Home() : Login(),
       ),

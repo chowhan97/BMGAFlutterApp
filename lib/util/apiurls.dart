@@ -428,7 +428,10 @@ String account_receivable_summary(){
   return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run';
 }
 
+// var commonHeaders = {
+//   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+// };
 var commonHeaders = {
-  'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
+  'Cookie': 'full_name=Prithvi%20Chowhan; sid=62d79a1a900705614100ea8b4d47542a51c4e5a838e2e07f594b466f; system_user=yes; user_id=dummy%40gmail.com; user_image='
 };
 

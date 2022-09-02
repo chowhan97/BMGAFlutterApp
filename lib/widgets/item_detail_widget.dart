@@ -12,7 +12,7 @@ class ItemDetailWidget extends StatelessWidget {
   const ItemDetailWidget({required this.snapshot,required this.apiurl});
   @override
   Widget build(BuildContext context) {
-    print("snapshot is====>>>>${snapshot.data!.pchDevision}");
+    print("snapshot is====>>>>${snapshot.data!.pch_division}");
     return Column(
       children: [
         Stack(
@@ -29,16 +29,14 @@ class ItemDetailWidget extends StatelessWidget {
                     itemDetailWidget(
                         'Item Code', snapshot.data?.itemCode),
                     SizedBox(height: 15),
-                    itemDetailWidget('Item Name',
-                       snapshot.data?.itemName),
+                    itemDetailWidget('Item Name', snapshot.data?.itemName),
                     // SizedBox(height: 15),
                     // itemDetailWidget(
                     //     'Item Group', snapshot.data?.itemGroup),
                     SizedBox(height: 15),
                     itemDetailWidget('HSN/SAC', snapshot.data?.hsn),
                     SizedBox(height: 15),
-                    itemDetailWidget('Brand',
-                        snapshot.data?.brand),
+                    itemDetailWidget('Brand', snapshot.data?.brand),
                     // SizedBox(height: 15),
                     // itemDetailWidget(
                     //     'Decscription',
@@ -46,8 +44,7 @@ class ItemDetailWidget extends StatelessWidget {
                     SizedBox(height: 15),
                     // itemDetailWidget('Shell Life (Days)',
                     //    snapshot.data?.shellLife.toString()),
-                    itemDetailWidget('PCH Division',
-                       snapshot.data?.pchDevision.toString()),
+                    itemDetailWidget('PCH Division', snapshot.data?.pch_division),
                     SizedBox(height: 15),
                     
                   ],

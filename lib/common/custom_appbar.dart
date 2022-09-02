@@ -1,5 +1,3 @@
-import 'package:ebuzz/common/colors.dart';
-import 'package:ebuzz/util/constants.dart';
 import 'package:flutter/material.dart';
 
 //It contains appbar which is used throughout the app

@@ -26,8 +26,8 @@ class LoginApiService {
       // HomeService _homeService=HomeService();
       baseUrl = "https://erptest.bharathrajesh.co.in";
       // username = "prithvichowhan97@gmail.com";
-      username = "dummy@gmail.com";
-      password = "vishalpatel2022";
+      // username = "dummy@gmail.com";
+      // password = "vishalpatel2022";
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("owner", username);
       final String url = loginUrl(baseUrl);

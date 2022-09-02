@@ -56,10 +56,15 @@ dev_dependencies:
 flutter_icons:
   android: 'launcher_icon'
   ios: true
-  image_path: 'assets/logo.png'
+  image_path: 'assets/ERP_logo.png'
 
 flutter:
   uses-material-design: true
 
   assets:
     - assets/
+
+  fonts:
+    - family: Asul
+      fonts:
+        - asset: assets/fonts/Asul-Regular.ttf
