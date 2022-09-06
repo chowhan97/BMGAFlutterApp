@@ -1,7 +1,7 @@
 ebuzz
 2.12
-file:///D:/ERP/BMGAFlutterApp/
-file:///D:/ERP/BMGAFlutterApp/lib/
+file:///D:/BMGA_3.0.5/BMGAFlutterApp%5B06-09-2022%5D_latest/BMGAFlutterApp/
+file:///D:/BMGA_3.0.5/BMGAFlutterApp%5B06-09-2022%5D_latest/BMGAFlutterApp/lib/
 _fe_analyzer_shared
 2.12
 file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-31.0.0/
@@ -142,10 +142,6 @@ dio_helper_flutter
 2.15
 file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/dio_helper_flutter-1.0.13/
 file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/dio_helper_flutter-1.0.13/lib/
-downloads_path_provider
-2.0
-file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/downloads_path_provider-0.1.0/
-file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/downloads_path_provider-0.1.0/lib/
 fake_async
 2.12
 file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/

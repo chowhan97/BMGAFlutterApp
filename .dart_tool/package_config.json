@@ -212,12 +212,6 @@
       "languageVersion": "2.15"
     },
     {
-      "name": "downloads_path_provider",
-      "rootUri": "file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/downloads_path_provider-0.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "fake_async",
       "rootUri": "file:///D:/flutter/flutter_windows_2.10.2-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0",
       "packageUri": "lib/",
@@ -956,7 +950,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-08-23T06:48:25.935721Z",
+  "generated": "2022-09-06T09:41:33.283650Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }
