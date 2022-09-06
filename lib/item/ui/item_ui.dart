@@ -194,12 +194,12 @@ class _ItemUiState extends State<ItemUi> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight( 55),
           child: CustomAppBar(
-            title: Text('Item', style: TextStyle(color: whiteColor)),
+            title: Text('Item', style: TextStyle(color: textcolor)),
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: Icon(
                 Icons.arrow_back,
-                color: whiteColor,
+                color: textcolor,
               ),
             ),
           )),

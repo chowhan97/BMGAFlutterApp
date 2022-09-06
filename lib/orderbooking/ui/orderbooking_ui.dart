@@ -34,12 +34,12 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
             preferredSize: Size.fromHeight(55),
             child: CustomAppBar(
               title:
-                  Text('Order Booking List', style: TextStyle(color: whiteColor)),
+                  Text('Order Booking List', style: TextStyle(color: textcolor)),
               leading: IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(
                   Icons.arrow_back,
-                  color: whiteColor,
+                  color: textcolor,
                 ),
               ),
             )),

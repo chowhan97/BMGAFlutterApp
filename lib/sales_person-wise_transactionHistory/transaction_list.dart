@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_detail_screen.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_model.dart';
+import 'package:ebuzz/util/apiurls.dart';
 import 'package:http/http.dart' as http;
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
@@ -26,10 +27,10 @@ class _TransactionListState extends State<TransactionList> {
     var toDate = jsonEncode(widget.todate);
     var fromDate = jsonEncode(widget.fromdate);
     fetch = true;
-    var headers = {
-      'Cookie':
-          'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
-    };
+    // var headers = {
+    //   'Cookie':
+    //       'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
+    // };
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
@@ -44,7 +45,7 @@ class _TransactionListState extends State<TransactionList> {
       'distinct': 'false'
     });
     print("request.fields ${request.fields}");
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
@@ -102,12 +103,12 @@ class _TransactionListState extends State<TransactionList> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
-          title: Text('Transaction List', style: TextStyle(color: whiteColor)),
+          title: Text('Transaction List', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context, false),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),

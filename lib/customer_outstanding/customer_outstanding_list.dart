@@ -105,12 +105,12 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
           title: Text('Accounts Receivable List',
-              style: TextStyle(color: whiteColor)),
+              style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context, false),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),

@@ -82,12 +82,12 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(displayWidth(context) > 600 ? 80 : 55),
         child: CustomAppBar(
-          title: Text('Order Booking Form', style: TextStyle(color: whiteColor)),
+          title: Text('Order Booking Form', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),

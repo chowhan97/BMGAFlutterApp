@@ -16,6 +16,7 @@ Color violetColor = Color(0xFF1b262c);
 Color redColor = Colors.red;
 Color greenColor = Colors.green;
 Color orangeColor = Colors.orange;
+Color textcolor = Color(0xFFF16667);
 
 
 

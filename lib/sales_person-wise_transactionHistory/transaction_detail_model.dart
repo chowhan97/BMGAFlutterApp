@@ -1040,7 +1040,7 @@ class PaymentSchedule {
   DateTime? dueDate;
   dynamic invoicePortion;
   String? discountType;
-  DateTime? discountDate;
+  String? discountDate;
   dynamic discount;
   dynamic paymentAmount;
   dynamic outstanding;
@@ -1063,7 +1063,7 @@ class PaymentSchedule {
     dueDate: DateTime.parse(json["due_date"]),
     invoicePortion: json["invoice_portion"],
     discountType: json["discount_type"],
-    discountDate: DateTime.parse(json["discount_date"]),
+    discountDate: json["discount_date"] ?? "",
     discount: json["discount"],
     paymentAmount: json["payment_amount"],
     outstanding: json["outstanding"],
@@ -1087,7 +1087,7 @@ class PaymentSchedule {
     "due_date": "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
     "invoice_portion": invoicePortion,
     "discount_type": discountType,
-    "discount_date": "${discountDate!.year.toString().padLeft(4, '0')}-${discountDate!.month.toString().padLeft(2, '0')}-${discountDate!.day.toString().padLeft(2, '0')}",
+    "discount_date": discountDate,
     "discount": discount,
     "payment_amount": paymentAmount,
     "outstanding": outstanding,

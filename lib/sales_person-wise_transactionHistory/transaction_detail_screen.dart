@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_detail_model.dart';
+import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:test_api/expect.dart';
 
 class TransactionDetail extends StatefulWidget {
   // String invoiceId;
@@ -28,12 +30,12 @@ class _TransactionDetailState extends State<TransactionDetail> {
   Future getTableData(BuildContext context,{invoiceId}) async{
     print("call");
     isNotEditableLoad = true;
-    var headers = {
-      'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
-    };
+    // var headers = {
+    //   'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
+    // };
     var request = http.Request('POST', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Invoice&name=$invoiceId&_=1661399544137'));
 
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
@@ -45,7 +47,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
         isNotEditableLoad = false;
         print("table call");
         transactionDetailModel = TransactionDetailModel.fromJson(json.decode(data));
-        print("${transactionDetailModel!.docs}");
+        print("${transactionDetailModel!.docs![0].taxes!.length}");
         print("${transactionDetailModel!.docinfo}");
       });
     }
@@ -61,12 +63,12 @@ class _TransactionDetailState extends State<TransactionDetail> {
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
           title:
-          Text('Transaction Detail', style: TextStyle(color: whiteColor)),
+          Text('Transaction Detail', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),
@@ -132,7 +134,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     transactionDetailModel!.docs![0].taxes!.isEmpty ? Container() : listOfTaxes(transactionDetailModel!.docs![0].taxes!),
                   ],
                 ),
-                SizedBox(height: 50,),
+                SizedBox(height: 50),
               ],
             ),
           ),
@@ -282,6 +284,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     Text("₹ ${list[0].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
+                if(list.length > 1)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -296,6 +299,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
+                if(list.length > 1)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

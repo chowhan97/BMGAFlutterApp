@@ -43,12 +43,12 @@ class _TransactionHistoryState extends State<TransactionHistory> {
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
           title:
-              Text('Transaction Summary', style: TextStyle(color: whiteColor)),
+              Text('Transaction Summary', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context, false),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),

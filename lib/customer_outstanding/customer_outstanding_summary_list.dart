@@ -95,12 +95,12 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
           title: Text('Accounts Receivable Summary List',
-              style: TextStyle(color: whiteColor)),
+              style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context, false),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),
