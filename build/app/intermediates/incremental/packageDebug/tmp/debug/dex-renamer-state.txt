@@ -1,4 +1,4 @@
-#Tue Sep 06 17:46:40 IST 2022
+#Tue Sep 06 18:02:36 IST 2022
 base.2=D\:\\BMGA_3.0.5\\BMGAFlutterApp\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes3.dex
 path.2=classes3.dex
 base.1=D\:\\BMGA_3.0.5\\BMGAFlutterApp\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex

@@ -244,7 +244,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               PopupMenuButton<Choice>(
                 icon: Icon(
                   Icons.more_vert,
-                  color: whiteColor,
+                  color: textcolor,
                 ),
                 onSelected: _select,
                 itemBuilder: (BuildContext context) {
