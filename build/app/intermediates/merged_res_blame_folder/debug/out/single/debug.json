@@ -32,19 +32,15 @@
         "source": "com.app.ebuzz.app-main-26:/mipmap-mdpi/ic_launcher.png"
     },
     {
+        "merged": "com.app.ebuzz.app-merged_res-32:/mipmap-xhdpi_launcher_icon.png.flat",
+        "source": "com.app.ebuzz.app-main-26:/mipmap-xhdpi/launcher_icon.png"
+    },
+    {
         "merged": "com.app.ebuzz.app-merged_res-32:/mipmap-xxhdpi_launcher_icon.png.flat",
         "source": "com.app.ebuzz.app-main-26:/mipmap-xxhdpi/launcher_icon.png"
     },
     {
-        "merged": "com.app.ebuzz.app-merged_res-32:/drawable_launch_background.xml.flat",
-        "source": "com.app.ebuzz.app-main-26:/drawable/launch_background.xml"
-    },
-    {
         "merged": "com.app.ebuzz.app-merged_res-32:/mipmap-xxxhdpi_launcher_icon.png.flat",
         "source": "com.app.ebuzz.app-main-26:/mipmap-xxxhdpi/launcher_icon.png"
-    },
-    {
-        "merged": "com.app.ebuzz.app-merged_res-32:/mipmap-xhdpi_launcher_icon.png.flat",
-        "source": "com.app.ebuzz.app-main-26:/mipmap-xhdpi/launcher_icon.png"
     }
 ]

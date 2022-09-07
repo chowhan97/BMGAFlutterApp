@@ -74,14 +74,7 @@ class _LoginState extends State<Login> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: displayHeight(context) * 0.15,
-                  ),
                   logo(),
-                  // ambibuzzText(),
-                  SizedBox(
-                    height: displayHeight(context) * 0.05,
-                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Form(
@@ -117,7 +110,7 @@ class _LoginState extends State<Login> {
 
   Widget logo() {
     // return Image.asset('assets/bharathrajesh.png');
-    return Container(height: 350,width: 350,child: Image.asset('assets/Applogo.png',fit: BoxFit.contain));
+    return Container(height: MediaQuery.of(context).size.height * 0.4,width: double.infinity,child: Image.asset('assets/Applogo.png',fit: BoxFit.contain));
   }
 
   Widget ambibuzzText() {
@@ -209,7 +202,7 @@ class _LoginState extends State<Login> {
       width: displayWidth(context),
       height: 50,
       child: RoundButton(
-        primaryColor: blueAccent,
+        primaryColor: textcolor,
         onPrimaryColor: whiteColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),

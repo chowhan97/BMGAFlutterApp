@@ -56,7 +56,6 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffcfd6e7),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
@@ -115,127 +114,10 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
               ),
               SizedBox(height: 15),
               if(accountReceivableSummary == true)
-              Container(
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                    color: whiteColor, borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTypeAheadFormField(
-                      controller: company,
-                      decoration: InputDecoration(
-                        fillColor: greyColor,
-                        filled: true,
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        hintText: 'Select Company',
-                      ),
-                      label: 'Company',
-                      labelStyle:
-                      TextStyle(color: blackColor, fontWeight: FontWeight.bold),
-                      style: TextStyle(fontSize: 14, color: blackColor),
-                      itemBuilder: (context, item) {
-                        return TypeAheadWidgets.itemUi(item);
-                      },
-                      onSuggestionSelected: (suggestion) async {
-                        print("suggestion selected");
-                        setState(() {
-                          company.text = suggestion;
-                        });
-                      },
-                      suggestionsCallback: (pattern) {
-                        print("suggestion list call");
-                        return TypeAheadWidgets.getSuggestions(
-                            pattern, companyList);
-                      },
-                      transitionBuilder: (context, suggestionsBox, controller) {
-                        return suggestionsBox;
-                      },
-                      validator: (val) => val == '' || val == null
-                          ? 'Company name should not be empty'
-                          : null,
-                    ),
-                SizedBox(height: 10),
-                CustomTypeAheadFormField(
-                  controller: customer,
-                  decoration: InputDecoration(
-                    fillColor: greyColor,
-                    filled: true,
-                    isDense: true,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    hintText: 'Select Customer Name',
-                  ),
-                  label: 'Customer Name',
-                  labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
-                  // required: true,
-                  style: TextStyle(fontSize: 14, color: blackColor),
-                  itemBuilder: (context, item) {
-                    return TypeAheadWidgets.itemUi(item);
-                  },
-                  onSuggestionSelected: (suggestion) async {
-                    customer.text = suggestion;
-                    print("this is index===>>>>${customerName.indexOf(suggestion)}");
-                    print("this is code===>>>${customerList[customerName.indexOf(suggestion)]}");
-                    setState(() {
-                      customername.text = customerList[customerName.indexOf(suggestion)];
-                    });
-                  },
-                  suggestionsCallback: (pattern) {
-                    return TypeAheadWidgets.getSuggestions(pattern, customerName);
-                  },
-                  transitionBuilder: (context, suggestionsBox, controller) {
-                    return suggestionsBox;
-                  },
-                  validator: (val) => val == '' || val == null ? 'Customer name should not be empty' : null,
-                ),
-                    // SizedBox(height: 10),
-                    // Text("From date", style: TextStyle(fontWeight: FontWeight.bold)),
-                    // SizedBox(height: 8),
-                    // dateWidget(
-                    //     hintText: "Select From Date",
-                    //     controller: reportDate,
-                    //     ontap: () {opencalender();},
-                    //     suffixIcon: Icons.calendar_today_outlined,readOnly: true),
-                    // SizedBox(height: 10),
-                    // Text("Range 1", style: TextStyle(fontWeight: FontWeight.bold)),
-                    // SizedBox(height: 8),
-                    // dateWidget(
-                    //     hintText: "Range 1",
-                    //     controller: range1,readOnly: false
-                    // ),
-                    // SizedBox(height: 10),
-                    // Text("Range 2", style: TextStyle(fontWeight: FontWeight.bold)),
-                    // SizedBox(height: 8),
-                    // dateWidget(
-                    //   hintText: "Range 2",
-                    //   controller: range2,readOnly: false
-                    // ),
-                    // SizedBox(height: 10),
-                    // Text("Range 3", style: TextStyle(fontWeight: FontWeight.bold)),
-                    // SizedBox(height: 8),
-                    // dateWidget(
-                    //   hintText: "Range 3",
-                    //   controller: range3,readOnly: false
-                    // ),
-                    // SizedBox(height: 10),
-                    // Text("Range 4", style: TextStyle(fontWeight: FontWeight.bold)),
-                    // SizedBox(height: 8),
-                    // dateWidget(
-                    //   hintText: "Range 4",
-                    //   controller: range4,readOnly: false
-                    // ),
-                  ],
-                ),
-              ),
-              if(accountReceivable == true)
-              Container(
+              Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                child: Container(
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       color: whiteColor, borderRadius: BorderRadius.circular(15)),
@@ -279,6 +161,42 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                             ? 'Company name should not be empty'
                             : null,
                       ),
+                  SizedBox(height: 10),
+                  CustomTypeAheadFormField(
+                    controller: customer,
+                    decoration: InputDecoration(
+                      fillColor: greyColor,
+                      filled: true,
+                      isDense: true,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      hintText: 'Select Customer Name',
+                    ),
+                    label: 'Customer Name',
+                    labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
+                    // required: true,
+                    style: TextStyle(fontSize: 14, color: blackColor),
+                    itemBuilder: (context, item) {
+                      return TypeAheadWidgets.itemUi(item);
+                    },
+                    onSuggestionSelected: (suggestion) async {
+                      customer.text = suggestion;
+                      print("this is index===>>>>${customerName.indexOf(suggestion)}");
+                      print("this is code===>>>${customerList[customerName.indexOf(suggestion)]}");
+                      setState(() {
+                        customername.text = customerList[customerName.indexOf(suggestion)];
+                      });
+                    },
+                    suggestionsCallback: (pattern) {
+                      return TypeAheadWidgets.getSuggestions(pattern, customerName);
+                    },
+                    transitionBuilder: (context, suggestionsBox, controller) {
+                      return suggestionsBox;
+                    },
+                    validator: (val) => val == '' || val == null ? 'Customer name should not be empty' : null,
+                  ),
                       // SizedBox(height: 10),
                       // Text("From date", style: TextStyle(fontWeight: FontWeight.bold)),
                       // SizedBox(height: 8),
@@ -318,6 +236,95 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                     ],
                   ),
                 ),
+              ),
+              if(accountReceivable == true)
+              Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                child: Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        color: whiteColor, borderRadius: BorderRadius.circular(15)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTypeAheadFormField(
+                          controller: company,
+                          decoration: InputDecoration(
+                            fillColor: greyColor,
+                            filled: true,
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            hintText: 'Select Company',
+                          ),
+                          label: 'Company',
+                          labelStyle:
+                          TextStyle(color: blackColor, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 14, color: blackColor),
+                          itemBuilder: (context, item) {
+                            return TypeAheadWidgets.itemUi(item);
+                          },
+                          onSuggestionSelected: (suggestion) async {
+                            print("suggestion selected");
+                            setState(() {
+                              company.text = suggestion;
+                            });
+                          },
+                          suggestionsCallback: (pattern) {
+                            print("suggestion list call");
+                            return TypeAheadWidgets.getSuggestions(
+                                pattern, companyList);
+                          },
+                          transitionBuilder: (context, suggestionsBox, controller) {
+                            return suggestionsBox;
+                          },
+                          validator: (val) => val == '' || val == null
+                              ? 'Company name should not be empty'
+                              : null,
+                        ),
+                        // SizedBox(height: 10),
+                        // Text("From date", style: TextStyle(fontWeight: FontWeight.bold)),
+                        // SizedBox(height: 8),
+                        // dateWidget(
+                        //     hintText: "Select From Date",
+                        //     controller: reportDate,
+                        //     ontap: () {opencalender();},
+                        //     suffixIcon: Icons.calendar_today_outlined,readOnly: true),
+                        // SizedBox(height: 10),
+                        // Text("Range 1", style: TextStyle(fontWeight: FontWeight.bold)),
+                        // SizedBox(height: 8),
+                        // dateWidget(
+                        //     hintText: "Range 1",
+                        //     controller: range1,readOnly: false
+                        // ),
+                        // SizedBox(height: 10),
+                        // Text("Range 2", style: TextStyle(fontWeight: FontWeight.bold)),
+                        // SizedBox(height: 8),
+                        // dateWidget(
+                        //   hintText: "Range 2",
+                        //   controller: range2,readOnly: false
+                        // ),
+                        // SizedBox(height: 10),
+                        // Text("Range 3", style: TextStyle(fontWeight: FontWeight.bold)),
+                        // SizedBox(height: 8),
+                        // dateWidget(
+                        //   hintText: "Range 3",
+                        //   controller: range3,readOnly: false
+                        // ),
+                        // SizedBox(height: 10),
+                        // Text("Range 4", style: TextStyle(fontWeight: FontWeight.bold)),
+                        // SizedBox(height: 8),
+                        // dateWidget(
+                        //   hintText: "Range 4",
+                        //   controller: range4,readOnly: false
+                        // ),
+                      ],
+                    ),
+                  ),
+              ),
             ],
           ),
         ),

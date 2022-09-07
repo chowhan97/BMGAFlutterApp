@@ -90,12 +90,10 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffcfd6e7),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
-          title: Text('Accounts Receivable Summary List',
-              style: TextStyle(color: textcolor)),
+          title: Text('Accounts Receivable Summary List', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context, false),
             icon: Icon(
@@ -122,8 +120,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Total Invoice Amount",
-                            style: TextStyle(color: Colors.black)),
+                        Text("Total Invoice Amount", style: TextStyle(color: Colors.black)),
                         SizedBox(height: 10),
                         head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[3] == "" ? "0.0": header.last[3]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                       ],

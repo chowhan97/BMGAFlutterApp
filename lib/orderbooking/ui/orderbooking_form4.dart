@@ -398,89 +398,12 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         ],
       ),
       body: isTableLoad == true
-          ? Container(height: MediaQuery.of(context).size.height, color: Color(0xffcfd6e7),child: Center(child: CircularProgressIndicator()))
+          ? Container(height: MediaQuery.of(context).size.height,child: Center(child: CircularProgressIndicator()))
           : Container(
              height: MediaQuery.of(context).size.height,
-             color: Color(0xffcfd6e7),
             child: SingleChildScrollView(
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  // child: Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Row(
-                  //       mainAxisAlignment: MainAxisAlignment.start,
-                  //       children: [
-                  //         Text(
-                  //           'Scroll ',
-                  //           style: TextStyle(fontSize: 18, color: blackColor),
-                  //         ),
-                  //         Icon(
-                  //           Icons.arrow_back,
-                  //           color: blackColor,
-                  //           size: 25,
-                  //         ),
-                  //         Text(
-                  //           ' or ',
-                  //           style: TextStyle(fontSize: 18, color: blackColor),
-                  //         ),
-                  //         Icon(
-                  //           Icons.arrow_forward,
-                  //           color: blackColor,
-                  //           size: 25,
-                  //         ),
-                  //         Text(
-                  //           ' to view table below',
-                  //           style: TextStyle(fontSize: 18, color: blackColor),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     SizedBox(height: 8),
-                  //     tableModel!.message!.salesOrder!.salesOrder!.isEmpty
-                  //         ? Container()
-                  //         : Text("Sales Order Preview",
-                  //             style: TextStyle(fontSize: 18)),
-                  //     SizedBox(height: 8),
-                  //     tableModel!.message!.salesOrder!.salesOrder!.isEmpty
-                  //         ? Container()
-                  //         : Expanded(
-                  //             child: ListView(
-                  //               scrollDirection: Axis.horizontal,
-                  //               children: [
-                  //                 _createDataTable(),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //     tableModel!.message!.salesPromosItems!.isEmpty
-                  //         ? Container()
-                  //         : Text("Promos", style: TextStyle(fontSize: 18)),
-                  //     SizedBox(height: 8),
-                  //     tableModel!.message!.salesPromosItems!.isEmpty
-                  //         ? Container()
-                  //         : Expanded(
-                  //             child: ListView(
-                  //               scrollDirection: Axis.horizontal,
-                  //               children: [
-                  //                 _createPromosDataTable(),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //     tableModel!.message!.salesPromoDiscount!.promos!.isEmpty
-                  //         ? Container()
-                  //         : Text("Promos Discount", style: TextStyle(fontSize: 18)),
-                  //     SizedBox(height: 8),
-                  //     tableModel!.message!.salesPromoDiscount!.promos!.isEmpty
-                  //         ? Container()
-                  //         : Expanded(
-                  //             child: ListView(
-                  //               scrollDirection: Axis.horizontal,
-                  //               children: [
-                  //                 _createPromosDiscountDataTable(),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //   ],
-                  // ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -497,12 +420,13 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                     tableModel!.message!.salesPromosItems!.isEmpty
                         ? Container()
                         : listPromosView(tableModel!.message!.salesPromosItems!),
-                    tableModel!.message!.salesPromoDiscount!.promos!.isEmpty
+                    tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
                         ? Container()
                         : header("Promos Discount"),
-                    tableModel!.message!.salesPromoDiscount!.promos!.isEmpty
+                    tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
                         ? Container()
-                        : listPromosDiscountView(tableModel!.message!.salesPromoDiscount!.promos!),
+                        // : listPromosDiscountView(tableModel!.message!.salesPromoDiscount!.promos!),
+                        : listPromosDiscountView(tableModel!.message!.salesPromoDiscountedAmount!),
                   ],
                 ),
                 ),
@@ -665,7 +589,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     );
   }
 
-  listPromosDiscountView(List<PromoDisc> list) {
+  listPromosDiscountView(List<SalesPromoDiscountedAmount> list) {
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -676,6 +600,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           physics: ScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context,index){
+            print("disc is===>>${list[index].promoType}");
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -685,40 +610,46 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(list[index].boughtItem.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
+                        Text(list[index].boughtItem.toString(),style: TextStyle(fontWeight: FontWeight.bold)),
                         SizedBox(height: 2,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            Text("PromoItem : ",style: TextStyle(fontWeight: FontWeight.bold)),
                             Container(
                               width: MediaQuery.of(context).size.width / 2.5,
                               child: Text(
-                                "${list[index].boughtItem}",style: TextStyle(color: Colors.grey),
+                                "${list[index].promoItem}",style: TextStyle(color: Colors.grey),
                                 // maxLines: 2,overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            // Container(
-                            //   width: MediaQuery.of(context).size.width / 1.7,
-                            //   child: Text(
-                            //     "PromoType : ${list[index].promoType}",style: TextStyle(fontWeight: FontWeight.bold,),
-                            //     // maxLines: 2,overflow: TextOverflow.ellipsis,
-                            //   ),
-                            // ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              child: Text(
+                                "${list[index].promoType}",style: TextStyle(color: Colors.grey),
+                                // maxLines: 2,overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ],
                         ),
                         // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        SizedBox(height: 2,),
+                        SizedBox(height: 2),
                         Text(
-                          "${list[index].forEveryQuantityThatIsBought} x ${list[index].discount}",
-                          style: TextStyle(fontWeight: FontWeight.bold,),
+                          "${list[index].dicQty} x ${list[index].rate == null ? "0.0" : list[index].rate}",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Text(
-                    "₹" +(list[index].forEveryQuantityThatIsBought * list[index].discount).toString(),
+                    "₹" +(list[index].dicQty! * (list[index].rate == null ? 0.0 : list[index].rate)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

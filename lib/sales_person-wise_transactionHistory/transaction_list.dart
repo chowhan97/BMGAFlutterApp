@@ -99,7 +99,6 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffcfd6e7),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(

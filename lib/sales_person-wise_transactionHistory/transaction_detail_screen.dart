@@ -75,7 +75,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
       ),
       body:  Container(
         height: MediaQuery.of(context).size.height,
-        color: Color(0xffcfd6e7),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 10,right: 10),
@@ -274,32 +273,30 @@ class _TransactionDetailState extends State<TransactionDetail> {
           elevation: 5,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
+            child: list.length > 1 ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("SGST total tax Amount",style: TextStyle(color: Colors.grey)),
+                    Text("SGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
                     Text("₹ ${list[0].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
-                if(list.length > 1)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("CGST total tax Amount",style: TextStyle(color: Colors.grey)),
+                    Text("CGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
                     Text("₹ ${list[1].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total value without tax",style: TextStyle(color: Colors.grey)),
+                    Text("Total Taxable",style: TextStyle(fontWeight: FontWeight.bold)),
                     Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
-                if(list.length > 1)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -308,55 +305,33 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   ],
                 ),
               ],
+            ) : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("IGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text("₹ ${list[0].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Total Taxable",style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Grand total",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+              ],
             ),
           ),
-          // child: ListView.builder(
-          //   itemCount: list.length,
-          //   physics: ScrollPhysics(),
-          //   shrinkWrap: true,
-          //   itemBuilder: (context,index){
-          //     return Padding(
-          //       padding: const EdgeInsets.all(16.0),
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           SizedBox(height: 2,),
-          //           Text(index == 0? "SGST" : "CGST",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-          //           SizedBox(height: 2,),
-          //           Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Text("Total Taxable Amount : ",),
-          //               Text(
-          //                 list[index].taxAmount.toString(),
-          //               ),
-          //             ],
-          //           ),
-          //           SizedBox(height: 2),
-          //           // Row(
-          //           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           //   children: [
-          //           //     Text("Total Tax Amount : ",),
-          //           //     Text(
-          //           //       list[index].taxAmount.toString(),
-          //           //     ),
-          //           //   ],
-          //           // ),
-          //           // SizedBox(height: 5,),
-          //           Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Text("Grand Total : ",style: TextStyle(fontWeight: FontWeight.bold,)),
-          //               Text(
-          //                 list[index].total.toString(),style: TextStyle(fontWeight: FontWeight.bold,)
-          //               ),
-          //             ],
-          //           ),
-          //         ],
-          //       ),
-          //     );
-          //   },
-          // ),
         ),
       ),
     );

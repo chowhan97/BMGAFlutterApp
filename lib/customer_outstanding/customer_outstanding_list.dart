@@ -100,7 +100,6 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffcfd6e7),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
@@ -458,7 +457,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("${heading}:- ", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text("${heading}: ", style: TextStyle(fontWeight: FontWeight.bold)),
         Text(val, style: TextStyle(color: Colors.grey)),
       ],
     );

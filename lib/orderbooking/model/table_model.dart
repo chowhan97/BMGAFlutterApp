@@ -590,7 +590,7 @@ class Message {
   SalesPromo? salesPromoDiffItems;
   SalesPromoDiscount? salesPromoDiscount;
   PromosQty? promosQty;
-  List<dynamic>? salesPromoDiscountedAmount;
+  List<SalesPromoDiscountedAmount>? salesPromoDiscountedAmount;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
     salesOrder: MessageSalesOrder.fromJson(json["sales_order"]),
@@ -600,7 +600,7 @@ class Message {
     salesPromoDiffItems: SalesPromo.fromJson(json["sales_promo_diff_items"]),
     salesPromoDiscount: SalesPromoDiscount.fromJson(json["sales_promo_discount"]),
     promosQty: PromosQty.fromJson(json["promos_qty"]),
-    salesPromoDiscountedAmount: List<dynamic>.from(json["sales_promo_discounted_amount"].map((x) => x)),
+    salesPromoDiscountedAmount: List<SalesPromoDiscountedAmount>.from(json["sales_promo_discounted_amount"].map((x) => SalesPromoDiscountedAmount.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {

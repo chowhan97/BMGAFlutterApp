@@ -4,6 +4,7 @@ import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/orderbooking/model/notEditable_model.dart';
 import 'package:ebuzz/orderbooking/model/order_booking.dart';
 import 'package:ebuzz/salesorder/model/sales_order.dart';
+import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,12 +83,12 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
   Future getTableData(BuildContext context,{name}) async{
     print("call");
     isNotEditableLoad = true;
-    var headers = {
-      'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
-    };
+    // var headers = {
+    //   'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
+    // };
     var request = http.Request('POST', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Order+Booking+V2&name=${name}&_=1660542323085'));
 
-    request.headers.addAll(headers);
+    request.headers.addAll(commonHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
@@ -114,19 +115,18 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
         preferredSize: Size.fromHeight(55),
         child: CustomAppBar(
           title:
-          Text('Order Booking Detail', style: TextStyle(color: whiteColor)),
+          Text('Order Booking Detail', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.arrow_back,
-              color: whiteColor,
+              color: textcolor,
             ),
           ),
         ),
       ),
       body:  Container(
           height: MediaQuery.of(context).size.height,
-          color: Color(0xffcfd6e7),
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(left: 10,right: 10),

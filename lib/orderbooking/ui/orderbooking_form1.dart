@@ -113,7 +113,6 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        color: Color(0xffcfd6e7),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(8.0),

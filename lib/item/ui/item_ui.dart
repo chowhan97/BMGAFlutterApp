@@ -75,12 +75,6 @@ class _ItemUiState extends State<ItemUi> {
   //For fetching item data
   fetchItem() async {
     try {
-      // final String? cookie = await getCookie();
-      // Map<String, String> requestHeaders = {
-      //   'Content-type': 'application/json',
-      //   'Accept': 'application/json',
-      //   // 'Cookie': cookie!
-      // };
       String? baseurl = await getApiUrl();
       final String url = itemDataUrl(searchController.text);
       final String itemCodeUrl = baseurl! + url;
@@ -124,25 +118,6 @@ class _ItemUiState extends State<ItemUi> {
       else {
         print(resp.reasonPhrase);
       }
-      // final itemNameResponse = await http.get(
-      //   itemNameUri,
-      //   headers: requestHeaders,
-      // );
-      // print("itemNameResponse ${itemNameResponse.statusCode}");
-      // print("response ${response.statusCode}");
-      // if (itemNameResponse.statusCode == 200) {
-      //   var data = jsonDecode(itemNameResponse.body);
-      //   var list = data['data'];
-      //   if (list.length == 1) {
-      //     itemCode = data['data'][0]['item_code'];
-      //     warehouseName = await CommonService().getWareHouseNameData(itemCode, context);
-      //     warehouseQty = await CommonService().getWareHouseQtyData(itemCode, context);
-      //     print("itemNameResponse warehouse name===>>>$warehouseName");
-      //     print("itemNameResponse warehouse qty===>>>$warehouseQty");
-      //     apiCall = true;
-      //     setState(() {});
-      //   }
-      // }
       if (respUri.statusCode == 200) {
         itemCode = searchController.text;
         print("itemcode======>>>$itemCode");
@@ -258,22 +233,22 @@ class _ItemUiState extends State<ItemUi> {
                                       snapshot: snapshot,
                                       apiurl: apiurl!,
                                     ),
-                                    warehouseName.isEmpty || warehouseName.length == 0
-                                        ? Text('No Warehouse data found',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: blackColor))
-                                        : Column(
-                                            children: [
-                                              UniqueWarehouseList(
-                                                warehouseName: warehouseName,
-                                                warehouseQty: warehouseQty,
-                                              ),
-                                            ],
-                                          ),
-                                    SizedBox(
-                                      height: displayHeight(context) * 0.05,
-                                    ),
+                                    // warehouseName.isEmpty || warehouseName.length == 0
+                                    //     ? Text('No Warehouse data found',
+                                    //         style: TextStyle(
+                                    //             fontSize: 18,
+                                    //             color: blackColor))
+                                    //     : Column(
+                                    //         children: [
+                                    //           UniqueWarehouseList(
+                                    //             warehouseName: warehouseName,
+                                    //             warehouseQty: warehouseQty,
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    // SizedBox(
+                                    //   height: displayHeight(context) * 0.05,
+                                    // ),
                                   ],
                                 );
                               }

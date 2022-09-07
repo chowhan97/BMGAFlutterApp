@@ -32,8 +32,4 @@ class ItemApiService {
     }
     return Product();
   }
-
-  
-
-  
 }

@@ -177,7 +177,6 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        color: Color(0xffcfd6e7),
         child: oblist.length == 0
             ? Center(child: Text(
                 'List is empty',
@@ -735,189 +734,6 @@ class _OBItemsFormState extends State<OBItemsForm>
                     print(itemcodecontrollerlist[widget.i].text);
                     ids.clear();
                     promoType1(itemCode: itemcodecontrollerlist[widget.i].text,promoType: "Promo Type 1",idx: 1);
-                    // showDialog(context: context, builder: (BuildContext context){
-                    //   return StatefulBuilder(
-                    //     builder: (context, setState) {
-                    //       return SingleChildScrollView(
-                    //         child: AlertDialog(backgroundColor: Color(0xffcfd6e7),
-                    //           title: Text("Show Offer"),
-                    //           content: Column(
-                    //             children: [
-                    //             if(promo1Res['message'].isNotEmpty)
-                    //             Card(
-                    //             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    //             elevation: 5,
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.all(8.0),
-                    //               child: Column(
-                    //                 children: [
-                    //                   Padding(
-                    //                     padding: const EdgeInsets.all(5.0),
-                    //                     child: Row(
-                    //                       children: [
-                    //                         Icon(Icons.apartment ,color: Colors.grey,),
-                    //                         SizedBox(width: 5,),
-                    //                         Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                   Padding(
-                    //                     padding: const EdgeInsets.all(5.0),
-                    //                     child: Row(
-                    //                       children: [
-                    //                         Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                    //                         SizedBox(width: 5,),
-                    //                         Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                   Padding(
-                    //                     padding: const EdgeInsets.all(5.0),
-                    //                     child: Row(
-                    //                       children: [
-                    //                         Icon(Icons.person,color: Colors.grey,),
-                    //                         SizedBox(width: 5,),
-                    //                         Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             ),
-                    //             if(promo2Res['message'].isNotEmpty)
-                    //             Card(
-                    //                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    //                 elevation: 5,
-                    //                 child: Padding(
-                    //                   padding: const EdgeInsets.all(8.0),
-                    //                   child: Column(
-                    //                     children: [
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(5.0),
-                    //                         child: Row(
-                    //                           children: [
-                    //                             Icon(Icons.apartment ,color: Colors.grey,),
-                    //                             SizedBox(width: 5,),
-                    //                             Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(5.0),
-                    //                         child: Row(
-                    //                           children: [
-                    //                             Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                    //                             SizedBox(width: 5,),
-                    //                             Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(5.0),
-                    //                         child: Row(
-                    //                           children: [
-                    //                             Icon(Icons.person,color: Colors.grey,),
-                    //                             SizedBox(width: 5,),
-                    //                             Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             if(promo3Res['message'].isNotEmpty)
-                    //             Card(
-                    //                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    //                 elevation: 5,
-                    //                 child: Padding(
-                    //                   padding: const EdgeInsets.all(8.0),
-                    //                   child: Column(
-                    //                     children: [
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(5.0),
-                    //                         child: Row(
-                    //                           children: [
-                    //                             Icon(Icons.apartment ,color: Colors.grey,),
-                    //                             SizedBox(width: 5,),
-                    //                             Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(5.0),
-                    //                         child: Row(
-                    //                           children: [
-                    //                             Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                    //                             SizedBox(width: 5,),
-                    //                             Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(5.0),
-                    //                         child: Row(
-                    //                           children: [
-                    //                             Icon(Icons.person,color: Colors.grey,),
-                    //                             SizedBox(width: 5,),
-                    //                             Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             if(promo5Res['message'].isNotEmpty)
-                    //             Card(
-                    //                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    //                   elevation: 5,
-                    //                   child: Padding(
-                    //                     padding: const EdgeInsets.all(8.0),
-                    //                     child: Column(
-                    //                       children: [
-                    //                         Padding(
-                    //                           padding: const EdgeInsets.all(5.0),
-                    //                           child: Row(
-                    //                             children: [
-                    //                               Icon(Icons.apartment ,color: Colors.grey,),
-                    //                               SizedBox(width: 5,),
-                    //                               Expanded(child: Text("fgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                             ],
-                    //                           ),
-                    //                         ),
-                    //                         Padding(
-                    //                           padding: const EdgeInsets.all(5.0),
-                    //                           child: Row(
-                    //                             children: [
-                    //                               Icon(Icons.add_circle_outline_outlined,color: Colors.grey,),
-                    //                               SizedBox(width: 5,),
-                    //                               Expanded(child: Text("fgfgfgfgf",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                             ],
-                    //                           ),
-                    //                         ),
-                    //                         Padding(
-                    //                           padding: const EdgeInsets.all(5.0),
-                    //                           child: Row(
-                    //                             children: [
-                    //                               Icon(Icons.person,color: Colors.grey,),
-                    //                               SizedBox(width: 5,),
-                    //                               Expanded(child: Text("fgfgfgfg",maxLines: 1,overflow: TextOverflow.ellipsis)),
-                    //                             ],
-                    //                           ),
-                    //                         ),
-                    //                       ],
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }
-                    //   );
-                    // });
                   },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: Constants.buttonColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
             ) : Container(),
             Padding(
@@ -1150,14 +966,12 @@ class _CustomDialogueState extends State<CustomDialogue> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Color(0xffcfd6e7),
       insetPadding: EdgeInsets.all(5),
       child: showoffer == true ? Container(height: 500,alignment: Alignment.center,child: Container(height: 30,width: 30,child: CircularProgressIndicator(color: Colors.white))) : Stack(
         alignment: Alignment.center,
         children: <Widget>[
           Container(
             height: 500,
-            color: Color(0xffcfd6e7),
             margin: EdgeInsets.all(5),
             child: SingleChildScrollView(
               child: Column(
