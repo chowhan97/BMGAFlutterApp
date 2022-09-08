@@ -1,0 +1,12 @@
+io.github.ponnamkarthik.toast.fluttertoast-core-1.6.0-0 C:\Users\HP\.gradle\caches\transforms-3\09e98e082fe0375dba3976e17ef175e1\transformed\core-1.6.0\res
+io.github.ponnamkarthik.toast.fluttertoast-jetified-window-1.0.0-beta04-1 C:\Users\HP\.gradle\caches\transforms-3\25515d5f22fd45a5281e1712c3c6cf37\transformed\jetified-window-1.0.0-beta04\res
+io.github.ponnamkarthik.toast.fluttertoast-jetified-window-java-1.0.0-beta04-2 C:\Users\HP\.gradle\caches\transforms-3\31c3bcfd27ec1a9bf7431eaf57b9c5a0\transformed\jetified-window-java-1.0.0-beta04\res
+io.github.ponnamkarthik.toast.fluttertoast-jetified-annotation-experimental-1.1.0-3 C:\Users\HP\.gradle\caches\transforms-3\6ec30ee4a459cfbf5d60c53600a374c1\transformed\jetified-annotation-experimental-1.1.0\res
+io.github.ponnamkarthik.toast.fluttertoast-pngs-4 D:\BMGA_3.0.5\BMGAFlutterApp\build\fluttertoast\generated\res\pngs\release
+io.github.ponnamkarthik.toast.fluttertoast-resValues-5 D:\BMGA_3.0.5\BMGAFlutterApp\build\fluttertoast\generated\res\resValues\release
+io.github.ponnamkarthik.toast.fluttertoast-rs-6 D:\BMGA_3.0.5\BMGAFlutterApp\build\fluttertoast\generated\res\rs\release
+io.github.ponnamkarthik.toast.fluttertoast-mergeReleaseResources-7 D:\BMGA_3.0.5\BMGAFlutterApp\build\fluttertoast\intermediates\incremental\release\mergeReleaseResources\merged.dir
+io.github.ponnamkarthik.toast.fluttertoast-mergeReleaseResources-8 D:\BMGA_3.0.5\BMGAFlutterApp\build\fluttertoast\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+io.github.ponnamkarthik.toast.fluttertoast-merged_res-9 D:\BMGA_3.0.5\BMGAFlutterApp\build\fluttertoast\intermediates\merged_res\release
+io.github.ponnamkarthik.toast.fluttertoast-main-10 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\fluttertoast-8.0.9\android\src\main\res
+io.github.ponnamkarthik.toast.fluttertoast-release-11 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\fluttertoast-8.0.9\android\src\release\res

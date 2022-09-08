@@ -1,0 +1,12 @@
+io.flutter.plugins.flutter_plugin_android_lifecycle-core-1.6.0-0 C:\Users\HP\.gradle\caches\transforms-3\09e98e082fe0375dba3976e17ef175e1\transformed\core-1.6.0\res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-window-1.0.0-beta04-1 C:\Users\HP\.gradle\caches\transforms-3\25515d5f22fd45a5281e1712c3c6cf37\transformed\jetified-window-1.0.0-beta04\res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-window-java-1.0.0-beta04-2 C:\Users\HP\.gradle\caches\transforms-3\31c3bcfd27ec1a9bf7431eaf57b9c5a0\transformed\jetified-window-java-1.0.0-beta04\res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-annotation-experimental-1.1.0-3 C:\Users\HP\.gradle\caches\transforms-3\6ec30ee4a459cfbf5d60c53600a374c1\transformed\jetified-annotation-experimental-1.1.0\res
+io.flutter.plugins.flutter_plugin_android_lifecycle-pngs-4 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\generated\res\pngs\release
+io.flutter.plugins.flutter_plugin_android_lifecycle-resValues-5 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\generated\res\resValues\release
+io.flutter.plugins.flutter_plugin_android_lifecycle-rs-6 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\generated\res\rs\release
+io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-7 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\intermediates\incremental\release\mergeReleaseResources\merged.dir
+io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-8 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-9 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\intermediates\merged_res\release
+io.flutter.plugins.flutter_plugin_android_lifecycle-main-10 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_plugin_android_lifecycle-2.0.6\android\src\main\res
+io.flutter.plugins.flutter_plugin_android_lifecycle-release-11 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_plugin_android_lifecycle-2.0.6\android\src\release\res

@@ -1,0 +1,12 @@
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-core-1.6.0-0 C:\Users\HP\.gradle\caches\transforms-3\09e98e082fe0375dba3976e17ef175e1\transformed\core-1.6.0\res
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-jetified-window-1.0.0-beta04-1 C:\Users\HP\.gradle\caches\transforms-3\25515d5f22fd45a5281e1712c3c6cf37\transformed\jetified-window-1.0.0-beta04\res
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-jetified-window-java-1.0.0-beta04-2 C:\Users\HP\.gradle\caches\transforms-3\31c3bcfd27ec1a9bf7431eaf57b9c5a0\transformed\jetified-window-java-1.0.0-beta04\res
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-jetified-annotation-experimental-1.1.0-3 C:\Users\HP\.gradle\caches\transforms-3\6ec30ee4a459cfbf5d60c53600a374c1\transformed\jetified-annotation-experimental-1.1.0\res
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-pngs-4 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_secure_storage\generated\res\pngs\release
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-resValues-5 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_secure_storage\generated\res\resValues\release
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-rs-6 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_secure_storage\generated\res\rs\release
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-mergeReleaseResources-7 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_secure_storage\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-mergeReleaseResources-8 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_secure_storage\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-merged_res-9 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_secure_storage\intermediates\merged_res\release
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-main-10 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_secure_storage-5.0.2\android\src\main\res
+com.it_nomads.fluttersecurestorage.flutter_secure_storage-release-11 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_secure_storage-5.0.2\android\src\release\res

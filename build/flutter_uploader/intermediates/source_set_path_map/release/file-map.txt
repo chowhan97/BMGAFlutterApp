@@ -1,0 +1,13 @@
+com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0 C:\Users\HP\.gradle\caches\transforms-3\09e98e082fe0375dba3976e17ef175e1\transformed\core-1.6.0\res
+com.bluechilli.flutteruploader.flutter_uploader-jetified-window-1.0.0-beta04-1 C:\Users\HP\.gradle\caches\transforms-3\25515d5f22fd45a5281e1712c3c6cf37\transformed\jetified-window-1.0.0-beta04\res
+com.bluechilli.flutteruploader.flutter_uploader-jetified-window-java-1.0.0-beta04-2 C:\Users\HP\.gradle\caches\transforms-3\31c3bcfd27ec1a9bf7431eaf57b9c5a0\transformed\jetified-window-java-1.0.0-beta04\res
+com.bluechilli.flutteruploader.flutter_uploader-jetified-annotation-experimental-1.1.0-3 C:\Users\HP\.gradle\caches\transforms-3\6ec30ee4a459cfbf5d60c53600a374c1\transformed\jetified-annotation-experimental-1.1.0\res
+com.bluechilli.flutteruploader.flutter_uploader-work-runtime-2.2.0-4 C:\Users\HP\.gradle\caches\transforms-3\b2d54ed8a4218c6737ae465fe81c594b\transformed\work-runtime-2.2.0\res
+com.bluechilli.flutteruploader.flutter_uploader-pngs-5 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_uploader\generated\res\pngs\release
+com.bluechilli.flutteruploader.flutter_uploader-resValues-6 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_uploader\generated\res\resValues\release
+com.bluechilli.flutteruploader.flutter_uploader-rs-7 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_uploader\generated\res\rs\release
+com.bluechilli.flutteruploader.flutter_uploader-mergeReleaseResources-8 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_uploader\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.bluechilli.flutteruploader.flutter_uploader-mergeReleaseResources-9 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_uploader\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.bluechilli.flutteruploader.flutter_uploader-merged_res-10 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_uploader\intermediates\merged_res\release
+com.bluechilli.flutteruploader.flutter_uploader-main-11 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_uploader-1.2.1\android\src\main\res
+com.bluechilli.flutteruploader.flutter_uploader-release-12 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_uploader-1.2.1\android\src\release\res

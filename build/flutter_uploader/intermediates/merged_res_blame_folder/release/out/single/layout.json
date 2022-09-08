@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.bluechilli.flutteruploader.flutter_uploader-merged_res-9:/layout/notification_action.xml",
+        "source": "com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0:/layout/notification_action.xml"
+    },
+    {
+        "merged": "com.bluechilli.flutteruploader.flutter_uploader-merged_res-9:/layout/notification_template_part_time.xml",
+        "source": "com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0:/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "com.bluechilli.flutteruploader.flutter_uploader-merged_res-9:/layout/custom_dialog.xml",
+        "source": "com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0:/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "com.bluechilli.flutteruploader.flutter_uploader-merged_res-9:/layout/notification_action_tombstone.xml",
+        "source": "com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0:/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "com.bluechilli.flutteruploader.flutter_uploader-merged_res-9:/layout/notification_template_part_chronometer.xml",
+        "source": "com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "com.bluechilli.flutteruploader.flutter_uploader-merged_res-9:/layout/notification_template_icon_group.xml",
+        "source": "com.bluechilli.flutteruploader.flutter_uploader-core-1.6.0-0:/layout/notification_template_icon_group.xml"
+    }
+]

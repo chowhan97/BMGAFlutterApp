@@ -1,0 +1,13 @@
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-core-1.6.0-0 C:\Users\HP\.gradle\caches\transforms-3\09e98e082fe0375dba3976e17ef175e1\transformed\core-1.6.0\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-window-1.0.0-beta04-1 C:\Users\HP\.gradle\caches\transforms-3\25515d5f22fd45a5281e1712c3c6cf37\transformed\jetified-window-1.0.0-beta04\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-window-java-1.0.0-beta04-2 C:\Users\HP\.gradle\caches\transforms-3\31c3bcfd27ec1a9bf7431eaf57b9c5a0\transformed\jetified-window-java-1.0.0-beta04\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-annotation-experimental-1.1.0-3 C:\Users\HP\.gradle\caches\transforms-3\6ec30ee4a459cfbf5d60c53600a374c1\transformed\jetified-annotation-experimental-1.1.0\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-media-1.1.0-4 C:\Users\HP\.gradle\caches\transforms-3\bb6f6938717d172c059c0479e40c322e\transformed\media-1.1.0\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-pngs-5 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_local_notifications\generated\res\pngs\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-resValues-6 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_local_notifications\generated\res\resValues\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-rs-7 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_local_notifications\generated\res\rs\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-mergeReleaseResources-8 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_local_notifications\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-mergeReleaseResources-9 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_local_notifications\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-merged_res-10 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_local_notifications\intermediates\merged_res\release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-main-11 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_local_notifications-9.7.0\android\src\main\res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-release-12 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_local_notifications-9.7.0\android\src\release\res

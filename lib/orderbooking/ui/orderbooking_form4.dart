@@ -157,6 +157,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
   bool isSaved = false;
   bool isSaveload = false;
+
   Future SaveData(BuildContext context) async {
     print("call");
     isSaveload = true;
@@ -168,8 +169,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       String Owner = jsonEncode(owner);
       List promolist = [];
       List salesOrderPreviewList = [];
+      List promoDiscount = [];
       promolist.clear();
       salesOrderPreviewList.clear();
+      promoDiscount.clear();
       for(var i=0; i<tableModel!.message!.boughtItem!.length; i++){
         promolist.add(jsonEncode({"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":int.parse("${i + 1}"),"bought_item":tableModel!.message!.boughtItem![i].itemCode,"free_items":tableModel!.message!.boughtItem![i].itemCode,"price":tableModel!.message!.boughtItem![i].averagePrice,"quantity":tableModel!.message!.boughtItem![i].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![i].quantityAvailable,"promo_type":"Buy x get same x"}));
         print("promolist======>>>$promolist");
@@ -177,6 +180,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       for(var i=0; i<tableModel!.message!.salesOrder!.salesOrder!.length; i++){
         salesOrderPreviewList.add(jsonEncode({"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"item_code": tableModel!.message!.salesOrder!.salesOrder![i].itemCode,"quantity_available":tableModel!.message!.salesOrder!.salesOrder![i].qtyAvailable,"quantity":tableModel!.message!.salesOrder!.salesOrder![i].qty,"average":tableModel!.message!.salesOrder!.salesOrder![i].averagePrice,"promo_type":tableModel!.message!.salesOrder!.salesOrder![i].promoType,"warehouse":tableModel!.message!.salesOrder!.salesOrder![i].warehouse}));
         print("salesOrderPreviewList======>>>$salesOrderPreviewList");
+      }
+      for(var i=0; i<tableModel!.message!.salesPromoDiscountedAmount!.length; i++){
+        promoDiscount.add(jsonEncode({"docstatus":0,"doctype":"Order Booking V2 Sales Promo Discount","name":"new-order-booking-v2-sales-promo-discount-1","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":int.parse("${i + 1}"),"promo_type": tableModel!.message!.salesPromoDiscountedAmount![i].promoType,"qty": tableModel!.message!.salesPromoDiscountedAmount![i].qty,"dic": tableModel!.message!.salesPromoDiscountedAmount![i].dic,"dic_qty": tableModel!.message!.salesPromoDiscountedAmount![i].dicQty,"rate": tableModel!.message!.salesPromoDiscountedAmount![i].rate,"bought_item": tableModel!.message!.salesPromoDiscountedAmount![i].boughtItem,"promo_item": tableModel!.message!.salesPromoDiscountedAmount![i].promoItem,"w_qty": tableModel!.message!.salesPromoDiscountedAmount![i].promoItem}));
+        print("promoDiscountlist======>>>$promoDiscount");
       }
       // var promos = [{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":Owner,"parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":tableModel!.message!.boughtItem![0].itemCode,"free_items":tableModel!.message!.boughtItem![0].itemCode,"price":tableModel!.message!.boughtItem![0].averagePrice,"quantity":tableModel!.message!.boughtItem![0].quantityBooked,"warehouse_quantity":tableModel!.message!.boughtItem![0].quantityAvailable,"promo_type":"Buy x get same x"}];
       // String PromosList = jsonEncode(promos);
@@ -193,7 +200,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     var request = http.MultipartRequest('POST', Uri.parse(saveOrder()));
     request.fields.addAll({
       // 'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","company":"Bharath Medical & General Agencies","customer_type":"Retail,"customer_name":"Banashankari Medicals","customer":"CUST-R-00002","order_booking_items_v2":[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"average_price":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"amount_after_gst":140,"brand_name":"Sanofi","quantity_booked":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"amount":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()}}],"order_booking_so":null,"hunting_quotation":null,"promos":[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":${tableModel!.message!.boughtItem![0].itemCode.toString()},"free_items":${tableModel!.message!.boughtItem![0].itemCode.toString()},"price":${tableModel!.message!.boughtItem![0].amount.toString()},"quantity":${tableModel!.message!.boughtItem![0].quantityBooked.toString()},"warehouse_quantity":${tableModel!.message!.boughtItem![0].quantityAvailable.toString()},"promo_type":"Buy x get same x"}],"promos_discount":[],"sales_order_preview":[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"quantity":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"average":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"promo_type":${tableModel!.message!.salesOrder!.salesOrder![0].promoType.toString()},"warehouse":${tableModel!.message!.salesOrder!.salesOrder![0].warehouse.toString()}},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"quantity":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"average":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"promo_type":${tableModel!.message!.salesOrder!.salesOrder![0].promoType.toString()},"warehouse":${tableModel!.message!.salesOrder!.salesOrder![0].warehouse.toString()}}]}',
-      'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount":[],"sales_order_preview":$salesOrderPreviewList}',
+      'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
       'action': 'Save'
     });
     request.headers.addAll(commonHeaders);
@@ -209,7 +216,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         // isNotEditableLoad = false;
         print("table call");
         saveModel = SaveModel.fromJson(json.decode(data));
-        print("${saveModel!.docs}");
+        print("this is promos discount${saveModel!.docs![0].promosDiscount}");
         isSaveload = false;
         isSaved = true;
         fluttertoast(whiteColor, greyLightColor, "Save Successful");
@@ -317,7 +324,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
         // saveModel = SaveModel.fromJson(json.decode(data));
         // print("${saveModel!.docs}");
         isSubmitLoad = false;
-        fluttertoast(whiteColor, redColor, "Submit Successful!!!");
+        fluttertoast(whiteColor, greyLightColor, "Submit Successful!!!");
       });
     } else {
       setState(() {
@@ -641,7 +648,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                         // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
                         SizedBox(height: 2),
                         Text(
-                          "${list[index].dicQty} x ${list[index].rate == null ? "0.0" : list[index].rate}",
+                          "${list[index].dicQty == null ? "0.0" : list[index].dicQty} x ${list[index].rate == null ? "0.0" : list[index].rate}",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
@@ -649,7 +656,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" +(list[index].dicQty! * (list[index].rate == null ? 0.0 : list[index].rate)).toString(),
+                    "₹" +((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].rate == null ? 0.0 : list[index].rate)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

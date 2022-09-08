@@ -182,6 +182,23 @@ class _TransactionHistoryState extends State<TransactionHistory> {
   opencalender({isFrom, isTo}) async {
     DateTime? pickedDate = await showDatePicker(
         context: context,
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: textcolor, // <-- SEE HERE
+                onPrimary: Colors.white, // <-- SEE HERE
+                onSurface: textcolor, // <-- SEE HERE
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  primary: textcolor, // button text color
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        },
         initialDate: DateTime.now(),
         firstDate: DateTime(1950),
         lastDate: DateTime(2100));

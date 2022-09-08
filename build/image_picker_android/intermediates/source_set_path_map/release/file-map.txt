@@ -1,0 +1,14 @@
+io.flutter.plugins.imagepicker.image_picker_android-jetified-window-1.0.0-beta04-0 C:\Users\HP\.gradle\caches\transforms-3\25515d5f22fd45a5281e1712c3c6cf37\transformed\jetified-window-1.0.0-beta04\res
+io.flutter.plugins.imagepicker.image_picker_android-jetified-window-java-1.0.0-beta04-1 C:\Users\HP\.gradle\caches\transforms-3\31c3bcfd27ec1a9bf7431eaf57b9c5a0\transformed\jetified-window-java-1.0.0-beta04\res
+io.flutter.plugins.imagepicker.image_picker_android-core-1.8.0-2 C:\Users\HP\.gradle\caches\transforms-3\326d3218f9fbc0475d65f91f98b16568\transformed\core-1.8.0\res
+io.flutter.plugins.imagepicker.image_picker_android-jetified-annotation-experimental-1.1.0-3 C:\Users\HP\.gradle\caches\transforms-3\6ec30ee4a459cfbf5d60c53600a374c1\transformed\jetified-annotation-experimental-1.1.0\res
+io.flutter.plugins.imagepicker.image_picker_android-lifecycle-runtime-2.3.1-4 C:\Users\HP\.gradle\caches\transforms-3\7178c19d88d31d3ec9182d81c3e1b1e1\transformed\lifecycle-runtime-2.3.1\res
+io.flutter.plugins.imagepicker.image_picker_android-packaged_res-5 D:\BMGA_3.0.5\BMGAFlutterApp\build\flutter_plugin_android_lifecycle\intermediates\packaged_res\release
+io.flutter.plugins.imagepicker.image_picker_android-pngs-6 D:\BMGA_3.0.5\BMGAFlutterApp\build\image_picker_android\generated\res\pngs\release
+io.flutter.plugins.imagepicker.image_picker_android-resValues-7 D:\BMGA_3.0.5\BMGAFlutterApp\build\image_picker_android\generated\res\resValues\release
+io.flutter.plugins.imagepicker.image_picker_android-rs-8 D:\BMGA_3.0.5\BMGAFlutterApp\build\image_picker_android\generated\res\rs\release
+io.flutter.plugins.imagepicker.image_picker_android-mergeReleaseResources-9 D:\BMGA_3.0.5\BMGAFlutterApp\build\image_picker_android\intermediates\incremental\release\mergeReleaseResources\merged.dir
+io.flutter.plugins.imagepicker.image_picker_android-mergeReleaseResources-10 D:\BMGA_3.0.5\BMGAFlutterApp\build\image_picker_android\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+io.flutter.plugins.imagepicker.image_picker_android-merged_res-11 D:\BMGA_3.0.5\BMGAFlutterApp\build\image_picker_android\intermediates\merged_res\release
+io.flutter.plugins.imagepicker.image_picker_android-main-12 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\image_picker_android-0.8.5+1\android\src\main\res
+io.flutter.plugins.imagepicker.image_picker_android-release-13 D:\flutter\flutter_windows_2.10.2-stable\flutter\.pub-cache\hosted\pub.dartlang.org\image_picker_android-0.8.5+1\android\src\release\res

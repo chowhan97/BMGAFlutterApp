@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.sidlatau.flutteremailsender.flutter_email_sender-merged_res-18:/menu/example_menu.xml",
+        "source": "com.sidlatau.flutteremailsender.flutter_email_sender-core-1.7.0-4:/menu/example_menu.xml"
+    },
+    {
+        "merged": "com.sidlatau.flutteremailsender.flutter_email_sender-merged_res-18:/menu/example_menu2.xml",
+        "source": "com.sidlatau.flutteremailsender.flutter_email_sender-core-1.7.0-4:/menu/example_menu2.xml"
+    }
+]

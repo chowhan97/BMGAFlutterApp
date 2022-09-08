@@ -745,7 +745,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Brand Name : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("Brand Name: ",style: TextStyle(fontWeight: FontWeight.bold)),
                       Expanded(
                         child: Text(
                           "${brandcontractcontrollerlist[widget.i].text}",style: TextStyle(color: Colors.grey),
@@ -758,7 +758,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Quantity Available : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("Quantity Available: ",style: TextStyle(fontWeight: FontWeight.bold)),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.5,
                         child: Text(
@@ -772,7 +772,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Last Batch Price : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                      Text("Last Batch Price: ",style: TextStyle(fontWeight: FontWeight.bold,)),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.5,
                         child: Text(
@@ -786,7 +786,7 @@ class _OBItemsFormState extends State<OBItemsForm>
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("MRP : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("MRP: ",style: TextStyle(fontWeight: FontWeight.bold)),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.5,
                         child: Text(

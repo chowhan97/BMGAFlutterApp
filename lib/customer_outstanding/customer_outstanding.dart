@@ -243,8 +243,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 child: Container(
                     padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: whiteColor, borderRadius: BorderRadius.circular(15)),
+                    decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(15)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -275,8 +274,7 @@ class _CustomerOutStandingState extends State<CustomerOutStanding> {
                           },
                           suggestionsCallback: (pattern) {
                             print("suggestion list call");
-                            return TypeAheadWidgets.getSuggestions(
-                                pattern, companyList);
+                            return TypeAheadWidgets.getSuggestions(pattern, companyList);
                           },
                           transitionBuilder: (context, suggestionsBox, controller) {
                             return suggestionsBox;
