@@ -175,7 +175,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   isNotEditableLoad == true ? SizedBox(height: 300,child: Center(child: CircularProgressIndicator())) :  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container() : header("Order Booking Items V2"),
+                      notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container() : header("Order Items"),
                       notEditable!.docs![0].orderBookingItemsV2!.isEmpty ? Container() : listOrderBooking(notEditable!.docs![0].orderBookingItemsV2!),
                       notEditable!.docs![0].promos!.isEmpty ? Container() : header("Promos"),
                       notEditable!.docs![0].promos!.isEmpty ? Container() : listPromosView(notEditable!.docs![0].promos!),

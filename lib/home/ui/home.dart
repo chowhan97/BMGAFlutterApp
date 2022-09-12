@@ -147,7 +147,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       widgetsList.add(LabelList(label: Text('Order Booking',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
       // widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
-      widgetsList.add(LabelList(label: Text('Order Booking Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: TransactionHistory()));
+      widgetsList.add(LabelList(label: Padding(
+        padding: const EdgeInsets.only(left: 4,right: 4),
+        child: Text('Order Booking Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center),
+      ), route: TransactionHistory()));
     widgetsList.add(LabelList(label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
       // widgetsList.add(LabelList(label: 'Customer Outstanding', route: CustomerOutStanding()));
       // widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));

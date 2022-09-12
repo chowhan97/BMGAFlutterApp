@@ -82,7 +82,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(displayWidth(context) > 600 ? 80 : 55),
         child: CustomAppBar(
-          title: Text('Order Booking Form', style: TextStyle(color: textcolor)),
+          title: Text('Order booking', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
@@ -98,6 +98,8 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           if (customerController.text.isNotEmpty && companyController.text.isNotEmpty) {
             pushScreen(context,
                 OrderBookingForm2(
+                   unPaidAmount: UnpaidField.text,
+                   creditLimit: CreditlimitField.text,
                   company: companyController.text,
                   // customer: customerController.text,
                   customer: custId[customerList.indexOf(customerController.text)],
@@ -314,6 +316,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   getCustomerType({suggestion}) async {
     var customerType = await CommonService().getCustomerType(context,customer: suggestion);
     print("cust type is===>>$customerType");
+    //cust type is===>>[[{cust_type: Retail, unpaid_amount: 0.0, credit_limit: 0}]]
     CustomerTypeField.text = customerType[0][0]['cust_type'].toString();
     UnpaidField.text = customerType[0][0]['unpaid_amount'].toString();
     CreditlimitField.text = customerType[0][0]['credit_limit'].toString();

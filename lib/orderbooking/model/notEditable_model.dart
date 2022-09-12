@@ -618,7 +618,7 @@ class PromosDiscount {
     docstatus: json["docstatus"],
     boughtItem: json["bought_item"],
     freeItem: json["free_item"],
-    quantity: json["quantity"],
+    quantity: json["quantity"] == null ? "0" : json["quantity"],
     discount: json["discount"],
     amount: json["amount"],
     promoType: json["promo_type"],

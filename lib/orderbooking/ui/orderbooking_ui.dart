@@ -26,6 +26,11 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
     _orderBookingList = await OrderBookingListService().getOrderBookingList(context);
     setState(() {});
   }
+  Future<void> _pullRefresh() async {
+    _orderBookingList = await OrderBookingListService().getOrderBookingList(context);
+    setState(() {
+    });
+  }
   @override
     Widget build(BuildContext context) {
       return Scaffold(
@@ -45,34 +50,38 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
             )),
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
-          child: ListView.builder(
-            itemCount: _orderBookingList.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: (){
-                  if(_orderBookingList[index].name == "" || _orderBookingList[index].name == null){
-                    pushScreen(context, OrderBookingForm2());
-                  }else{
-                    pushScreen(
-                      context,
-                      OrderBookingDetail(
-                        bookingOrder: _orderBookingList[index],
-                      ),
-                    );
-                  }
-                  // pushScreen(
-                  //   context,
-                  //   OrderBookingDetail(
-                  //     bookingOrder: _orderBookingList[index],
-                  //   ),
-                  // );
-                },
-                // child: Text(_orderBookingList[index].name.toString()),
-                child: SOTileUi(
-                  soData: _orderBookingList[index],index: index,
-                ),
-              );
-            },
+          child: RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: _orderBookingList.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: (){
+                    if(_orderBookingList[index].name == "" || _orderBookingList[index].name == null){
+                      pushScreen(context, OrderBookingForm2());
+                    }else{
+                      pushScreen(
+                        context,
+                        OrderBookingDetail(
+                          bookingOrder: _orderBookingList[index],
+                        ),
+                      );
+                    }
+                    // pushScreen(
+                    //   context,
+                    //   OrderBookingDetail(
+                    //     bookingOrder: _orderBookingList[index],
+                    //   ),
+                    // );
+                  },
+                  // child: Text(_orderBookingList[index].name.toString()),
+                  child: SOTileUi(
+                    soData: _orderBookingList[index],index: index,
+                  ),
+                );
+              },
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

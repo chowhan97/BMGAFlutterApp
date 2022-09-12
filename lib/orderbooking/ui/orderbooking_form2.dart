@@ -47,12 +47,16 @@ class OrderBookingForm2 extends StatefulWidget {
   final String? customer;
   final String? customertype;
   final String? itemCode;
+  final String? unPaidAmount;
+  final String? creditLimit;
   OrderBookingForm2(
       {
       this.company,
       this.customer,
       this.customertype,
       this.itemCode,
+        this.creditLimit,
+        this.unPaidAmount,
       });
   @override
   _OrderBookingForm2State createState() => _OrderBookingForm2State();
@@ -70,6 +74,8 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
     print("2. ${widget.customer}");
     print("3. ${widget.customertype}");
     print("4. ${widget.itemCode}");
+    print("5. ${widget.unPaidAmount}");
+    print("6. ${widget.creditLimit}");
     saveData();
     // print(widget.customer);
     }
@@ -95,120 +101,132 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(55),
-        child: CustomAppBar(
-          title: Text('Order booking Form', style: TextStyle(color: textcolor)),
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(
-              Icons.arrow_back,
-              color: textcolor,
+    return WillPopScope(
+      onWillPop: ()async{
+        setState(() {
+          itemCodeList.clear();
+        });
+        return true;
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(55),
+          child: CustomAppBar(
+            title: Text('Order Booking', style: TextStyle(color: textcolor)),
+            leading: IconButton(
+              onPressed: () {
+                itemCodeList.clear();
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: textcolor,
+              ),
             ),
           ),
         ),
-      ),
-      floatingActionButton: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            heroTag: 'Add Button',
+        floatingActionButton: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: 'Add Button',
+              backgroundColor: Constants.buttonColor,
+              onPressed: () {
+                oblist.add(OrderBookingItems(
+                    amount: 0,
+                    itemcode: '',
+                    itemname: '',
+                    qty: 0,
+                    rate: 0));
+                itemcodecontrollerlist.add(TextEditingController());
+                quantitycontrollerlist.add(TextEditingController());
+                quantityavailablecontrollerlist.add(TextEditingController());
+                lastbatchpricecontrollerlist.add(TextEditingController());
+                ratecontractcontrollerlist.add(TextEditingController());
+                mrpcontractcontrollerlist.add(TextEditingController());
+                brandcontractcontrollerlist.add(TextEditingController());
+                // salespromocontractcontrollerlist.add(TextEditingController()) == [itemcodecontrollerlist.add(TextEditingController()), quantitycontrollerlist.add(TextEditingController())];
+                setState(() {});
+              },
+              child: Icon(
+                Icons.add,
+                color: whiteColor,
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            FloatingActionButton(
             backgroundColor: Constants.buttonColor,
-            onPressed: () {
-              oblist.add(OrderBookingItems(
-                  amount: 0,
-                  itemcode: '',
-                  itemname: '',
-                  qty: 0,
-                  rate: 0));
-              itemcodecontrollerlist.add(TextEditingController());
-              quantitycontrollerlist.add(TextEditingController());
-              quantityavailablecontrollerlist.add(TextEditingController());
-              lastbatchpricecontrollerlist.add(TextEditingController());
-              ratecontractcontrollerlist.add(TextEditingController());
-              mrpcontractcontrollerlist.add(TextEditingController());
-              brandcontractcontrollerlist.add(TextEditingController());
-              // salespromocontractcontrollerlist.add(TextEditingController()) == [itemcodecontrollerlist.add(TextEditingController()), quantitycontrollerlist.add(TextEditingController())];
-              setState(() {});
-            },
-            child: Icon(
-              Icons.add,
-              color: whiteColor,
-            ),
+            onPressed:() async{
+              // Create for loop of item list
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              var owner = prefs.getString("owner");
+              List itemcode = [];
+              List orderlist = [];
+              List OrderBookingItemsV2 = [];
+              List Bookorderlist = [];
+              itemcode.clear();
+              orderlist.clear();
+              OrderBookingItemsV2.clear();
+              Bookorderlist.clear();
+              print("length is==>>${oblist.length}");
+              for(var i=0; i < oblist.length; i++){
+                itemcode.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0))}));
+                orderlist.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[i].text)}));
+                print("item code====>>>>${itemcode}");
+                print("orderlist====>>>>${orderlist}");
+                OrderBookingItemsV2.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"quantity_booked":int.parse(quantitycontrollerlist[i].text),"amount":int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0))}));
+                print("OrderBookingItemsV2====>>>>${OrderBookingItemsV2}");
+                Bookorderlist.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"__checked":0,"quantity_booked":quantitycontrollerlist[i].text,"amount":int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0))}));
+                print("Bookorderlist====>>>>${Bookorderlist}");
+              }
+              pushScreen(context,OrderBookingForm4(itemcode: itemcode,orderlist: orderlist,OrderBookingItemsV2: OrderBookingItemsV2,bookOrderList: Bookorderlist,creditLimit: widget.creditLimit,unPaidAmount: widget.unPaidAmount,));
+              // oblist.clear();
+              },
+           child: Icon(
+            Icons.arrow_forward,
+            color: whiteColor,
           ),
-          SizedBox(
-            height: 5,
-          ),
-          FloatingActionButton(
-          backgroundColor: Constants.buttonColor,
-          onPressed:() async{
-            // Create for loop of item list
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            var owner = prefs.getString("owner");
-            List itemcode = [];
-            List orderlist = [];
-            List OrderBookingItemsV2 = [];
-            List Bookorderlist = [];
-            itemcode.clear();
-            orderlist.clear();
-            OrderBookingItemsV2.clear();
-            Bookorderlist.clear();
-            print("length is==>>${oblist.length}");
-            for(var i=0; i< oblist.length; i++){
-              itemcode.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0))}));
-              orderlist.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[i].text)}));
-              print("item code====>>>>${itemcode}");
-              print("orderlist====>>>>${orderlist}");
-              OrderBookingItemsV2.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"quantity_booked":int.parse(quantitycontrollerlist[i].text),"amount":int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0))}));
-              print("OrderBookingItemsV2====>>>>${OrderBookingItemsV2}");
-              Bookorderlist.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"__checked":0,"quantity_booked":quantitycontrollerlist[i].text,"amount":int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text).toStringAsFixed(0))}));
-              print("Bookorderlist====>>>>${Bookorderlist}");
-            }
-            pushScreen(context,OrderBookingForm4(itemcode: itemcode,orderlist: orderlist,OrderBookingItemsV2: OrderBookingItemsV2,bookOrderList: Bookorderlist));
-         },
-         child: Icon(
-          Icons.arrow_forward,
-          color: whiteColor,
         ),
-      ),
-        ],
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: oblist.length == 0
-            ? Center(child: Text(
-                'List is empty',
-                style: TextStyle(fontSize: 18, color: blackColor),
-              ))
-            : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: oblist.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final item = oblist[index];
-                            int lastElement = oblist.length - 1;
-                            return Column(
-                              children: [
-                                OBItemsForm(
-                                  key: ObjectKey(item),
-                                  obi: item,
-                                  i: index,
-                                  onDelete: () => onDelete(index, lastElement),
-                                ),
-                              ],
-                            );
-                          }),
-                    ),
-                  ],
-                ),
-            ),
+          ],
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          child: oblist.length == 0
+              ? Center(child: Text(
+                  'List is empty',
+                  style: TextStyle(fontSize: 18, color: blackColor),
+                ))
+              : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: oblist.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final item = oblist[index];
+                              int lastElement = oblist.length - 1;
+                              return Column(
+                                children: [
+                                  OBItemsForm(
+                                    key: ObjectKey(item),
+                                    obi: item,
+                                    i: index,
+                                    onDelete: () => onDelete(index, lastElement),
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
+              ),
+        ),
       ),
     );
   }
@@ -315,7 +333,7 @@ class _OBItemsFormState extends State<OBItemsForm>
     // orderDetails = await getOrderBookingDetails(itemCode,customertype,company,customer, context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      prefscompany    = prefs.getString("company");
+      prefscompany = prefs.getString("company");
       print("prefscompany??????$prefscompany");
       prefscustomer   = prefs.getString("customer");
       print("prefscustomer??????????$prefscustomer");
@@ -839,6 +857,7 @@ class _OBItemsFormState extends State<OBItemsForm>
       required: true,
       style: TextStyle(fontSize: 14, color: blackColor),
       itemBuilder: (context, item) {
+        print(item);
         return TypeAheadWidgets.itemUi(item);
       },
       onSuggestionSelected: (suggestion) async {
@@ -847,15 +866,17 @@ class _OBItemsFormState extends State<OBItemsForm>
         setState(() {
           oblist[widget.i].itemcode = suggestion;
         });
+        // itemcodecontrollerlist.clear();
+
         // var result = await getOrderBookingDetails(itemCode,customertype,company,customer, context);
         // print(result["message"]["available_qty"]);
       },
       suggestionsCallback: (pattern) {
         return TypeAheadWidgets.getSuggestions(pattern, itemCodeList);
       },
-      transitionBuilder: (context, suggestionsBox, controller) {
-        return suggestionsBox;
-      },
+      // transitionBuilder: (context, suggestionsBox, controller) {
+      //   return suggestionsBox;
+      // },
       validator: (val) =>
           val == '' || val == null ? 'Item Code should not be empty' : null,
 

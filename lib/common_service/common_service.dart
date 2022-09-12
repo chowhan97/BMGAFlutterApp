@@ -63,6 +63,7 @@ class CommonService {
       final String so = CustomerTypeUrl(customer: customer);
       final response = await _dio.get(so);
       var data = response.data;
+      print("data ${data}");
       // customerType = data['message']['customer_type']['pch_customer_type'];
       custData.add([{"cust_type":data['message']['customer_type']['pch_customer_type'],"unpaid_amount":data['message']['unpaid_amount'],"credit_limit":data['message']['credit_limit']}]);
       return custData;
