@@ -213,6 +213,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     //   'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
     // };
     var request = http.MultipartRequest('POST', Uri.parse(saveOrder()));
+    print("Uri.parse(saveOrder()) ${Uri.parse(saveOrder())}");
     request.fields.addAll({
       // 'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","company":"Bharath Medical & General Agencies","customer_type":"Retail,"customer_name":"Banashankari Medicals","customer":"CUST-R-00002","order_booking_items_v2":[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"average_price":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"amount_after_gst":140,"brand_name":"Sanofi","quantity_booked":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"amount":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()}}],"order_booking_so":null,"hunting_quotation":null,"promos":[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":${tableModel!.message!.boughtItem![0].itemCode.toString()},"free_items":${tableModel!.message!.boughtItem![0].itemCode.toString()},"price":${tableModel!.message!.boughtItem![0].amount.toString()},"quantity":${tableModel!.message!.boughtItem![0].quantityBooked.toString()},"warehouse_quantity":${tableModel!.message!.boughtItem![0].quantityAvailable.toString()},"promo_type":"Buy x get same x"}],"promos_discount":[],"sales_order_preview":[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"quantity":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"average":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"promo_type":${tableModel!.message!.salesOrder!.salesOrder![0].promoType.toString()},"warehouse":${tableModel!.message!.salesOrder!.salesOrder![0].warehouse.toString()}},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"quantity":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"average":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"promo_type":${tableModel!.message!.salesOrder!.salesOrder![0].promoType.toString()},"warehouse":${tableModel!.message!.salesOrder!.salesOrder![0].warehouse.toString()}}]}',
       'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"pending_reason":"$pendingReason","__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
@@ -304,16 +305,9 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     // print("map ${map}");
 
     var request = http.MultipartRequest('POST', Uri.parse('https://erptest.bharathrajesh.co.in${orderBooking()}'));
-    request.fields.addAll({
-      'customer': prefscustomer.toString(),
-      'order_list': widget.bookOrderList.toString(),
-      'company': prefscompany.toString(),
-      'customer_type': prefscust_type.toString(),
-      'free_promos': freePromos.toString(),
-      'promo_dis': promoDisc.toString(),
-      'sales_order': salesOrder.toString(),
-    });
-    request.headers.addAll(headers);
+    request.fields.addAll(map);
+    print("request.fields ${request.fields}");
+    request.headers.addAll(commonHeaders);
 
     // http.StreamedResponse response = await request.send();
     // print("response.statusCode ${response.statusCode}");
@@ -322,42 +316,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
     print("response ${response.body}");
     if (response.statusCode == 200) {
-      String SalesOrderPreview = jsonEncode(saveModel!.docs![0].salesOrderPreview);
-      String Promos = jsonEncode(saveModel!.docs![0].promos);
-      String Promosdiscount = jsonEncode(saveModel!.docs![0].promosDiscount);
-      fluttertoast(whiteColor, redColor, "Order book successful");
-      // var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow'));
-      var request = http.MultipartRequest('GET', Uri.parse(saveOrder()));
-      request.fields.addAll({
-        'doc': '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "Pending","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "Credit limit exceeded","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}',
-        'action': 'Submit'
-      });
-      print(request.fields);
-      request.headers.addAll(commonHeaders);
-      var streamedResponse = await request.send();
-      var response = await http.Response.fromStream(streamedResponse);
-      print("response.statusCode ${response.statusCode}");
-      if (response.statusCode == 200) {
-        setState(() {
-          print(response.body);
-          // String data = response.body;
-          // isNotEditableLoad = false;
-          print("submit table call");
-          submit("Approved");
-          // saveModel = SaveModel.fromJson(json.decode(data));
-          // print("${saveModel!.docs}");
-          isSubmitLoad = false;
-          fluttertoast(whiteColor, greyLightColor, "Submit Successful!!!");
-        });
-      } else {
-        setState(() {
-          isSubmitLoad = false;
-        });
-        print(response.reasonPhrase);
-      }
-      setState(() {
-        isLoadbook = false;
-      });
+      submit("Approved");
     }
     else {
       print("orderBooking Else");
@@ -409,7 +368,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     // print(jsonEncode(saveModel!.docs![0].promosDiscount));
     print(status);
     // var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow'));
-
+    print("Submit ${Uri.parse(saveOrder())}");
     var request = http.MultipartRequest('Post', Uri.parse(saveOrder()));
       request.fields.addAll({
         // 'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
@@ -425,8 +384,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       request.headers.addAll(commonHeaders);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-      print("response.statusCode ${response}");
-      print("response.statusCode ${response.body}");
+      print("response.statusCode ${response.statusCode}");
+      print("response.body ${response.body}");
       if (response.statusCode == 200) {
         setState(() {
           print(response.body);
@@ -516,7 +475,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                 if(pending_status == true){
                   print("if");
                   if(isSaved == true){
-                    submit("Approved");
+                    submit("Pending");
                   }
                   else{
                     fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
@@ -611,7 +570,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
             }
             else{
                 pending_status = false;
-              print(" pch_status = Pending");
+              print("pch_status = Pending");
             }
             return Padding(
               padding: const EdgeInsets.all(16.0),

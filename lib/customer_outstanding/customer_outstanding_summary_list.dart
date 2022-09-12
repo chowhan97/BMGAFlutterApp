@@ -25,6 +25,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
   List header = [];
   bool head = false;
   String formatted = "";
+  var formatter = NumberFormat('#,##,000');
 
   Future getTableData() async {
     print("call");
@@ -122,7 +123,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                       children: [
                         Text("Total Invoice Amount", style: TextStyle(color: Colors.black)),
                         SizedBox(height: 10),
-                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[3] == "" ? "0.0": header.last[3]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[3] == "" ? "0.0": formatter.format(header.last[3])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                       ],
                     ),
                   ),
@@ -138,7 +139,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                       children: [
                         Text("Total Outstanding Amount", style: TextStyle(color: Colors.black)),
                         SizedBox(height: 10),
-                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[6] == "" ? "0.0" : header.last[6]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[6] == "" ? "0.0" : formatter.format(header.last[6])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                       ],
                     ),
                   ),
@@ -156,7 +157,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                         children: [
                           Text("0-30 Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[7] == "" ? "0.0" :header.last[7]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[7] == "" ? "0.0" :formatter.format(header.last[7])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -175,7 +176,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                         children: [
                           Text("31-60 Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[8] == "" ? "0.0": header.last[8]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[8] == "" ? "0.0": formatter.format(header.last[8])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -196,7 +197,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                               style: TextStyle(
                                   color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9] == "" ? "0.0" : header.last[9]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9] == "" ? "0.0" : formatter.format(header.last[9])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -217,7 +218,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                               style: TextStyle(
                                   color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[10] == "" ? "0.0" : header.last[10]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[10] == "" ? "0.0" : formatter.format(header.last[10])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -236,7 +237,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                         children: [
                           Text("121-above Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[11] == "" ? "0.0" : header.last[11]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[11] == "" ? "0.0" : formatter.format(header.last[11])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),

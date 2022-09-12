@@ -4,6 +4,7 @@ import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/customer_outstanding/customer_outstanding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../util/apiurls.dart';
 
@@ -25,6 +26,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
   List accountReceivable = [];
   List header = [];
   bool head = false;
+  var formatter = NumberFormat('#,##,000');
 
   Future getTableData() async {
     print("call");
@@ -75,6 +77,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
           print("accountReceivable====>>>>>${accountReceivable}");
         }
         for (var i = 0; i < responce['message']['result'].length; i++) {
+          print("responce['message']['result'][i] ${responce['message']['result'][i]}");
           header.add(responce['message']['result'][i]);
           print("header length====>>>>>${header.length}");
           print("header====>>>>>${header.last}");
@@ -135,7 +138,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                             Text("Total Invoice Amount",
                                 style: TextStyle(color: Colors.black)),
                             SizedBox(height: 10),
-                            head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9] == "" ? "0.0" : header.last[9]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9] == "" ? "0.0" : formatter.format(header.last[9])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                           ],
                         ),
                       ),
@@ -153,7 +156,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                 style: TextStyle(
                                     color: Colors.black)),
                             SizedBox(height: 10),
-                            head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[12] == "" ? "0.0" : header.last[12]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                            head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[12] == "" ? "0.0" : formatter.format(header.last[12])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                           ],
                         ),
                       ),
@@ -173,7 +176,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                   style: TextStyle(
                                       color: Colors.black)),
                               SizedBox(height: 10),
-                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[14] == "" ? "0.0" : header.last[14]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[14] == "" ? "0.0" : formatter.format(header.last[14])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                             ],
                           ),
                         ),
@@ -194,7 +197,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                   style: TextStyle(
                                       color: Colors.black)),
                               SizedBox(height: 10),
-                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[15] == "" ? "0.0" : header.last[15]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[15] == "" ? "0.0" : formatter.format(header.last[15])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                             ],
                           ),
                         ),
@@ -215,7 +218,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                   style: TextStyle(
                                       color: Colors.black)),
                               SizedBox(height: 10),
-                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[16] == "" ? "0.0" : header.last[16]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[16] == "" ? "0.0" : formatter.format(header.last[16])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                             ],
                           ),
                         ),
@@ -236,7 +239,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                   style: TextStyle(
                                       color: Colors.black)),
                               SizedBox(height: 10),
-                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[17] == "" ? "0.0" : header.last[17]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[17] == "" ? "0.0" : formatter.format(header.last[17])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                             ],
                           ),
                         ),
@@ -257,7 +260,8 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                   style: TextStyle(
                                       color: Colors.black)),
                               SizedBox(height: 10),
-                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[18] == "" ? "0.0" : header.last[17]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                              // head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[18] == "" ? "0.0" : header.last[17]}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                              head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[18] == "" ? "0.0" : formatter.format(header.last[18])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                             ],
                           ),
                         ),
