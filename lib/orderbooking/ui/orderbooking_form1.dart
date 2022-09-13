@@ -82,7 +82,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(displayWidth(context) > 600 ? 80 : 55),
         child: CustomAppBar(
-          title: Text('Order booking', style: TextStyle(color: textcolor)),
+          title: Text('Order Booking', style: TextStyle(color: textcolor)),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
@@ -297,9 +297,12 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
           getCustomerType(suggestion: custId[customerList.indexOf(suggestion)]);
           prefs.setString("customer", custId[customerList.indexOf(suggestion)]);
           customerController.text = suggestion;
+          prefs.setString("customerName", suggestion);
           print(custId[customerList.indexOf(suggestion)]);
           var cust = prefs.getString("customer");
+          var custName = prefs.getString("customerName");
           print("cust????????$cust");
+          print("custName????????$custName");
         });
       },
       suggestionsCallback: (pattern) {

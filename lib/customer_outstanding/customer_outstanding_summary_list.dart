@@ -288,18 +288,17 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                               SizedBox(height: 8),
                               listText(
                                   heading: "Due amount",
-                                  val:
-                                  "${accountReceivableSummary[index]['total_due']}"),
+                                  val: "${formatter.format(accountReceivableSummary[index]['total_due'])}"),
                               SizedBox(height: 8),
                               listText(
                                   heading: "Invoice amount",
                                   val:
-                                  "${accountReceivableSummary[index]['invoiced']}"),
+                                  "${formatter.format(accountReceivableSummary[index]['invoiced'])}"),
                               SizedBox(height: 8),
                               listText(
                                   heading: "Outstanding amount",
                                   val:
-                                  "${accountReceivableSummary[index]['outstanding']}"),
+                                  "${formatter.format(accountReceivableSummary[index]['outstanding'])}"),
                             ],
                           ),
                         ),
@@ -320,7 +319,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("${heading}:- ", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text("${heading}: ", style: TextStyle(fontWeight: FontWeight.bold)),
         Text(val, style: TextStyle(color: Colors.grey)),
       ],
     );

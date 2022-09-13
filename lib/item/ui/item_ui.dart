@@ -49,6 +49,7 @@ class _ItemUiState extends State<ItemUi> {
 
   //For storing itemcode and itemname in list
   getItemList() async {
+    listItems.clear();
     apiurl = await getApiUrl();
     try {
       setState(() {
@@ -57,12 +58,12 @@ class _ItemUiState extends State<ItemUi> {
       List listData = await CommonService().getItemList(context);
       for (int i = 0; i < listData.length; i++) {
         listItems.add(listData[i]['item_name']);
-        listItemName.add(listData[i]['item_name']);
+        // listItemName.add(listData[i]['item_name']);
       }
-      for (int i = 0; i < listData.length; i++) {
-        listItems.add(listData[i]['item_code']);
-        listItemCode.add(listData[i]['item_code']);
-      }
+      // for (int i = 0; i < listData.length; i++) {
+      //   listItems.add(listData[i]['item_code']);
+      //   listItemCode.add(listData[i]['item_code']);
+      // }
       setState(() {
         loading = false;
       });

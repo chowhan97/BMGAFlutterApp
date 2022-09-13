@@ -419,8 +419,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Posting date",
-                                    val:
-                                        "${accountReceivable[index]['posting_date']}"),
+                                    val: "${accountReceivable[index]['posting_date']}"),
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Voucher number",
@@ -434,13 +433,11 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Invoice amount",
-                                    val:
-                                        "${accountReceivable[index]['invoice_grand_total']}"),
+                                    val: "${formatter.format(accountReceivable[index]['invoice_grand_total'])}"),
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Outstanding amount",
-                                    val:
-                                        "${accountReceivable[index]['outstanding']}"),
+                                    val: "${formatter.format(accountReceivable[index]['outstanding'])}"),
                               ],
                             ),
                           ),

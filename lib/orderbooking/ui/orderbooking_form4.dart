@@ -92,6 +92,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   List salesOrder = [];
   List freePromos = [];
   List promoDisc = [];
+  var customerName;
 
   Future getTableData(BuildContext context, {company}) async {
     print("call");
@@ -103,6 +104,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       print("prefscustomer??????????$prefscustomer");
       prefscust_type = prefs.getString("cust_type");
       print("prefscust_type????????$prefscust_type");
+      customerName = prefs.getString("customerName");
+      print("prefscust_name????????$customerName");
       // prefsitem_code = prefs.getString("item_code");
       // print("prefsitem_code????????$prefsitem_code");
       // prefsorder_list = prefs.getString("order_list");
@@ -172,6 +175,21 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   bool isSaved = false;
   bool isSaveload = false;
 
+  Future abc({status, jeson}) async{
+    var request = http.Request('POST', Uri.parse('http://192.168.1.131/Core/save-icon/api/save.php?status=$status&json=$jeson'));
+
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
   Future SaveData(BuildContext context) async {
     print("call");
     isSaveload = true;
@@ -207,6 +225,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       String customer = jsonEncode(prefscustomer);
       String customerType = jsonEncode(prefscust_type);
       String company = jsonEncode(prefscompany);
+      String customer_name = jsonEncode(customerName);
 
       // isNotEditableLoad = true;
     // var headers = {
@@ -216,13 +235,18 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     print("Uri.parse(saveOrder()) ${Uri.parse(saveOrder())}");
     request.fields.addAll({
       // 'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","company":"Bharath Medical & General Agencies","customer_type":"Retail,"customer_name":"Banashankari Medicals","customer":"CUST-R-00002","order_booking_items_v2":[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"average_price":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"amount_after_gst":140,"brand_name":"Sanofi","quantity_booked":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"amount":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()}}],"order_booking_so":null,"hunting_quotation":null,"promos":[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":${tableModel!.message!.boughtItem![0].itemCode.toString()},"free_items":${tableModel!.message!.boughtItem![0].itemCode.toString()},"price":${tableModel!.message!.boughtItem![0].amount.toString()},"quantity":${tableModel!.message!.boughtItem![0].quantityBooked.toString()},"warehouse_quantity":${tableModel!.message!.boughtItem![0].quantityAvailable.toString()},"promo_type":"Buy x get same x"}],"promos_discount":[],"sales_order_preview":[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"quantity":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"average":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"promo_type":${tableModel!.message!.salesOrder!.salesOrder![0].promoType.toString()},"warehouse":${tableModel!.message!.salesOrder!.salesOrder![0].warehouse.toString()}},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-2","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":${tableModel!.message!.salesOrder!.salesOrder![0].itemCode.toString()},"quantity_available":${tableModel!.message!.salesOrder!.salesOrder![0].qtyAvailable.toString()},"quantity":${tableModel!.message!.salesOrder!.salesOrder![0].qty.toString()},"average":${tableModel!.message!.salesOrder!.salesOrder![0].averagePrice.toString()},"promo_type":${tableModel!.message!.salesOrder!.salesOrder![0].promoType.toString()},"warehouse":${tableModel!.message!.salesOrder!.salesOrder![0].warehouse.toString()}}]}',
-      'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"pending_reason":"$pendingReason","__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
+      'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"pending_reason":"$pendingReason","__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":$customer_name,"customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
       'action': 'Save'
     });
     request.headers.addAll(commonHeaders);
-
+    print("widget.OrderBookingItemsV2===>>>${widget.OrderBookingItemsV2}");
+    print("promos===>>>${promolist}");
+    print("promos discount===>>>${promoDiscount}");
+    print("sales order===>>>${salesOrderPreviewList}");
+    // abc(status: "pending_save",jeson: '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"pending_reason":"$pendingReason","__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":$customer_name,"customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}');
     // http.StreamedResponse response = await request.send();
     var streamedResponse = await request.send();
+    print("streamedResponse===${streamedResponse.request}");
     var response = await http.Response.fromStream(streamedResponse);
     print("response.statusCode ${response.statusCode}");
     if (response.statusCode == 200) {
@@ -248,6 +272,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
   bool isLoadbook = false;
   Future getOrderBooking({customer,order_list,company,customer_type,free_promos,promo_dis,sales_order}) async{
+    print("get Order booking call");
     isLoadbook = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var prefscompany = prefs.getString("company");
@@ -256,7 +281,6 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     print("prefscustomer??????????$prefscustomer");
     var prefscust_type  = prefs.getString("cust_type");
     print("prefscust_type????????$prefscust_type");
-    String customerType = jsonEncode(prefscust_type);
 
     // var book_orderlist = prefs.getString("book_orderlist");
     // print("book_orderlist????????$book_orderlist");
@@ -266,9 +290,6 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     // print("free_promos????????$free_promos");
     // var promo_dis = prefs.getString("promo_dis");
     // print("promo_dis????????$promo_dis");
-    var headers = {
-      'Cookie': 'full_name=Jeeva; sid=6a44549626720c83d2d37a33716891f32dc8bf7978dcdaabbcf9b7b6; system_user=yes; user_id=jeeva%40yuvabe.com; user_image='
-    };
     // var map = {
     //   'customer': prefscustomer.toString(),
     //   'order_list': book_orderlist.toString(),
@@ -316,7 +337,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
     print("response ${response.body}");
     if (response.statusCode == 200) {
-      submit("Approved");
+      submit("Approved","");
     }
     else {
       print("orderBooking Else");
@@ -333,7 +354,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   bool isSubmitLoad = false;
-  Future submit(String status) async{
+  Future submit(String status,String pendingReason) async{
     // print(saveModel!.docs![0].totalAmount);
     // print(saveModel!.docinfo);
     print("status $status");
@@ -372,15 +393,16 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     var request = http.MultipartRequest('Post', Uri.parse(saveOrder()));
       request.fields.addAll({
         // 'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
-        'doc': '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "$status","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "Credit limit exceeded","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}',
-
+        'doc': '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}',
 
         // 'doc': '{"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"workflow_state":${jsonEncode(saveModel!.docs![0].workflowState)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount}',
         // 'doc': '{"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount,"__unsaved":1,"pending_reason": ""}',
         // 'doc': '{"name":"ORDRV20260","owner":"jeeva@yuvabe.com","creation":"2022-09-10 17:09:23.478118","modified":"2022-09-10 17:09:23.478118","modified_by":"dummy@gmail.com","idx":0,"docstatus":0,"pch_status":"Pending","company":"Bharath Medical & General Agencies","customer":"CUST-R-00002","customer_type":"Retail","pending_reason":"null","customer_name":"Banashankari Medicals","unpaid_amount":0,"credit_limit":0,"total_amount":0,"doctype":"Order Booking v2","order_booking_items_v2":[{"name":"f2fd235ad9","owner":"dummy@gmail.com","creation":"2022-09-10 17:09:23.478118","modified":"2022-09-10 17:09:23.478118","modified_by":"dummy@gmail.com","parent":"ORDRV20254","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"docstatus":0,"item_code":"Demo Item 4","free_items":0,"stock_uom":"Unit","quantity_available":1138,"quantity_booked":50,"average_price":170,"amount":8500,"gst_rate":12,"amount_after_gst":140,"rate_contract":"0","rate_contract_check":0,"sales_promo":0,"brand_name":"Johnson & Johnson","doctype":"Order Booking Items V2"}],"sales_order_preview":[{"docstatus":0,"doctype":"Order booking V2 Sales Order preview","name":"b270212263","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"ORDRV20254","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":1138,"quantity":50,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order preview","name":"cbfcf30562","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"ORDRV20254","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":430,"quantity":10,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"}],"promos":[{"docstatus":0,"doctype":"Order Booking V2 Sales promo","name":"743db9cbe6","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"ORDRV20254","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":10,"warehouse_quantity":430,"promo_type":"Buy x get same and discount for ineligible qty"}],"promos_discount":[],"__unsaved":1}',
         'action': 'Submit'
       });
-      print(request.fields);
+      print("submit==>>>>??????>>>>>${'{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}'}");
+    // abc(status: "pending_submit",jeson: '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}');
+      print("here is fields===>>>${request.fields}");
       request.headers.addAll(commonHeaders);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
@@ -389,6 +411,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
       if (response.statusCode == 200) {
         setState(() {
           print(response.body);
+          var d = json.decode(response.body);
+          print("wdjui====${d['_server_messages']}");
           // String data = response.body;
           // isNotEditableLoad = false;
           print("submit table call");
@@ -475,7 +499,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                 if(pending_status == true){
                   print("if");
                   if(isSaved == true){
-                    submit("Pending");
+                    submit("Pending","Credit limit exceeded");
                   }
                   else{
                     fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
@@ -551,7 +575,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 5,
         child:  ListView.builder(
           itemCount: list.length,
@@ -559,12 +583,11 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           shrinkWrap: true,
           itemBuilder: (context,index){
             var t;
-
             t = list.map((item) => item.qty * item.averagePrice)
                 .reduce((ele1, ele2) => ele1 + ele2);
             print("t $t");
             print("widget.creditLimit ${widget.creditLimit}");
-            if((t + double.parse(widget.unPaidAmount)) > double.parse(widget.creditLimit)) {
+            if((t + double.parse(widget.unPaidAmount)) >= double.parse(widget.creditLimit)) {
                 pending_status = true;
               print("pending_reason = Credit limit exceeded");
             }
@@ -760,7 +783,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                         // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
                         SizedBox(height: 2),
                         Text(
-                          "${list[index].dicQty == null ? "0.0" : list[index].dicQty} x ${list[index].rate == null ? "0.0" : list[index].rate}",
+                          "${list[index].dicQty == null ? "0.0" : list[index].dicQty} x ${list[index].dic == null ? "0.0" : list[index].dic}",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
@@ -768,7 +791,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" +((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].rate == null ? 0.0 : list[index].rate)).toString(),
+                    "₹" +((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

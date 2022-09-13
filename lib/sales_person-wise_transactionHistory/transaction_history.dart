@@ -205,7 +205,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
     if (pickedDate != null) {
       print(pickedDate);
-      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
       print(formattedDate);
       setState(() {
         if (isFrom == true) {
