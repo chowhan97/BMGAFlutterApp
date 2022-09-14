@@ -7,6 +7,7 @@ import 'package:ebuzz/salesorder/model/sales_order.dart';
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class OrderBookingDetail extends StatefulWidget {
   final OrderBooking bookingOrder;
@@ -24,6 +25,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
   TextEditingController customerTypeController = TextEditingController();
   NotEditable? notEditable;
   bool isNotEditableLoad = false;
+  var formatter = NumberFormat('#,##,000');
 
   @override
   void initState() {
@@ -492,7 +494,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                     ],
                   ),
                   Text(
-                      "₹${list[index].amount}",
+                      "₹${formatter.format(list[index].amount)}",
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],
@@ -558,7 +560,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" +((list[index].quantity!) * list[index].average!).toString(),
+                    "₹" + formatter.format((list[index].quantity!) * list[index].average!).toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -641,10 +643,10 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                       // ),
                     ],
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Text(
-                    "₹" +(int.parse(list[index].quantity!) * list[index].price!).toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold,),
+                    "₹" + formatter.format(int.parse(list[index].quantity!) * list[index].price!).toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -708,7 +710,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" +(int.parse(list[index].quantity!) * list[index].discount!).toString(),
+                    "₹" + formatter.format(int.parse(list[index].quantity!) * list[index].discount!).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],

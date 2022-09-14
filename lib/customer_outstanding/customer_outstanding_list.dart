@@ -27,6 +27,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
   List header = [];
   bool head = false;
   var formatter = NumberFormat('#,##,000');
+  var dateformatter = new DateFormat('dd-MM-yyyy');
 
   Future getTableData() async {
     print("call");
@@ -419,7 +420,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Posting date",
-                                    val: "${accountReceivable[index]['posting_date']}"),
+                                    val: "${DateFormat('dd-MM-yyyy').format(DateTime.parse(accountReceivable[index]['posting_date']))}"),
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Voucher number",
@@ -429,7 +430,7 @@ class _CustomerOutStandingListState extends State<CustomerOutStandingList> {
                                 listText(
                                     heading: "Due date",
                                     val:
-                                        "${accountReceivable[index]['posting_date']}"),
+                                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(accountReceivable[index]['posting_date']))}"),
                                 SizedBox(height: 8),
                                 listText(
                                     heading: "Invoice amount",

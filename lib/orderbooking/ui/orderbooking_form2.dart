@@ -20,6 +20,7 @@ import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var item = [{"item_code":"ItemA","quantity_booked":21,"average_price":41,"amount":861,"quantity_available":486}].toString();
@@ -322,6 +323,7 @@ class _OBItemsFormState extends State<OBItemsForm>
 
 
   setItemData(String itemCode, int index) async {
+    var formatter = NumberFormat('#,##,000');
     product = await getData(itemCode);
     // print(product);
     print(itemCode);
@@ -344,10 +346,10 @@ class _OBItemsFormState extends State<OBItemsForm>
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     print("orderDetails is=====>>>>>${orderDetails}");
-    quantityavailablecontrollerlist[index].text = orderDetails["message"]["available_qty"].toString();
-    lastbatchpricecontrollerlist[index].text = orderDetails["message"]["price_details"]["price"].toString();
+    quantityavailablecontrollerlist[index].text = formatter.format(orderDetails["message"]["available_qty"]);
+    lastbatchpricecontrollerlist[index].text = formatter.format(orderDetails["message"]["price_details"]["price"]);
     ratecontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["rate_contract_check"].toString();
-    mrpcontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["mrp"].toString();
+    mrpcontractcontrollerlist[index].text = formatter.format(orderDetails["message"]["price_details"]["mrp"]);
     brandcontractcontrollerlist[index].text = orderDetails["message"]["brand_name"]["brand_name"].toString();
     print("is offer???????${orderDetails['message']['promo_check']}");
     setState(() {

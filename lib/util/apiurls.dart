@@ -318,7 +318,8 @@ String salesOrderUrl() {
 }
 
 String orderBookingListUrl() {
-  return '/api/resource/Order%20Booking%20V2?fields=["*"]&limit_page_length=*';
+  return '/api/resource/Order%20Booking%20V2?fields=["*"]&limit_page_length=*&order_by=name desc';
+  // return '/api/resource/:doctype?order_by=title%20desc';
 }
 
 String sampleApiCheckUrl(String text) {

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionList extends StatefulWidget {
   // var fromdate, todate;
@@ -238,6 +239,7 @@ class _TransactionListState extends State<TransactionList> {
   }
 
   List<DataRow> _createRows() {
+    var formatter = NumberFormat('#,##,000');
     return selectedValue.map(
       (book) {
         print("book ${book}");
@@ -389,7 +391,7 @@ class _TransactionListState extends State<TransactionList> {
                   child: Container(
                       // width: 90,
                       width: MediaQuery.of(context).size.width * 0.13,
-                      child: Center(child: Text(book[0]['outstanding_amount'].toString(),style: TextStyle(fontSize: 11)))),
+                      child: Center(child: Text(formatter.format(book[0]['outstanding_amount']),style: TextStyle(fontSize: 11)))),
                 )), onTap: () {
               pushScreen(
                   context,
@@ -405,7 +407,7 @@ class _TransactionListState extends State<TransactionList> {
                       // width: 70,
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: Center(
-                        child: Text(book[0]['grand_total'].toString(),
+                        child: Text(formatter.format(book[0]['grand_total']),
                             style: TextStyle(fontWeight: FontWeight.bold,fontSize: 11)),
                       ),
                     ),

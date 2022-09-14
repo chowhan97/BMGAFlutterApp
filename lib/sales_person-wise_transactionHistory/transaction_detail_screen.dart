@@ -5,6 +5,7 @@ import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_detail_mo
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:test_api/expect.dart';
 
 class TransactionDetail extends StatefulWidget {
@@ -192,7 +193,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       children: [
                         Text("Due Date",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
                         SizedBox(height: 5),
-                        Text(transactionDetailModel!.docs![0].dueDate.toString(),maxLines: 1,overflow: TextOverflow.ellipsis),
+                        Text(DateFormat('dd-MM-yyyy').format(DateTime.parse(transactionDetailModel!.docs![0].dueDate.toString())),maxLines: 1,overflow: TextOverflow.ellipsis),
                       ],
                     ),
                     Column(
@@ -200,7 +201,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       children: [
                         Text("Sales Invoice Date",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
                         SizedBox(height: 5),
-                        Text(transactionDetailModel!.docs![0].postingDate.toString(),maxLines: 1,overflow: TextOverflow.ellipsis),
+                        Text(DateFormat('dd-MM-yyyy').format(DateTime.parse(transactionDetailModel!.docs![0].postingDate.toString())),maxLines: 1,overflow: TextOverflow.ellipsis),
                       ],
                     ),
                     // Icon(Icons.date_range,color: Colors.grey),
@@ -217,6 +218,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   listOfItems(List<Item> list) {
+    var formatter = NumberFormat('#,##,000');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -240,7 +242,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       Row(
                         children: [
                           Text("Net Rate : ",style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text("${list[index].netRate}",style: TextStyle(color: Colors.grey),),
+                          Text("${formatter.format(list[index].netRate)}",style: TextStyle(color: Colors.grey)),
                         ],
                       ),
                       SizedBox(height: 2,),
@@ -251,7 +253,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                   Text(
-                    "₹${list[index].amount}",
+                    "₹${formatter.format(list[index].amount)}",
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],
@@ -264,6 +266,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   listOfTaxes(List<Tax> list) {
+    var formatter = NumberFormat('#,##,000');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -280,28 +283,28 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("SGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${list[0].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${formatter.format(list[0].taxAmount)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("CGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${list[1].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${formatter.format(list[1].taxAmount)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Total Taxable",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${formatter.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Grand total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${list[1].total.toString()}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${formatter.format(list[1].total)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
               ],
@@ -312,21 +315,21 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("IGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${list[0].taxAmount.toString()}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${formatter.format(list[0].taxAmount)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Total Taxable",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${formatter.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Grand total",style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text("₹ ${list[0].total.toString()}",style: TextStyle(color: Colors.grey)),
+                      Text("₹ ${formatter.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
                     ],
                   ),
               ],

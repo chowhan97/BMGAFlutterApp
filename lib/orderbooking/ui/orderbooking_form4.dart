@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/common/custom_toast.dart';
+import 'package:ebuzz/common/navigations.dart';
 import 'package:ebuzz/orderbooking/model/saveData_model.dart';
 import 'package:ebuzz/orderbooking/model/table_model.dart';
+import 'package:ebuzz/orderbooking/ui/orderbooking_ui.dart';
 import 'package:ebuzz/util/apiurls.dart';
 import 'package:ebuzz/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderBookingForm4 extends StatefulWidget {
@@ -419,7 +423,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           // saveModel = SaveModel.fromJson(json.decode(data));
           // print("${saveModel!.docs}");
           isSubmitLoad = false;
-          fluttertoast(whiteColor, greyLightColor, "Submit Successful!!!");
+          fluttertoast(whiteColor, greyLightColor, "Submit Successful");
+          pushScreen(context, OrderBookingUi());
         });
       } else {
         setState(() {
@@ -463,75 +468,77 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           // ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      // floatingActionButton: Column(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     FloatingActionButton(
+      //       backgroundColor: Constants.buttonColor,
+      //       onPressed: () {
+      //         SaveData(context);
+      //       },
+      //       child: isSaveload == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Icon(
+      //         Icons.save,
+      //         color: whiteColor,
+      //       ),
+      //     ),
+      //     SizedBox(
+      //       height: 5,
+      //     ),
+      //     FloatingActionButton(
+      //       backgroundColor: Constants.buttonColor,
+      //       onPressed: () {
+      //         setState(() {
+      //           // 'customer': 'CUST-R-00002',
+      //           // 'order_list': '[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":52,"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":"Demo Item 4","average_price":170,"amount_after_gst":180,"brand_name":"Johnson & Johnson","__checked":0,"quantity_booked":22,"amount":3740}]',
+      //           // 'company': 'Bharath Medical & General Agencies',
+      //           // 'customer_type': 'Retail',
+      //           // 'free_promos': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":4,"warehouse_quantity":20,"promo_type":"Buy x get same and discount for ineligible qty"}]',
+      //           // 'promo_dis': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_item":"Demo Item 4","quantity":2,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":272}]',
+      //           // 'sales_order': '[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":52,"quantity":20,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":20,"quantity":4,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":"Demo Item 4","quantity_available":52,"quantity":2,"average":136,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"BMGA Test Warehouse - BMGA"}]'
+      //           // getOrderBooking();
+      //           // if(isSaved == true){
+      //           //   submit();
+      //           // }else{
+      //           //   fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+      //           // }
+      //           if(pending_status == true){
+      //             print("if");
+      //             if(isSaved == true){
+      //               submit("Pending","Credit limit exceeded");
+      //             }
+      //             else{
+      //               fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+      //             }
+      //           }else{
+      //             print("else");
+      //             if(isSaved == true){
+      //               getOrderBooking();
+      //             }
+      //             else{
+      //               fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+      //             }
+      //           }
+      //         });
+      //         //pushReplacementScreen(context, OrderBookingUi());
+      //         // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
+      //         // print(salesPromos);
+      //       },
+      //       child: isSubmitLoad == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Icon(
+      //         Icons.arrow_forward,
+      //         color: whiteColor,
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      body: Column(
         children: [
-          FloatingActionButton(
-            backgroundColor: Constants.buttonColor,
-            onPressed: () {
-              SaveData(context);
-            },
-            child: isSaveload == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Icon(
-              Icons.save,
-              color: whiteColor,
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          FloatingActionButton(
-            backgroundColor: Constants.buttonColor,
-            onPressed: () {
-              setState(() {
-                // 'customer': 'CUST-R-00002',
-                // 'order_list': '[{"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","quantity_available":52,"gst_rate":"12","rate_contract":"0","rate_contract_check":0,"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"__unedited":false,"stock_uom":"Unit","item_code":"Demo Item 4","average_price":170,"amount_after_gst":180,"brand_name":"Johnson & Johnson","__checked":0,"quantity_booked":22,"amount":3740}]',
-                // 'company': 'Bharath Medical & General Agencies',
-                // 'customer_type': 'Retail',
-                // 'free_promos': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Promo","name":"new-order-booking-v2-sales-promo-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":4,"warehouse_quantity":20,"promo_type":"Buy x get same and discount for ineligible qty"}]',
-                // 'promo_dis': '[{"docstatus":0,"doctype":"Order Booking V2 Sales Discount","name":"new-order-booking-v2-sales-discount-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"promos_discount","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_item":"Demo Item 4","quantity":2,"discount":136,"promo_type":"Buy x get same and discount for ineligible qty","amount":272}]',
-                // 'sales_order': '[{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-1","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":52,"quantity":20,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-2","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":20,"quantity":4,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order Preview","name":"new-order-booking-v2-sales-order-preview-3","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"new-order-booking-v2-1","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":3,"item_code":"Demo Item 4","quantity_available":52,"quantity":2,"average":136,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"BMGA Test Warehouse - BMGA"}]'
-                // getOrderBooking();
-                // if(isSaved == true){
-                //   submit();
-                // }else{
-                //   fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
-                // }
-                if(pending_status == true){
-                  print("if");
-                  if(isSaved == true){
-                    submit("Pending","Credit limit exceeded");
-                  }
-                  else{
-                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
-                  }
-                }else{
-                  print("else");
-                  if(isSaved == true){
-                    getOrderBooking();
-                  }
-                  else{
-                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
-                  }
-                }
-              });
-              //pushReplacementScreen(context, OrderBookingUi());
-              // var salesPromos = getOrderBookingSalesPromo(item, customerType, companies,orderList, customers, context);
-              // print(salesPromos);
-            },
-            child: isSubmitLoad == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Icon(
-              Icons.arrow_forward,
-              color: whiteColor,
-            ),
-          ),
-        ],
-      ),
-      body: isTableLoad == true
-          ? Container(height: MediaQuery.of(context).size.height,child: Center(child: CircularProgressIndicator()))
-          : Container(
-             height: MediaQuery.of(context).size.height,
+          Expanded(child:  isTableLoad == true
+              ? Container(height: MediaQuery.of(context).size.height,child: Center(child: CircularProgressIndicator()))
+              : Container(
+            height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -553,25 +560,60 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                         : header("Promos Discount"),
                     tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
                         ? Container()
-                        // : listPromosDiscountView(tableModel!.message!.salesPromoDiscount!.promos!),
+                    // : listPromosDiscountView(tableModel!.message!.salesPromoDiscount!.promos!),
                         : listPromosDiscountView(tableModel!.message!.salesPromoDiscountedAmount!),
                   ],
                 ),
-                ),
+              ),
             ),
+          ),),
+          if(isSaved == false)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MaterialButton(onPressed: (){
+              SaveData(context);
+            },height: 50,minWidth: double.infinity,color: textcolor,child: isSaveload == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("Save",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
           ),
+          if(isSaved == true)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MaterialButton(onPressed: (){
+              setState(() {
+                if(pending_status == true){
+                  print("if");
+                  if(isSaved == true){
+                    submit("Pending","Credit limit exceeded");
+                  }
+                  else{
+                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+                  }
+                }else{
+                  print("else");
+                  if(isSaved == true){
+                    getOrderBooking();
+                  }
+                  else{
+                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+                  }
+                }
+              });
+            },height: 50,minWidth: double.infinity,color: textcolor,child: isSubmitLoad == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("Submit",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+          ),
+          SizedBox(height: 5)
+        ],
+      )
     );
   }
 
   header(String s) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0),
       child: Text(s,style: TextStyle(fontSize: 18)),
     );
   }
 
   listSalesOrderPreview(List<SalesOrderElement> list) {
-
+    var formatter = NumberFormat('#,##,000');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -589,10 +631,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
             print("widget.creditLimit ${widget.creditLimit}");
             if((t + double.parse(widget.unPaidAmount)) >= double.parse(widget.creditLimit)) {
                 pending_status = true;
-              print("pending_reason = Credit limit exceeded");
+                print("pending_reason = Credit limit exceeded");
             }
             else{
-                pending_status = false;
+              pending_status = false;
               print("pch_status = Pending");
             }
             return Padding(
@@ -638,7 +680,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" +(list[index].qty * list[index].averagePrice).toString(),
+                    "₹" + formatter.format(list[index].qty * list[index].averagePrice).toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -654,6 +696,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   listPromosView(List<SalesPromoDiscountedAmount> list) {
+    var formatter = NumberFormat('#,##,000');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -719,7 +762,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" +(list[index].qty * list[index].amount).toString(),
+                    "₹" + formatter.format(list[index].qty * list[index].amount).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],
@@ -732,6 +775,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   listPromosDiscountView(List<SalesPromoDiscountedAmount> list) {
+    var formatter = NumberFormat('#,##,000');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -791,7 +835,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" +((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
+                    "₹" + formatter.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

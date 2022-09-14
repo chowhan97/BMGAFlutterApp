@@ -8,6 +8,7 @@ import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderBookingForm1 extends StatefulWidget {
@@ -94,12 +95,13 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Constants.buttonColor,
-        onPressed: () {
+        onPressed: () async{
+          SharedPreferences prefs = await SharedPreferences.getInstance();
           if (customerController.text.isNotEmpty && companyController.text.isNotEmpty) {
             pushScreen(context,
                 OrderBookingForm2(
-                   unPaidAmount: UnpaidField.text,
-                   creditLimit: CreditlimitField.text,
+                   unPaidAmount: prefs.getString("unpaid"),
+                   creditLimit: prefs.getString("creditlimit"),
                   company: companyController.text,
                   // customer: customerController.text,
                   customer: custId[customerList.indexOf(customerController.text)],
@@ -317,14 +319,17 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
 
 
   getCustomerType({suggestion}) async {
+    var formatter = NumberFormat('#,##,000');
     var customerType = await CommonService().getCustomerType(context,customer: suggestion);
     print("cust type is===>>$customerType");
     //cust type is===>>[[{cust_type: Retail, unpaid_amount: 0.0, credit_limit: 0}]]
     CustomerTypeField.text = customerType[0][0]['cust_type'].toString();
-    UnpaidField.text = customerType[0][0]['unpaid_amount'].toString();
-    CreditlimitField.text = customerType[0][0]['credit_limit'].toString();
+    UnpaidField.text = formatter.format(customerType[0][0]['unpaid_amount']);
+    CreditlimitField.text = formatter.format(customerType[0][0]['credit_limit']);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("cust_type", CustomerTypeField.text);
+    prefs.setString("unpaid", customerType[0][0]['unpaid_amount'].toString());
+    prefs.setString("creditlimit", customerType[0][0]['credit_limit'].toString());
     var cust_type = prefs.getString("cust_type");
     print("cust_type?????????$cust_type");
     setState(() {});

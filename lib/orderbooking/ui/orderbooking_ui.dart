@@ -8,6 +8,7 @@ import 'package:ebuzz/orderbooking/ui/orderbooking_form2.dart';
 import 'package:ebuzz/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/orderbooking/ui/orderbooking_form1.dart';
+import 'package:intl/intl.dart';
 
 class OrderBookingUi extends StatefulWidget {
   @override
@@ -133,7 +134,7 @@ class SOTileUi extends StatelessWidget {
                   SizedBox(height: 5),
                   Text(
                     // 'Grand Total : \$' + soData.grandtotal.toString(),
-                    'Modified : ' + soData.modified.toString(),
+                    'Modified : ' + DateFormat('dd-MM-yyyy').format(DateTime.parse(soData.modified.toString())),
                   ),
                   // SizedBox(height: 5),
                   // Row(
