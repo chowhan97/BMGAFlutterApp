@@ -680,7 +680,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" + formatter.format(list[index].qty * list[index].averagePrice).toString(),
+                  list[index].qty * list[index].averagePrice == 0 ? "₹0" : "₹" + formatter.format(list[index].qty * list[index].averagePrice).toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -762,7 +762,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" + formatter.format(list[index].qty * list[index].amount).toString(),
+                      list[index].qty * list[index].amount == 0 ? "₹0" :  "₹" + formatter.format(list[index].qty * list[index].amount).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],
@@ -835,7 +835,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" + formatter.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
+                  (list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic) == 0 ? "₹0" :  "₹" + formatter.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

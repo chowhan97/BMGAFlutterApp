@@ -22,6 +22,8 @@ class _TransactionListState extends State<TransactionList> {
   bool fetch = false;
   TransactionModel? transactionModel;
   List selectedValue = [];
+  var total = [];
+  num sum = 0;
 
   Future getTableData() async {
     print("call");
@@ -77,6 +79,13 @@ class _TransactionListState extends State<TransactionList> {
                 "is_return":transactionModel!.message!.values![i][12],
               },
             ]);
+            total.clear();
+            total.add(transactionModel!.message!.values![i][5]);
+            print("total is====>>>>$total");
+            for (var i in total) {
+              sum = sum + i;
+            }
+            print(sum);
           });
           //{"message":{"keys":["name","docstatus","title","customer","company","grand_total","status","currency","customer_name","base_grand_total","outstanding_amount","due_date","is_return"],"values":[["SINV-22-00015",1,"Big Hospitals","CUST-H-00001","Bharath Medical & General Agencies",-693.0,"Return","INR","Big Hospitals",-693.0,0.0,"2022-08-13",1],["SINV-22-00016",1,"Balaji Medicals","CUST-R-00006","Bharath Medical & General Agencies",496.0,"Credit Note Issued","INR","Balaji Medicals",496.0,0.0,"2022-08-20",0],["SINV-22-00017",1,"Balaji Medicals","CUST-R-00006","Bharath Medical & General Agencies",-248.0,"Return","INR","Balaji Medicals",-248.0,0.0,"2022-08-20",1],["SINV-DL-00072",0,"Banashankari Medicals","CUST-R-00002","Bharath Medical & General Agencies",336268.3,"Draft","INR","Banashankari Medicals",336268.3,336268.0,"2022-08-11",0],["SINV-DL-00073",0,"Banashankari Medicals","CUST-R-00002","Bharath Medical & General Agencies",4185.0,"Draft","INR","Banashankari Medicals",4185.0,4185.0,"2022-08-12",0],
           // print(data);
@@ -116,8 +125,28 @@ class _TransactionListState extends State<TransactionList> {
       body: fetch == true
           ? Center(child: CircularProgressIndicator())
           : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                transactionModel!.message!.values!.isEmpty
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(15)),
+                      child:  transactionModel!.message!.values!.isEmpty ? CircularProgressIndicator(): Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("total sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                          SizedBox(height: 5),
+                          Text("₹${sum.toStringAsFixed(0)}",style: TextStyle(fontSize: 15)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                    transactionModel!.message!.values!.isEmpty
                     ? Container()
                     : Expanded(
                         child: ListView(
@@ -391,7 +420,7 @@ class _TransactionListState extends State<TransactionList> {
                   child: Container(
                       // width: 90,
                       width: MediaQuery.of(context).size.width * 0.13,
-                      child: Center(child: Text(formatter.format(book[0]['outstanding_amount']),style: TextStyle(fontSize: 11)))),
+                      child: Center(child: Text("₹${formatter.format(book[0]['outstanding_amount'])}",style: TextStyle(fontSize: 11)))),
                 )), onTap: () {
               pushScreen(
                   context,
@@ -407,7 +436,7 @@ class _TransactionListState extends State<TransactionList> {
                       // width: 70,
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: Center(
-                        child: Text(formatter.format(book[0]['grand_total']),
+                        child: Text("₹${formatter.format(book[0]['grand_total'])}",
                             style: TextStyle(fontWeight: FontWeight.bold,fontSize: 11)),
                       ),
                     ),

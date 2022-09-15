@@ -123,7 +123,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                       children: [
                         Text("Total Invoice Amount", style: TextStyle(color: Colors.black)),
                         SizedBox(height: 10),
-                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[3] == "" ? "0.0": formatter.format(header.last[3])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[3] == "" ? "₹0": "₹${formatter.format(header.last[3])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                       ],
                     ),
                   ),
@@ -139,7 +139,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                       children: [
                         Text("Total Outstanding Amount", style: TextStyle(color: Colors.black)),
                         SizedBox(height: 10),
-                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[6] == "" ? "0.0" : formatter.format(header.last[6])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                        head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[6] == "" ? "₹0" : "₹${formatter.format(header.last[6])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                       ],
                     ),
                   ),
@@ -157,7 +157,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                         children: [
                           Text("0-30 Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[7] == "" ? "0.0" :formatter.format(header.last[7])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[7] == "" ? "₹0" :"₹${formatter.format(header.last[7])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -176,7 +176,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                         children: [
                           Text("31-60 Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[8] == "" ? "0.0": formatter.format(header.last[8])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[8] == "" ? "₹0": "₹${formatter.format(header.last[8])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -197,7 +197,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                               style: TextStyle(
                                   color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9] == "" ? "0.0" : formatter.format(header.last[9])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[9] == "" ? "₹0" : "₹${formatter.format(header.last[9])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -218,7 +218,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                               style: TextStyle(
                                   color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[10] == "" ? "0.0" : formatter.format(header.last[10])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[10] == "" ? "₹0" : "₹${formatter.format(header.last[10])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -237,7 +237,7 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                         children: [
                           Text("121-above Total", style: TextStyle(color: Colors.black)),
                           SizedBox(height: 10),
-                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[11] == "" ? "0.0" : formatter.format(header.last[11])}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
+                          head == true ? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.black)) : Text("${header.last[11] == "" ? "₹0" : "₹${formatter.format(header.last[11])}"}", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 17)),
                         ],
                       ),
                     ),
@@ -288,17 +288,17 @@ class _CustomerOutstandingSummaryState extends State<CustomerOutstandingSummary>
                               SizedBox(height: 8),
                               listText(
                                   heading: "Due amount",
-                                  val: "${formatter.format(accountReceivableSummary[index]['total_due'])}"),
+                                  val: "₹${formatter.format(accountReceivableSummary[index]['total_due'])}"),
                               SizedBox(height: 8),
                               listText(
                                   heading: "Invoice amount",
                                   val:
-                                  "${formatter.format(accountReceivableSummary[index]['invoiced'])}"),
+                                  "₹${formatter.format(accountReceivableSummary[index]['invoiced'])}"),
                               SizedBox(height: 8),
                               listText(
                                   heading: "Outstanding amount",
                                   val:
-                                  "${formatter.format(accountReceivableSummary[index]['outstanding'])}"),
+                                  "₹${formatter.format(accountReceivableSummary[index]['outstanding'])}"),
                             ],
                           ),
                         ),

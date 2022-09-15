@@ -55,12 +55,12 @@ class CommonService {
     return companylist;
   }
 
-  Future getCustomerType(BuildContext context, {customer}) async{
+  Future getCustomerType(BuildContext context, {customer,company}) async{
     // var customerType;
     List custData = [];
     try {
       Dio _dio = await BaseDio().getBaseDio();
-      final String so = CustomerTypeUrl(customer: customer);
+      final String so = CustomerTypeUrl(customer: customer,company: company);
       final response = await _dio.get(so);
       var data = response.data;
       print("data ${data}");

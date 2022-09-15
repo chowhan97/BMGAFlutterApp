@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/common/display_helper.dart';
@@ -319,13 +321,14 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
 
 
   getCustomerType({suggestion}) async {
+    print("suggestion is====>>${suggestion}");
     var formatter = NumberFormat('#,##,000');
-    var customerType = await CommonService().getCustomerType(context,customer: suggestion);
+    var customerType = await CommonService().getCustomerType(context,customer: suggestion,company: "Bharath%20Medical%20%26%20General%20Agencies");
     print("cust type is===>>$customerType");
     //cust type is===>>[[{cust_type: Retail, unpaid_amount: 0.0, credit_limit: 0}]]
     CustomerTypeField.text = customerType[0][0]['cust_type'].toString();
-    UnpaidField.text = formatter.format(customerType[0][0]['unpaid_amount']);
-    CreditlimitField.text = formatter.format(customerType[0][0]['credit_limit']);
+    UnpaidField.text = "₹${formatter.format(customerType[0][0]['unpaid_amount'])}";
+    CreditlimitField.text = "₹${formatter.format(customerType[0][0]['credit_limit'])}";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("cust_type", CustomerTypeField.text);
     prefs.setString("unpaid", customerType[0][0]['unpaid_amount'].toString());

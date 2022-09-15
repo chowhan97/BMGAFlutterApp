@@ -201,11 +201,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           builder: (dialogContext) {
             return AlertDialog(
               title: Text(
-                'LogOut?',
+                'Logout?',
                 style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               content: Text(
-                'Are you sure you wan\'t to logout',
+                'Are you sure you wan\'t to logout?',
                 style: TextStyle(fontSize: 16),
               ),
               actions: [
@@ -215,7 +215,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                     await logout(context);
                   },
                   child: Text(
-                    'Ok',
+                    'OK',
                     style: TextStyle(fontSize: 16, color: blueAccent),
                   ),
                 ),

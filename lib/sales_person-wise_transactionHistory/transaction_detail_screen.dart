@@ -253,8 +253,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                   Text(
-                    "₹${formatter.format(list[index].amount)}",
-                    style: TextStyle(fontWeight: FontWeight.bold,),
+                      list[index].amount == 0 ? "₹${list[index].amount.toStringAsFixed(0)}" : "₹${formatter.format(list[index].amount)}",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

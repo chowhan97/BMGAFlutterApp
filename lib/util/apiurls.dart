@@ -59,8 +59,8 @@ String companyListUrl() {
   return '/api/resource/Company?fields=["*"]&limit_page_length=*';
 }
 
-String CustomerTypeUrl({customer}){
-  return "/api/method/bmga.bmga.doctype.order_booking_v2.api.customer_type_container?customer=$customer";
+String CustomerTypeUrl({customer,company}){
+  return "/api/method/bmga.bmga.doctype.order_booking_v2.api.customer_type_container?customer=$customer&company=$company";
 }
 
 String tableData({itemcode,customerType,company,order_list,customer}){
