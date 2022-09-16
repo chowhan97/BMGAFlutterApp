@@ -131,6 +131,10 @@ String itemDataUrl(String text) {
   return '/api/resource/Item/$text';
 }
 
+String ItemDataUrl({itemcode,company}){
+  return '/api/method/bmga.global_api.item_qty_available_container?item_code=$itemcode&company=$company';
+}
+
 String itemGroupDataUrl(String text) {
   return '/api/resource/Item/?fields=["item_code","item_name","image"]&filters=[["Item","item_group","=","$text"]]&limit_page_length=*';
 }

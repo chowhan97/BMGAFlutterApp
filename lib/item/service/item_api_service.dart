@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 
 //ItemApiService class contains function for fetching data or posting  data
 class ItemApiService {
+  static bool isItemLoading = false;
 
-  //For fetching data from item api in product model
   Future<Product> getData(String text,BuildContext context) async {
     print("text is====>>>$text");
     try {
@@ -29,6 +29,30 @@ class ItemApiService {
       }
     } catch (e) {
       exception(e,context);
+    }
+    return Product();
+  }
+
+  Future<Product> getItemData({itemcode,company,required BuildContext context}) async {
+    isItemLoading = true;
+    try {
+      Dio _dio = await BaseDio().getBaseDio();
+      final String url = ItemDataUrl(itemcode: itemcode,company: company);
+      final response = await _dio.get(
+        url,
+      );
+      print("statusCode====>>>${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("${response.data}");
+        isItemLoading = false;
+        return Product(quantity_available: response.data['message']['available_qty'],sales_quantity: response.data['message']['sales_qty']);
+        // return Product.fromJson(response.data['data']);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      exception(e,context);
+      isItemLoading = false;
     }
     return Product();
   }

@@ -4,12 +4,10 @@ import 'package:ebuzz/common_models/product.dart';
 import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:flutter/material.dart';
 
-//ItemDetailWidget class is a reusable widget for displaying data from item api
 
 class ItemDetailWidget extends StatelessWidget {
   final AsyncSnapshot<Product> snapshot;
-  final String apiurl;
-  const ItemDetailWidget({required this.snapshot,required this.apiurl});
+  const ItemDetailWidget({required this.snapshot});
   @override
   Widget build(BuildContext context) {
     print("snapshot is====>>>>${snapshot.data!.pch_division}");
@@ -31,14 +29,13 @@ class ItemDetailWidget extends StatelessWidget {
                     itemDetailWidget('Brand', snapshot.data?.brand),
                     SizedBox(height: 15),
                     itemDetailWidget('PCH Division', snapshot.data?.pch_division),
-                    SizedBox(height: 15),
                   ],
                 ),
               ),
             ) : CircularProgressIndicator(),
           ],
         ),
-        
+
       ],
     );
   }

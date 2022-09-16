@@ -323,7 +323,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   getCustomerType({suggestion}) async {
     print("suggestion is====>>${suggestion}");
     var formatter = NumberFormat('#,##,000');
-    var customerType = await CommonService().getCustomerType(context,customer: suggestion,company: "Bharath%20Medical%20%26%20General%20Agencies");
+    var customerType = await CommonService().getCustomerType(context,customer: suggestion,company: Uri.encodeFull(companyController.text).replaceAll("&", "%26"));
     print("cust type is===>>$customerType");
     //cust type is===>>[[{cust_type: Retail, unpaid_amount: 0.0, credit_limit: 0}]]
     CustomerTypeField.text = customerType[0][0]['cust_type'].toString();

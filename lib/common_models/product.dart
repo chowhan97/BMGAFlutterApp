@@ -14,6 +14,8 @@ class Product {
   final double valuationRate;
   final String defaultUnitOfMeasure;
   final String? pch_division;
+  final String? quantity_available;
+  final String sales_quantity;
 
   Product({
     this.valuationRate=0,
@@ -29,6 +31,8 @@ class Product {
     this.sampleSize=0,
     this.defaultUnitOfMeasure='',
     this.pch_division='',
+    this.quantity_available='',
+    this.sales_quantity=''
   });
 
   //For fetching json data from item api and storing it in Product model
@@ -47,6 +51,8 @@ class Product {
       valuationRate: json['valuation_rate'] ?? 0,
       defaultUnitOfMeasure: json['stock_uom'] ?? 0,
       pch_division: json['pch_division'] ?? '',
+      quantity_available: json['available_qty'] ?? '',
+      sales_quantity: json['sales_qty'] ?? ''
     );
   }
 }

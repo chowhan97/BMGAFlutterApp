@@ -24,6 +24,7 @@ class _TransactionListState extends State<TransactionList> {
   List selectedValue = [];
   var total = [];
   num sum = 0;
+  var formatter = NumberFormat('#,##,000');
 
   Future getTableData() async {
     print("call");
@@ -140,7 +141,7 @@ class _TransactionListState extends State<TransactionList> {
                         children: [
                           Text("total sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
                           SizedBox(height: 5),
-                          Text("₹${sum.toStringAsFixed(0)}",style: TextStyle(fontSize: 15)),
+                          Text("₹${formatter.format(sum)}",style: TextStyle(fontSize: 15)),
                         ],
                       ),
                     ),

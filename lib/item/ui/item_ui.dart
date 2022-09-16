@@ -11,6 +11,7 @@ import 'package:ebuzz/exception/custom_exception.dart';
 import 'package:ebuzz/item/service/item_api_service.dart';
 import 'package:ebuzz/util/constants.dart';
 import 'package:ebuzz/util/preference.dart';
+import 'package:ebuzz/widgets/custom_textformformfield.dart';
 import 'package:ebuzz/widgets/custom_typeahead_formfield.dart';
 import 'package:ebuzz/widgets/item_detail_widget.dart';
 import 'package:ebuzz/widgets/typeahead_widgets.dart';
@@ -40,11 +41,45 @@ class _ItemUiState extends State<ItemUi> {
   String? apiurl;
   bool loading = false;
   bool searchButtonDisabled = false;
+  TextEditingController companyController = TextEditingController();
+  List<String> companyList = [];
+  bool isItemLoading = false;
+  List itemData = [];
+  bool show = false;
 
   @override
   void initState() {
     super.initState();
     getItemList();
+  }
+
+  Future getItemData({ItemCode,Company}) async{
+    setState(() {
+      isItemLoading = true;
+    });
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.global_api.item_qty_available_container?item_code=$ItemCode&company=$Company'));
+
+    request.headers.addAll(commonHeaders);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    print("response.statusCode ${response.statusCode}");
+    print("response.body ${response.body}");
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      setState(() {
+        itemData.clear();
+        itemData.add([data['message']['available_qty'],data['message']['sales_qty']]);
+        print("itemdata is==>>>$itemData");
+        isItemLoading = false;
+        show = true;
+      });
+    } else {
+      setState(() {
+        isItemLoading = false;
+      });
+      print(response.reasonPhrase);
+    }
   }
 
   //For storing itemcode and itemname in list
@@ -70,6 +105,7 @@ class _ItemUiState extends State<ItemUi> {
     } catch (e) {
       throw Exception(e.toString());
     }
+    companyList = await CommonService().getCompanyList(context);
     setState(() {});
   }
 
@@ -186,28 +222,30 @@ class _ItemUiState extends State<ItemUi> {
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    companyField(),
+                    SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(
                           child: searchField(),
                         ),
-                        GestureDetector(
-                          onTap: scanBarCode,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 30, left: 10),
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: blackColor,
-                              size: 30,
-                            ),
-                          ),
-                        )
+                        // GestureDetector(
+                        //   onTap: scanBarCode,
+                        //   child: Padding(
+                        //     padding: EdgeInsets.only(top: 30, left: 10),
+                        //     child: Icon(
+                        //       Icons.camera_alt,
+                        //       color: blackColor,
+                        //       size: 30,
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    searchButton(),
+                    // searchButton(),
                     apiCall
                         ? FutureBuilder<Product>(
                             future: _itemApiService.getData(itemCode, context),
@@ -232,8 +270,9 @@ class _ItemUiState extends State<ItemUi> {
                                   children: [
                                     ItemDetailWidget(
                                       snapshot: snapshot,
-                                      apiurl: apiurl!,
+                                      // apiurl: apiurl!,
                                     ),
+                                    isItemLoading == true ? CircularProgress() : show == true ? itemDetailWidget(label: "Quantity Available",value: itemData[0][0]) : Container()
                                     // warehouseName.isEmpty || warehouseName.length == 0
                                     //     ? Text('No Warehouse data found',
                                     //         style: TextStyle(
@@ -266,6 +305,59 @@ class _ItemUiState extends State<ItemUi> {
     );
   }
 
+  Widget itemDetailWidget({label,value}) {
+    return CustomTextFormField(
+      decoration: InputDecoration(
+          fillColor: greyColor,
+          filled: true,
+          isDense: true,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(5),
+          )),
+      label: label.toString(),
+      readOnly: true,
+      initialValue: value.toString(),
+      labelStyle: TextStyle(color: blackColor),
+      style: TextStyle(fontSize: 14, color: blackColor),
+    );
+  }
+
+  Widget companyField() {
+    return CustomTypeAheadFormField(
+      controller: companyController,
+      decoration: InputDecoration(
+        fillColor: greyColor,
+        filled: true,
+        isDense: true,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        hintText: 'Select Company',
+      ),
+      label: 'Company',
+      labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
+      required: true,
+      style: TextStyle(fontSize: 14, color: blackColor),
+      itemBuilder: (context, item) {
+        return TypeAheadWidgets.itemUi(item);
+      },
+      onSuggestionSelected: (suggestion) async {
+        print("suggestion selected");
+        companyController.text = suggestion;
+      },
+      suggestionsCallback: (pattern) {
+        print("suggestion list call");
+        return TypeAheadWidgets.getSuggestions(pattern, companyList);
+      },
+      transitionBuilder: (context, suggestionsBox, controller) {
+        return suggestionsBox;
+      },
+      validator: (val) => val == '' || val == null ? 'Company name should not be empty' : null,
+    );
+  }
+
   Widget searchField() {
     return CustomTypeAheadFormField(
       controller: searchController,
@@ -276,16 +368,22 @@ class _ItemUiState extends State<ItemUi> {
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
-          )),
-      label: 'Search',
-      labelStyle: TextStyle(color: blackColor),
+          ),
+        hintText: "Select Item Code"
+      ),
+      label: 'Item Code',
+      labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.bold),
       required: true,
       style: TextStyle(fontSize: 14, color: blackColor),
       itemBuilder: (context, item) {
         return TypeAheadWidgets.itemUi(item);
       },
       onSuggestionSelected: (suggestion) async {
-        searchController.text = suggestion;
+        setState(() {
+          searchController.text = suggestion;
+          fetchItem();
+          getItemData(ItemCode: Uri.encodeFull(searchController.text).replaceAll("&", "%26"),Company: Uri.encodeFull(companyController.text).replaceAll("&", "%26"));
+        });
       },
       suggestionsCallback: (pattern) {
         return TypeAheadWidgets.getSuggestions(pattern, listItems);
