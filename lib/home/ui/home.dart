@@ -21,6 +21,7 @@ import 'package:ebuzz/orderbooking/ui/orderbooking_ui.dart';
 import 'package:ebuzz/common/display_helper.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 //Home class displays ui of different functionalities in form of cards
 class Home extends StatefulWidget {
@@ -92,7 +93,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     //   widgetsList.add(LabelList(label: 'BOM', route: BomUi()));
 
     if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
-       widgetsList.add(LabelList(label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
+       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/item.svg",fit: BoxFit.fill),label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
     // if (labels.contains(DoctypeNames.purchaseOrder) &&
     //     labels.contains(DoctypeNames.purchaseReceipt))
     //   widgetsList.add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
@@ -144,14 +145,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         labels.contains(DoctypeNames.company) &&
         labels.contains(DoctypeNames.customer) &&
         labels.contains(DoctypeNames.warehouse))
-      widgetsList.add(LabelList(label: Text('Order Booking',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: OrderBookingUi()));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Order.svg",fit: BoxFit.fill),label: Text('Order Booking',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: OrderBookingUi()));
     if (labels.contains(DoctypeNames.quotation))
       // widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
-      widgetsList.add(LabelList(label: Padding(
-        padding: const EdgeInsets.only(left: 4,right: 4),
-        child: Text('Order Booking Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center),
-      ), route: TransactionHistory()));
-    widgetsList.add(LabelList(label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Order booking.svg",fit: BoxFit.fill),label: Padding(padding: const EdgeInsets.only(left: 4,right: 4), child: Text('Sales Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center),), route: TransactionHistory()));
+    widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/customer care.svg",fit: BoxFit.fill),label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
       // widgetsList.add(LabelList(label: 'Customer Outstanding', route: CustomerOutStanding()));
       // widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));
       print(widgetsList.length);
@@ -297,13 +295,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
             mainAxisSpacing:  5,
           ),
           itemBuilder: (context, i) {
-            return cardUi(widgetsList[i].label, widgetsList[i].route);
+            return cardUi(widgetsList[i].label, widgetsList[i].route, widgetsList[i].icon);
           }),
     );
   }
 
   //ui of particular card which is reusable
-  Widget cardUi(Widget text, Widget routeScreen) {
+  Widget cardUi(Widget text, Widget routeScreen, Widget icon) {
     return GestureDetector(
       onTap: () {
         pushScreen(context, routeScreen);
@@ -314,8 +312,11 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 2,
-          child: Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Container(child: Container(height: 50,width: 50,child: icon)),
+              SizedBox(height: 5),
               Align(
                 alignment: Alignment.center,
                 child: text
@@ -337,6 +338,7 @@ class Choice {
 class LabelList {
   final Widget label;
   final Widget route;
+  final Widget icon;
 
-  LabelList({required this.label, required this.route});
+  LabelList({required this.label, required this.route, required this.icon});
 }

@@ -25,40 +25,7 @@ class OrderBookingForm4 extends StatefulWidget {
 
 class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
-  // List<Map> _books = [
-  //   {
-  //     'item_code': "Demo item 4",
-  //     'quantity_available': '52',
-  //     'quantity': '20',
-  //     'latest_prize': '₹ 160',
-  //     'promo_type': 'None',
-  //   },
-  //   {
-  //     'item_code': "Demo item 4",
-  //     'quantity_available': '52',
-  //     'quantity': '20',
-  //     'latest_prize': '₹ 136',
-  //     'promo_type': 'Buy x get same and discount',
-  //   },
-  // ];
 
-  // List<Map> promos = [
-  //   {
-  //     'bought': "Demo item 4",
-  //     'warehouse_qty': "20",
-  //     'free_items': "Demo item 4",
-  //     'qty': "4"
-  //   }
-  // ];
-  //
-  // List<Map> promosDiscount = [
-  //   {
-  //     'bought': "Demo item 4",
-  //     'free_item': "Demo item 4",
-  //     'discounted_prize': "₹ 136",
-  //     'qty': "2"
-  //   }
-  // ];
 
   var finalTotal = 0;
   bool pending_status = false;
@@ -201,6 +168,16 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   Future SaveData(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('Do you want to go back?'),
+          actions: [
+            MaterialButton(onPressed: (){},child: Text("Yes")),
+            MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No")),
+          ],
+        )
+    );
     print("call");
     isSaveload = true;
     // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -432,6 +409,10 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           // print("${saveModel!.docs}");
           isSubmitLoad = false;
           fluttertoast(whiteColor, greyLightColor, "Submit Successful");
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
           pushScreen(context, OrderBookingUi());
         });
       } else {
@@ -593,7 +574,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                     submit("Pending","Credit limit exceeded");
                   }
                   else{
-                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order');
                   }
                 }else{
                   print("else");
@@ -601,7 +582,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                     getOrderBooking();
                   }
                   else{
-                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order!!!');
+                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order');
                   }
                 }
               });

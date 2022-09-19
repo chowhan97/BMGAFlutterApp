@@ -54,6 +54,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
 
   bool loading = false;
 
+  var custType;
 
   @override
   void initState() {
@@ -132,12 +133,17 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
                     companyField(),
                     SizedBox(height: 15),
                     customerField(),
-                    SizedBox(height: 15),
-                    customerTypeField(),
-                    SizedBox(height: 15),
-                    creditlimitField(),
-                    SizedBox(height: 15),
-                    unpaidAmountField(),
+                    if(custType != null)
+                    Column(
+                      children: [
+                        SizedBox(height: 15),
+                        customerTypeField(),
+                        SizedBox(height: 15),
+                        creditlimitField(),
+                        SizedBox(height: 15),
+                        unpaidAmountField(),
+                      ],
+                    ),
                     // SizedBox(height: 15),
                   ],
                 ),
@@ -323,16 +329,17 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
   getCustomerType({suggestion}) async {
     print("suggestion is====>>${suggestion}");
     var formatter = NumberFormat('#,##,000');
-    var customerType = await CommonService().getCustomerType(context,customer: suggestion,company: Uri.encodeFull(companyController.text).replaceAll("&", "%26"));
-    print("cust type is===>>$customerType");
+    var formatter2 = NumberFormat('#,##,0');
+    custType = await CommonService().getCustomerType(context,customer: suggestion,company: Uri.encodeFull(companyController.text).replaceAll("&", "%26"));
+    print("cust type is===>>$custType");
     //cust type is===>>[[{cust_type: Retail, unpaid_amount: 0.0, credit_limit: 0}]]
-    CustomerTypeField.text = customerType[0][0]['cust_type'].toString();
-    UnpaidField.text = "₹${formatter.format(customerType[0][0]['unpaid_amount'])}";
-    CreditlimitField.text = "₹${formatter.format(customerType[0][0]['credit_limit'])}";
+    CustomerTypeField.text = custType[0][0]['cust_type'].toString();
+    UnpaidField.text = custType[0][0]['unpaid_amount'] == 0.0 ? "₹${formatter2.format(custType[0][0]['unpaid_amount'])}" : "₹${formatter.format(custType[0][0]['unpaid_amount'])}";
+    CreditlimitField.text = custType[0][0]['credit_limit'] == 0.0 ? "₹${formatter2.format(custType[0][0]['credit_limit'])}" : "₹${formatter.format(custType[0][0]['credit_limit'])}";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("cust_type", CustomerTypeField.text);
-    prefs.setString("unpaid", customerType[0][0]['unpaid_amount'].toString());
-    prefs.setString("creditlimit", customerType[0][0]['credit_limit'].toString());
+    prefs.setString("unpaid", custType[0][0]['unpaid_amount'].toString());
+    prefs.setString("creditlimit", custType[0][0]['credit_limit'].toString());
     var cust_type = prefs.getString("cust_type");
     print("cust_type?????????$cust_type");
     setState(() {});

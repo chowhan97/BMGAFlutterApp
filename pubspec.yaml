@@ -40,6 +40,7 @@ dependencies:
   test_api: ^0.4.8
   flutter_tagging: ^3.0.0
   dio_helper_flutter: ^1.0.13
+  flutter_svg: ^0.21.0
 
 dev_dependencies:
   flutter_driver:
@@ -63,6 +64,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/home_icons/
 
   fonts:
     - family: Asul

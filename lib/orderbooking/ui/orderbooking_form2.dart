@@ -318,12 +318,20 @@ class _OBItemsFormState extends State<OBItemsForm>
   bool isOfferAvaibale = false;
   @override
   void initState() {
+    itemcodecontrollerlist[widget.i].text = '';
+    quantityavailablecontrollerlist[widget.i].text = '';
+    lastbatchpricecontrollerlist[widget.i].text = '';
+    ratecontractcontrollerlist[widget.i].text = '';
+    mrpcontractcontrollerlist[widget.i].text = '';
+    brandcontractcontrollerlist[widget.i].text = '';
+    quantitycontrollerlist[widget.i].text = '';
     super.initState();
   }
 
 
   setItemData(String itemCode, int index) async {
     var formatter = NumberFormat('#,##,000');
+    var formatter2 = NumberFormat('#,##,0');
     product = await getData(itemCode);
     // print(product);
     print(itemCode);
@@ -346,7 +354,7 @@ class _OBItemsFormState extends State<OBItemsForm>
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     print("orderDetails is=====>>>>>${orderDetails}");
-    quantityavailablecontrollerlist[index].text = formatter.format(orderDetails["message"]["available_qty"]);
+    quantityavailablecontrollerlist[index].text =  orderDetails["message"]["available_qty"] == 0.0 ? formatter2.format(orderDetails["message"]["available_qty"]):  formatter.format(orderDetails["message"]["available_qty"]);
     lastbatchpricecontrollerlist[index].text = '₹${formatter.format(orderDetails["message"]["price_details"]["price"])}';
     ratecontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["rate_contract_check"].toString();
     mrpcontractcontrollerlist[index].text = "₹${formatter.format(orderDetails["message"]["price_details"]["mrp"])}";

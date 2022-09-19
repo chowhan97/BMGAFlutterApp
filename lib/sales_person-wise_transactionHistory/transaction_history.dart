@@ -64,25 +64,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("From Date",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  dateWidget(
-                      hintText: "Select From Date",
-                      controller: fromdate,
-                      ontap: () {
-                        opencalender(isFrom: true);
-                      }),
-                  SizedBox(height: 10),
-                  Text("To Date", style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  dateWidget(
-                      hintText: "Select To Date",
-                      controller: todate,
-                      ontap: () {
-                        opencalender(isTo: true);
-                      }),
-                  SizedBox(height: 10),
                   CustomTypeAheadFormField(
                     controller: company,
                     decoration: InputDecoration(
@@ -97,7 +78,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                     ),
                     label: 'Company',
                     labelStyle:
-                        TextStyle(color: blackColor, fontWeight: FontWeight.bold),
+                    TextStyle(color: blackColor, fontWeight: FontWeight.bold),
                     style: TextStyle(fontSize: 14, color: blackColor),
                     itemBuilder: (context, item) {
                       return TypeAheadWidgets.itemUi(item);
@@ -120,6 +101,25 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                         ? 'Company name should not be empty'
                         : null,
                   ),
+                  SizedBox(height: 10),
+                  Text("From Date",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  dateWidget(
+                      hintText: "Select From Date",
+                      controller: fromdate,
+                      ontap: () {
+                        opencalender(isFrom: true);
+                      }),
+                  SizedBox(height: 10),
+                  Text("To Date", style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  dateWidget(
+                      hintText: "Select To Date",
+                      controller: todate,
+                      ontap: () {
+                        opencalender(isTo: true);
+                      }),
                 ],
               ),
             ),
@@ -135,12 +135,12 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                   company.text.isEmpty) {
                 fluttertoast(
                     whiteColor,
-                    redColor,
+                    greyLightColor,
                     fromdate.text.isEmpty
-                        ? "Please choose from date!!!"
+                        ? "Please choose from date"
                         : todate.text.isEmpty
-                            ? "Please choose to date!!!"
-                            : "Please choose company!!!");
+                            ? "Please choose to date"
+                            : "Please choose company");
               } else {
                 pushScreen(
                     context,
