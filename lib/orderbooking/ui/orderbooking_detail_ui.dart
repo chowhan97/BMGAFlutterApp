@@ -25,7 +25,8 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
   TextEditingController customerTypeController = TextEditingController();
   NotEditable? notEditable;
   bool isNotEditableLoad = false;
-  var formatter = NumberFormat('#,##,000');
+  // var formatter = NumberFormat('#,##,000');
+  NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
 
   @override
   void initState() {
@@ -494,7 +495,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                     ],
                   ),
                   Text(
-                      "₹${formatter.format(list[index].amount)}",
+                      "₹${myFormat.format(list[index].amount)}",
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],
@@ -560,7 +561,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" + formatter.format((list[index].quantity!) * list[index].average!).toString(),
+                    "₹" + myFormat.format((list[index].quantity!) * list[index].average!).toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -645,7 +646,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" + formatter.format(int.parse(list[index].quantity!) * list[index].price!).toString(),
+                    "₹" + myFormat.format(int.parse(list[index].quantity!) * list[index].price!).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -710,8 +711,8 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                    "₹" + formatter.format(int.parse(list[index].quantity!) * list[index].discount!).toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold,),
+                    "₹" + myFormat.format(int.parse(list[index].quantity!) * list[index].discount!).toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

@@ -174,13 +174,13 @@ class _OrderBookingForm2State extends State<OrderBookingForm2> {
               Bookorderlist.clear();
               print("length is==>>${oblist.length}");
               for(var i=0; i < oblist.length; i++){
-                itemcode.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0))}));
-                orderlist.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"quantity_available": int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)), "rate_contract_check": int.parse(ratecontractcontrollerlist[i].text)}));
+                itemcode.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"quantity_available": int.parse(quantityavailablecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", ""))}));
+                orderlist.add(jsonEncode({"item_code":itemcodecontrollerlist[i].text,"quantity_booked": int.parse(quantitycontrollerlist[i].text),"average_price": int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"amount": int.parse(quantitycontrollerlist[i].text) * int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"quantity_available": int.parse(quantityavailablecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")), "rate_contract_check": int.parse(ratecontractcontrollerlist[i].text)}));
                 print("item code====>>>>${itemcode}");
                 print("orderlist====>>>>${orderlist}");
-                OrderBookingItemsV2.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"quantity_booked":int.parse(quantitycontrollerlist[i].text),"amount":int.parse(quantitycontrollerlist[i].text.replaceAll("₹", "")) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹","")).toStringAsFixed(0))}));
+                OrderBookingItemsV2.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-2","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(quantityavailablecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-2","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"amount_after_gst":int.parse(mrpcontractcontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"brand_name":brandcontractcontrollerlist[i].text,"quantity_booked":int.parse(quantitycontrollerlist[i].text),"amount":int.parse(quantitycontrollerlist[i].text.replaceAll("₹", "")) * int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹","").replaceAll(",", ""))}));
                 print("OrderBookingItemsV2====>>>>${OrderBookingItemsV2}");
-                Bookorderlist.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(double.parse(quantityavailablecontrollerlist[i].text).toStringAsFixed(0)),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"amount_after_gst":int.parse(double.parse(mrpcontractcontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0)),"brand_name":brandcontractcontrollerlist[i].text,"__checked":0,"quantity_booked":quantitycontrollerlist[i].text,"amount":int.parse(quantitycontrollerlist[i].text.replaceAll("₹", "")) * int.parse(double.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "")).toStringAsFixed(0))}));
+                Bookorderlist.add(jsonEncode({"docstatus":0,"doctype":"Order Booking Items V2","name":"new-order-booking-items-v2-7","__islocal":1,"__unsaved":1,"owner":owner,"quantity_available":int.parse(quantityavailablecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"gst_rate":"12","rate_contract":"0","rate_contract_check":int.parse(ratecontractcontrollerlist[i].text),"parent":"new-order-booking-v2-1","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":int.parse("${i+1}"),"__unedited":false,"stock_uom":"Unit","item_code":itemcodecontrollerlist[i].text,"average_price":int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"amount_after_gst":int.parse(mrpcontractcontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", "")),"brand_name":brandcontractcontrollerlist[i].text,"__checked":0,"quantity_booked":quantitycontrollerlist[i].text,"amount":int.parse(quantitycontrollerlist[i].text.replaceAll("₹", "")) * int.parse(lastbatchpricecontrollerlist[i].text.replaceAll("₹", "").replaceAll(",", ""))}));
                 print("Bookorderlist====>>>>${Bookorderlist}");
               }
               pushScreen(context,OrderBookingForm4(itemcode: itemcode,orderlist: orderlist,OrderBookingItemsV2: OrderBookingItemsV2,bookOrderList: Bookorderlist,creditLimit: widget.creditLimit,unPaidAmount: widget.unPaidAmount,));
@@ -328,10 +328,11 @@ class _OBItemsFormState extends State<OBItemsForm>
     super.initState();
   }
 
-
   setItemData(String itemCode, int index) async {
-    var formatter = NumberFormat('#,##,000');
-    var formatter2 = NumberFormat('#,##,0');
+    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
+    print("ggggg==>>${myFormat.format(5000.00)}");
+    // var formatter = NumberFormat('#,##,000');
+    // var formatter2 = NumberFormat('#,##,0');
     product = await getData(itemCode);
     // print(product);
     print(itemCode);
@@ -354,10 +355,13 @@ class _OBItemsFormState extends State<OBItemsForm>
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     orderDetails = await getOrderBookingDetails(itemCode,prefscust_type,company,prefscustomer, context);
     print("orderDetails is=====>>>>>${orderDetails}");
-    quantityavailablecontrollerlist[index].text =  orderDetails["message"]["available_qty"] == 0.0 ? formatter2.format(orderDetails["message"]["available_qty"]):  formatter.format(orderDetails["message"]["available_qty"]);
-    lastbatchpricecontrollerlist[index].text = '₹${formatter.format(orderDetails["message"]["price_details"]["price"])}';
+    // quantityavailablecontrollerlist[index].text =  orderDetails["message"]["available_qty"] == 0.0 ? formatter2.format(orderDetails["message"]["available_qty"]):  formatter.format(orderDetails["message"]["available_qty"]);
+    quantityavailablecontrollerlist[index].text =  myFormat.format(orderDetails["message"]["available_qty"]);
+    // lastbatchpricecontrollerlist[index].text = '₹${formatter.format(orderDetails["message"]["price_details"]["price"])}';
+    lastbatchpricecontrollerlist[index].text = '₹${myFormat.format(orderDetails["message"]["price_details"]["price"])}';
     ratecontractcontrollerlist[index].text = orderDetails["message"]["price_details"]["rate_contract_check"].toString();
-    mrpcontractcontrollerlist[index].text = "₹${formatter.format(orderDetails["message"]["price_details"]["mrp"])}";
+    // mrpcontractcontrollerlist[index].text = "₹${formatter.format(orderDetails["message"]["price_details"]["mrp"])}";
+    mrpcontractcontrollerlist[index].text = "₹${myFormat.format(orderDetails["message"]["price_details"]["mrp"])}";
     brandcontractcontrollerlist[index].text = orderDetails["message"]["brand_name"]["brand_name"].toString();
     print("is offer???????${orderDetails['message']['promo_check']}");
     setState(() {
@@ -572,172 +576,6 @@ class _OBItemsFormState extends State<OBItemsForm>
     }
   }
 
-  // Future promoType2({itemCode}) async {
-  //   print("call");
-  //   fetchPromo2 = true;
-  //   // var headers = {
-  //   //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-  //   // };
-  //   var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
-  //
-  //   request.fields.addAll({
-  //     'doctype': 'Sales Promos',
-  //     'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-  //     'filters': '[["Promo Type 2","bought_item","=",$itemCode]]',
-  //     'order_by': '`tabSales Promos`.`modified` desc',
-  //     'start': '0',
-  //     'page_length': '20',
-  //     'view': 'List',
-  //     'group_by': '`tabSales Promos`.`name`',
-  //     'with_comment_count': 'true'
-  //   });
-  //
-  //   request.headers.addAll(commonHeaders);
-  //
-  //   var streamedResponse = await request.send();
-  //   var response = await http.Response.fromStream(streamedResponse);
-  //   if (response.statusCode == 200) {
-  //     promoType3(itemCode: itemCode);
-  //     setState(() {
-  //       print(response.body);
-  //       String data = response.body;
-  //       promo2Res = json.decode(data);
-  //       fetchPromo2 = false;
-  //       print("promo type 2 success");
-  //       print("promo type 2 res====>>>$promo2Res");
-  //       if(promo2Res['message'].isNotEmpty){
-  //         Id id = Id(p2: promo2Res['message']['values'][0][0]);
-  //         print("??????P1??????===>>${id.p2}");
-  //         ids.add(id.p2);
-  //       }
-  //       // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-  //       // print("transactionModel====>>$customerOutstandingModel");
-  //     });
-  //   } else {
-  //     print("error cause===>>${response.reasonPhrase}");
-  //     setState(() {
-  //       fetchPromo2 = false;
-  //     });
-  //   }
-  // }
-  //
-  // Future promoType3({itemCode}) async {
-  //   print("call");
-  //   fetchPromo3 = true;
-  //   // var headers = {
-  //   //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-  //   // };
-  //   var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
-  //
-  //   request.fields.addAll({
-  //     'doctype': 'Sales Promos',
-  //     'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-  //     'filters': '[["Promo Type 3","bought_item","=",$itemCode]]',
-  //     'order_by': '`tabSales Promos`.`modified` desc',
-  //     'start': '0',
-  //     'page_length': '20',
-  //     'view': 'List',
-  //     'group_by': '`tabSales Promos`.`name`',
-  //     'with_comment_count': 'true'
-  //   });
-  //
-  //   request.headers.addAll(commonHeaders);
-  //
-  //   var streamedResponse = await request.send();
-  //   var response = await http.Response.fromStream(streamedResponse);
-  //   if (response.statusCode == 200) {
-  //     promoType5(itemCode: itemCode);
-  //     setState(() {
-  //       print(response.body);
-  //       String data = response.body;
-  //       promo3Res = json.decode(data);
-  //       fetchPromo3 = false;
-  //       print("promo type 3 success");
-  //       print("promo type 3 res====>>>$promo3Res");
-  //       if(promo3Res['message'].isNotEmpty){
-  //         Id id = Id(p3: promo3Res['message']['values'][0][0]);
-  //         print("??????P1??????===>>${id.p3}");
-  //         ids.add(id.p3);
-  //       }
-  //       // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-  //       // print("transactionModel====>>$customerOutstandingModel");
-  //     });
-  //   } else {
-  //     print("error cause===>>${response.reasonPhrase}");
-  //     setState(() {
-  //       fetchPromo3 = false;
-  //     });
-  //   }
-  // }
-  //
-  // Future promoType5({itemCode}) async {
-  //   print("call");
-  //   fetchPromo5 = true;
-  //   // var headers = {
-  //   //   'Cookie': 'full_name=Vishal%20Patel; sid=a8dd85da2f5ea05156bb1e1a1a83c0b22965ec46a959d0d242d6b46b; system_user=yes; user_id=prithvichowhan97%40gmail.com; user_image=https%3A//secure.gravatar.com/avatar/f8e2205f18d8e3e18fe031120b5aa50b%3Fd%3D404%26s%3D200'
-  //   // };
-  //   var request = http.MultipartRequest('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get'));
-  //
-  //   request.fields.addAll({
-  //     'doctype': 'Sales Promos',
-  //     'fields': '["`tabSales Promos`.`name`","`tabSales Promos`.`owner`","`tabSales Promos`.`creation`","`tabSales Promos`.`modified`","`tabSales Promos`.`modified_by`","`tabSales Promos`.`_user_tags`","`tabSales Promos`.`_comments`","`tabSales Promos`.`_assign`","`tabSales Promos`.`_liked_by`","`tabSales Promos`.`docstatus`","`tabSales Promos`.`parent`","`tabSales Promos`.`parenttype`","`tabSales Promos`.`parentfield`","`tabSales Promos`.`idx`","`tabSales Promos`.`start_date`"]',
-  //     'filters': '[["Promo Type 5","bought_item","=",$itemCode]]',
-  //     'order_by': '`tabSales Promos`.`modified` desc',
-  //     'start': '0',
-  //     'page_length': '20',
-  //     'view': 'List',
-  //     'group_by': '`tabSales Promos`.`name`',
-  //     'with_comment_count': 'true'
-  //   });
-  //
-  //   request.headers.addAll(commonHeaders);
-  //
-  //   var streamedResponse = await request.send();
-  //   var response = await http.Response.fromStream(streamedResponse);
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       print(response.body);
-  //       String data = response.body;
-  //       promo5Res = json.decode(data);
-  //       fetchPromo5 = false;
-  //       print("promo type 5 success");
-  //       print("promo type 5 res====>>>$promo5Res");
-  //       if(promo5Res['message'].isNotEmpty){
-  //         Id id = Id(p5: promo5Res['message']['values'][0][0]);
-  //         print("??????P1??????===>>${id.p5}");
-  //         ids.add(id.p5);
-  //       }
-  //       // var n1 = promo1Res['message']['values'][0][0];
-  //       // var n2 = promo2Res['message']['values'][0][0];
-  //       // var n3 = promo3Res['message']['values'][0][0];
-  //       // var n5 = promo5Res['message']['values'][0][0];
-  //       // List n = [];
-  //       // if(id.p1 != null){
-  //       //   n.add(id.p1);
-  //       // }
-  //       // if(id.p2 != null){
-  //       //   n.add(id.p2);
-  //       // }
-  //       // if(id.p3 != null){
-  //       //   n.add(id.p3);
-  //       // }
-  //       // if(id.p5 != null){
-  //       //   n.add(id.p5);
-  //       // }
-  //       print("n is====>>>${ids}");
-  //       showDialog(context: context,builder: (context) =>  CustomDialogue(promo1res: promo1Res,promo2res: promo2Res,promo3res: promo3Res,promo5res: promo5Res,ids: ids));
-  //       // customerOutstandingModel = CustomerOutstandingModel.fromJson(json.decode(data));
-  //       // print("transactionModel====>>$customerOutstandingModel");
-  //     });
-  //   } else {
-  //     print("error cause===>>${response.reasonPhrase}");
-  //     setState(() {
-  //       fetchPromo5 = false;
-  //     });
-  //   }
-  // }
-
-
   @override
   Widget build(BuildContext context){
     // result = await getOrderBookingDetails(itemCode,customertype,company,customer, context);
@@ -758,10 +596,11 @@ class _OBItemsFormState extends State<OBItemsForm>
               padding: EdgeInsets.only(top: 140,right: 10),
               child: Align(
                   alignment: Alignment.centerRight,
-                  child: fetchPromo5 == true ? CircularProgressIndicator() : MaterialButton(onPressed: (){
+                  child: MaterialButton(onPressed: (){
                     print(itemcodecontrollerlist[widget.i].text);
-                    ids.clear();
-                    promoType1(itemCode: itemcodecontrollerlist[widget.i].text,promoType: "Promo Type 1",idx: 1);
+                    showDialog(context: context,builder: (context) =>  CustomDialogue(name: itemcodecontrollerlist[widget.i].text));
+                    // ids.clear();
+                    // promoType1(itemCode: itemcodecontrollerlist[widget.i].text,promoType: "Promo Type 1",idx: 1);
                   },child: Text("Show Offer",style: TextStyle(color: Colors.white)),color: Constants.buttonColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)))),
             ) : Container(),
             Padding(
@@ -951,8 +790,8 @@ class _OBItemsFormState extends State<OBItemsForm>
 
 class CustomDialogue extends StatefulWidget {
   // var promo1res,promo2res,promo3res,promo5res,ids;
-  final promo1res,promo2res,promo3res,promo5res,ids;
-  CustomDialogue({this.promo1res,this.promo2res,this.promo3res,this.promo5res,this.ids});
+  final promo1res,promo2res,promo3res,promo5res,ids,name;
+  CustomDialogue({this.promo1res,this.promo2res,this.promo3res,this.promo5res,this.ids,this.name});
 
   @override
   State<CustomDialogue> createState() => _CustomDialogueState();
@@ -963,35 +802,58 @@ class _CustomDialogueState extends State<CustomDialogue> {
   OfferModel? offerModel;
 
 
+  // Future showOffer() async {
+  //   print("call");
+  //   showoffer = true;
+  //   var request = http.Request('GET',Uri.parse(showOfferApi(name: widget.ids[0])));
+  //   request.headers.addAll(commonHeaders);
+  //   var streamedResponse = await request.send();
+  //   var response = await http.Response.fromStream(streamedResponse);
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       print(response.body);
+  //       String data = response.body;
+  //       showoffer = false;
+  //       print("show offer success");
+  //       offerModel = OfferModel.fromJson(json.decode(data));
+  //       print("transactionModel====>>${offerModel!.docs![0].freeItemForEligibleQuantity}");
+  //     });
+  //   }
+  //   else {
+  //     print("error cause===>>${response.reasonPhrase}");
+  //     setState(() {
+  //       showoffer = false;
+  //     });
+  //   }
+  // }
+
   Future showOffer() async {
-    print("call");
-    showoffer = true;
-    var request = http.Request('GET',Uri.parse(showOfferApi(name: widget.ids[0])));
-    request.headers.addAll(commonHeaders);
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    if (response.statusCode == 200) {
-      setState(() {
-        print(response.body);
-        String data = response.body;
-        showoffer = false;
-        print("show offer success");
-        offerModel = OfferModel.fromJson(json.decode(data));
-        print("transactionModel====>>${offerModel!.docs![0].freeItemForEligibleQuantity}");
-      });
+      print("call");
+      showoffer = true;
+      var request = http.Request('GET',Uri.parse(showOfferApi(name: Uri.encodeFull(widget.name))));
+      request.headers.addAll(commonHeaders);
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        setState(() {
+          print(response.body);
+          String data = response.body;
+          showoffer = false;
+          print("show offer success");
+          offerModel = OfferModel.fromJson(json.decode(data));
+        });
+      }
+      else {
+        print("error cause===>>${response.reasonPhrase}");
+        setState(() {
+          showoffer = false;
+        });
+      }
     }
-    else {
-      print("error cause===>>${response.reasonPhrase}");
-      setState(() {
-        showoffer = false;
-      });
-    }
-  }
 
   @override
   void initState() {
     showOffer();
-    print("ids is===>>>${widget.ids[0]}");
     super.initState();
   }
   @override
@@ -1008,33 +870,33 @@ class _CustomDialogueState extends State<CustomDialogue> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!.isEmpty
+                  offerModel!.message!.promoTableForQuantityamountBasedDiscount!.isEmpty
                       ? Container()
                       : Text("Quantity Based Promo",
                           style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
-                  offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!.isEmpty
+                  offerModel!.message!.promoTableForQuantityamountBasedDiscount!.isEmpty
                       ? Container() :
                   _createDataTable(),
-                  offerModel!.docs![0].promosTableOfSameItem!.isEmpty
+                  offerModel!.message!.promosTableOfSameItem!.isEmpty
                       ? Container()
                       : Text("Buy X of item and get Y of same item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
-                  offerModel!.docs![0].promosTableOfSameItem!.isEmpty
+                  offerModel!.message!.promosTableOfSameItem!.isEmpty
                       ? Container() :
                   _createPromosDataTable(),
-                  offerModel!.docs![0].promosTableOfDifferentItems!.isEmpty
+                  offerModel!.message!.promosTableOfDifferentItems!.isEmpty
                       ? Container()
                       : Text("Buy X of item and get Y of different item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
-                  offerModel!.docs![0].promosTableOfDifferentItems!.isEmpty
+                  offerModel!.message!.promosTableOfDifferentItems!.isEmpty
                       ? Container() :
                   _createPromosDiscountDataTable(),
-                  offerModel!.docs![0].freeItemForEligibleQuantity!.isEmpty
+                  offerModel!.message!.freeItemForEligibleQuantity!.isEmpty
                       ? Container()
                       : Text("Free Item for Eligible Quantity, Discount for Ineligible Quantity", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
-                  offerModel!.docs![0].freeItemForEligibleQuantity!.isEmpty
+                  offerModel!.message!.freeItemForEligibleQuantity!.isEmpty
                       ? Container()
                       : _createTable(),
                 ],
@@ -1448,7 +1310,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   }
 
   List<DataRow> _createRows() {
-    return offerModel!.docs![0].promoTableForQuantityamountBasedDiscount!
+    return offerModel!.message!.promoTableForQuantityamountBasedDiscount!
         .map((book) => DataRow(
         cells: [
           DataCell(
@@ -1459,7 +1321,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                       width: MediaQuery.of(context).size.width * 0.47,
                       child: Center(
                           child: Text(
-                            book.quantityBought.toString(),
+                            book.boughtItem.toString(),
                             textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                           )),
                     ),
@@ -1473,7 +1335,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                     width: MediaQuery.of(context).size.width * 0.47,
                     child: Center(
                         child: Text(
-                          "${book.discountPercentage.toString()}%",
+                          "${book.discount.toString()}%",
                           textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                         )),
                   ),
@@ -1576,7 +1438,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   }
 
   List<DataRow> _createPromosRows() {
-    return offerModel!.docs![0].promosTableOfSameItem!
+    return offerModel!.message!.promosTableOfSameItem!
         .map((book) => DataRow(cells: [
       DataCell(
         Expanded(
@@ -1614,7 +1476,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                 width: MediaQuery.of(context).size.width * 0.25,
                 child: Center(
                     child: Text(
-                      book.forEveryQuantityThatIsBought.toString(),
+                      book.boughtQty.toString(),
                       textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                     )),
               ),
@@ -1628,7 +1490,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                 width: MediaQuery.of(context).size.width * 0.25,
                 child: Center(
                     child: Text(
-                      book.quantityOfFreeItemsThatsGiven.toString(),
+                      book.freeQty.toString(),
                       textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                     )),
               ),
@@ -1736,7 +1598,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   }
 
   List<DataRow> _createPromosDiscountRows() {
-    return offerModel!.docs![0].promosTableOfDifferentItems!
+    return offerModel!.message!.promosTableOfDifferentItems!
         .map((book) => DataRow(cells: [
       DataCell(
         Expanded(
@@ -1772,7 +1634,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                 width: MediaQuery.of(context).size.width * 0.2,
                 child: Center(
                     child: Text(
-                      book.forEveryQuantityThatIsBought.toString(),
+                      book.boughtQty.toString(),
                       textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                     )),
               ),
@@ -1785,7 +1647,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                 width: MediaQuery.of(context).size.width * 0.25,
                 child: Center(
                     child: Text(
-                      book.quantityOfFreeItemsThatsGiven.toString(),
+                      book.freeQty.toString(),
                       textAlign: TextAlign.center,style: TextStyle(fontSize: 11),
                     )),
               ),
@@ -1849,12 +1711,12 @@ class _CustomDialogueState extends State<CustomDialogue> {
   }
 
   List<DataRow> _createtableRows() {
-    return offerModel!.docs![0].freeItemForEligibleQuantity!
+    return offerModel!.message!.freeItemForEligibleQuantity!
         .map((book) => DataRow(cells: [
       DataCell(Center(child: Container(width: 80,child: Text(book.boughtItem.toString(),textAlign: TextAlign.center)))),
-      DataCell(Expanded(child: Container(width: 60,child: Center(child: Text(book.promoBasedOn.toString(),textAlign: TextAlign.center))))),
-      DataCell(Expanded(child: Container(width: 65,child: Center(child: Text(book.forEveryQuantityThatIsBought.toString()))))),
-      DataCell(Expanded(child: Container(width: 65,child: Center(child: Text(book.quantityOfFreeItemsThatsGiven.toString()))))),
+      DataCell(Expanded(child: Container(width: 60,child: Center(child: Text(book.boughtItem.toString(),textAlign: TextAlign.center))))),
+      DataCell(Expanded(child: Container(width: 65,child: Center(child: Text(book.boughtQty.toString()))))),
+      DataCell(Expanded(child: Container(width: 65,child: Center(child: Text(book.freeQty.toString()))))),
       DataCell(Expanded(child: Container(width: 70,child: Center(child: Text("${book.discount.toString()}%"))))),
     ])).toList();
   }

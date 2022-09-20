@@ -414,7 +414,8 @@ String orderBooking(){
 }
 
 String showOfferApi({name}){
-  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=${name}&_=1661330362628';
+  // return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Sales+Promos&name=${name}&_=1661330362628';
+  return 'https://erptest.bharathrajesh.co.in/api/method/bmga.global_api.sales_promo_detail_container?item_code=$name';
 }
 
 String getTableApi({itemcode,customer_type,company,order_list,customer}){
@@ -431,6 +432,10 @@ String account_receivable({fromDate,customer,customername}){
 
 String account_receivable_summary(){
   return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.query_report.run';
+}
+
+String deleteOrder(){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.client.delete';
 }
 
 // var commonHeaders = {

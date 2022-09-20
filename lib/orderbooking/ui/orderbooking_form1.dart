@@ -344,17 +344,4 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
     print("cust_type?????????$cust_type");
     setState(() {});
   }
-  //   for (var products in list) {
-  //     for (var product in products) {
-  //       if (product['name'] == name){
-  //         setState(() {
-  //           CustomerTypeField.text = product['customer_type'];
-  //         });
-  //       }
-  //       print("product is====>>>>$product");
-  //       return product;
-  //     }
-  //   }
-  // }
-
 }

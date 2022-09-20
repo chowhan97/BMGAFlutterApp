@@ -20,15 +20,15 @@ class ItemDetailWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 16),
                 child: Column(
                   children: [
-                    itemDetailWidget('Item Code', snapshot.data?.itemCode),
-                    SizedBox(height: 15),
+                    // itemDetailWidget('Item Code', snapshot.data?.itemCode),
+                    // SizedBox(height: 15),
                     itemDetailWidget('Item Name', snapshot.data?.itemName),
                     SizedBox(height: 15),
                     itemDetailWidget('HSN/SAC', snapshot.data?.hsn),
                     SizedBox(height: 15),
                     itemDetailWidget('Brand', snapshot.data?.brand),
                     SizedBox(height: 15),
-                    itemDetailWidget('PCH Division', snapshot.data?.pch_division),
+                    itemDetailWidget('Division', snapshot.data?.pch_division),
                   ],
                 ),
               ),

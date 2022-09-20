@@ -152,35 +152,20 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   bool isSaved = false;
   bool isSaveload = false;
 
-  Future abc({status, jeson}) async{
-    var request = http.Request('POST', Uri.parse('http://192.168.1.131/Core/save-icon/api/save.php?status=$status&json=$jeson'));
-
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    }
-    else {
-      print(response.reasonPhrase);
-    }
-
-  }
-
   Future SaveData(BuildContext context) async {
     // showDialog(
     //     context: context,
     //     builder: (_) => AlertDialog(
     //       title: Text('Do you want to go back?'),
     //       actions: [
-    //         MaterialButton(onPressed: (){},child: Text("Yes")),
-    //         MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No")),
+    //         MaterialButton(onPressed: (){},child: Text("Yes",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+    //         MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
     //       ],
     //     )
     // );
     print("call");
     isSaveload = true;
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
       // setState(() {
       //   order_booking_items_v2 = prefs.getString("order_booking_items_v2");
       //   print("prefsorder_list????????$order_booking_items_v2");
@@ -343,6 +328,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   bool isSubmitLoad = false;
+  bool isSubmitSuccess = false;
   Future submit(String status,String pendingReason) async{
     // print(saveModel!.docs![0].totalAmount);
     // print(saveModel!.docinfo);
@@ -408,6 +394,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           // saveModel = SaveModel.fromJson(json.decode(data));
           // print("${saveModel!.docs}");
           isSubmitLoad = false;
+          isSubmitSuccess = true;
           fluttertoast(whiteColor, greyLightColor, "Submit Successful");
           Navigator.pop(context);
           Navigator.pop(context);
@@ -427,6 +414,40 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     // };
     // var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/frappe.model.workflow.apply_workflow?doc={"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"workflow_state":${jsonEncode(saveModel!.docs![0].workflowState)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount}&action=Submit'));
 
+  }
+
+  bool deleteLoading = false;
+  var deleteRes;
+
+  Future DeleteOrder({id}) async {
+    print("call");
+    deleteLoading = true;
+    var request = http.MultipartRequest('GET', Uri.parse(deleteOrder()));
+
+    request.fields.addAll({
+      'doctype': 'Order Booking V2',
+      'name': 'ORDRV20504'
+    });
+
+    request.headers.addAll(commonHeaders);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      setState(() {
+        print(response.body);
+        String data = response.body;
+        deleteRes = json.decode(data);
+        deleteLoading = false;
+        print("delete success");
+        print("delete res====>>>$deleteRes");
+      });
+    } else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        deleteLoading = false;
+      });
+    }
   }
 
 
@@ -602,7 +623,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   listSalesOrderPreview(List<SalesOrderElement> list) {
-    var formatter = NumberFormat('#,##,000');
+    // var formatter = NumberFormat('#,##,000');
+    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -669,7 +691,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                  list[index].qty * list[index].averagePrice == 0 ? "₹0" : "₹" + formatter.format(list[index].qty * list[index].averagePrice).toString(),
+                  list[index].qty * list[index].averagePrice == 0 ? "₹0" : "₹" + myFormat.format(list[index].qty * list[index].averagePrice).toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -685,7 +707,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   listPromosView(List<SalesPromoDiscountedAmount> list) {
-    var formatter = NumberFormat('#,##,000');
+    // var formatter = NumberFormat('#,##,000');
+    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -751,7 +774,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10,),
                   Text(
-                      list[index].qty * list[index].amount == 0 ? "₹0" :  "₹" + formatter.format(list[index].qty * list[index].amount).toString(),
+                      list[index].qty * list[index].amount == 0 ? "₹0" :  "₹" + myFormat.format(list[index].qty * list[index].amount).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold,),
                   ),
                 ],
@@ -764,7 +787,8 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   }
 
   listPromosDiscountView(List<SalesPromoDiscountedAmount> list) {
-    var formatter = NumberFormat('#,##,000');
+    // var formatter = NumberFormat('#,##,000');
+    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -824,7 +848,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                  (list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic) == 0 ? "₹0" :  "₹" + formatter.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
+                  (list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic) == 0 ? "₹0" :  "₹" + myFormat.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
