@@ -16,21 +16,18 @@ class ItemDetailWidget extends StatelessWidget {
         Stack(
           children: [
             snapshot.hasData ? SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 16),
-                child: Column(
-                  children: [
-                    // itemDetailWidget('Item Code', snapshot.data?.itemCode),
-                    // SizedBox(height: 15),
-                    itemDetailWidget('Item Name', snapshot.data?.itemName),
-                    SizedBox(height: 15),
-                    itemDetailWidget('HSN/SAC', snapshot.data?.hsn),
-                    SizedBox(height: 15),
-                    itemDetailWidget('Brand', snapshot.data?.brand),
-                    SizedBox(height: 15),
-                    itemDetailWidget('Division', snapshot.data?.pch_division),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  // itemDetailWidget('Item Code', snapshot.data?.itemCode),
+                  // SizedBox(height: 15),
+                  itemDetailWidget('Item Name', snapshot.data?.itemName),
+                  SizedBox(height: 15),
+                  itemDetailWidget('HSN/SAC', snapshot.data?.hsn),
+                  SizedBox(height: 15),
+                  itemDetailWidget('Brand', snapshot.data?.brand),
+                  SizedBox(height: 15),
+                  itemDetailWidget('Division', snapshot.data?.pch_division),
+                ],
               ),
             ) : CircularProgressIndicator(),
           ],

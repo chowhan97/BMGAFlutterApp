@@ -240,7 +240,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(55),
           child: CustomAppBar(
-            title: Text('Bharath Rajesh ERP', style: TextStyle(color: textcolor)),
+            title: Text('BR Sales Hub', style: TextStyle(color: textcolor)),
             actions: [
               PopupMenuButton<Choice>(
                 icon: Icon(

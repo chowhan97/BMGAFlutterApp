@@ -218,7 +218,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   listOfItems(List<Item> list) {
-    var formatter = NumberFormat('#,##,000');
+    // var formatter = NumberFormat('#,##,000');
+    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -242,19 +243,19 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       Row(
                         children: [
                           Text("Net Rate : ",style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text("${formatter.format(list[index].netRate)}",style: TextStyle(color: Colors.grey)),
+                          Text("${myFormat.format(list[index].netRate)}",style: TextStyle(color: Colors.grey)),
                         ],
                       ),
-                      SizedBox(height: 2,),
+                      SizedBox(height: 2),
                       Text(
-                        "${list[index].qty} x ${list[index].rate}",
-                        style: TextStyle(fontWeight: FontWeight.bold,),
+                        "₹${myFormat.format(list[index].qty)} x ₹${myFormat.format(list[index].rate)}",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
                   Text(
-                      list[index].amount == 0 ? "₹${list[index].amount.toStringAsFixed(0)}" : "₹${formatter.format(list[index].amount)}",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                      list[index].amount == 0 ? "₹${list[index].amount.toStringAsFixed(0)}" : "₹${myFormat.format(list[index].amount)}",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -266,7 +267,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   listOfTaxes(List<Tax> list) {
-    var formatter = NumberFormat('#,##,000');
+    // var formatter = NumberFormat('#,##,000');
+    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -283,28 +285,28 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("SGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${formatter.format(list[0].taxAmount)}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${myFormat.format(list[0].taxAmount)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("CGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${formatter.format(list[1].taxAmount)}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${myFormat.format(list[1].taxAmount)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Total Taxable",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${formatter.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${myFormat.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Grand total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${formatter.format(list[1].total)}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${myFormat.format(list[1].total)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
               ],
@@ -315,21 +317,21 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("IGST Total",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${formatter.format(list[0].taxAmount)}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${myFormat.format(list[0].taxAmount)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Total Taxable",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("₹ ${formatter.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
+                    Text("₹ ${myFormat.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Grand total",style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text("₹ ${formatter.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
+                      Text("₹ ${myFormat.format(list[0].total)}",style: TextStyle(color: Colors.grey)),
                     ],
                   ),
               ],
@@ -343,14 +345,14 @@ class _TransactionDetailState extends State<TransactionDetail> {
   header(String s) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(s,style: TextStyle(fontSize: 18),),
+      child: Text(s,style: TextStyle(fontSize: 18)),
     );
   }
 
   totalHeader(String s) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Text(s,style: TextStyle(fontWeight: FontWeight.bold),),
+      child: Text(s,style: TextStyle(fontWeight: FontWeight.bold)),
     );
   }
 }

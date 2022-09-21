@@ -489,7 +489,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                       ),
                       SizedBox(height: 2,),
                       Text(
-                          "${list[index].quantityBooked} x ${list[index].averagePrice}",
+                          "₹${list[index].quantityBooked} x ₹${myFormat.format(list[index].averagePrice)}",
                         style: TextStyle(fontWeight: FontWeight.bold,),
                       )
                     ],
@@ -532,7 +532,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold,)),
+                            Text("PromoType : ",style: TextStyle(fontWeight: FontWeight.bold)),
                             Container(
                               width: MediaQuery.of(context).size.width / 2.9,
                               child: Text(
@@ -551,15 +551,15 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                           ],
                         ),
                         // Text("PromoType : ${list[index].promoType}",style: TextStyle(color: Colors.grey),maxLines: 2,overflow: TextOverflow.ellipsis),
-                        SizedBox(height: 2,),
+                        SizedBox(height: 2),
                         Text(
-                          "${list[index].quantity} x ${list[index].average}",
-                          style: TextStyle(fontWeight: FontWeight.bold,),
+                          "₹${list[index].quantity} x ₹${myFormat.format(list[index].average)}",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Text(
                     "₹" + myFormat.format((list[index].quantity!) * list[index].average!).toString(),
                     style: TextStyle(
@@ -703,7 +703,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                         // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
                         SizedBox(height: 2),
                         Text(
-                          "${list[index].quantity} x ${list[index].discount}",
+                          "₹${list[index].quantity} x ₹${myFormat.format(list[index].discount)}",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],

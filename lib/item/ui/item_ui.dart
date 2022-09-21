@@ -272,6 +272,7 @@ class _ItemUiState extends State<ItemUi> {
                                       snapshot: snapshot,
                                       // apiurl: apiurl!,
                                     ),
+                                    SizedBox(height: 15),
                                     isItemLoading == true ? CircularProgress() : show == true ? itemDetailWidget(label: "Quantity Available",value: itemData[0][0]) : Container()
                                     // warehouseName.isEmpty || warehouseName.length == 0
                                     //     ? Text('No Warehouse data found',

@@ -829,7 +829,9 @@ class _CustomDialogueState extends State<CustomDialogue> {
 
   Future showOffer() async {
       print("call");
-      showoffer = true;
+      setState(() {
+        showoffer = true;
+      });
       var request = http.Request('GET',Uri.parse(showOfferApi(name: Uri.encodeFull(widget.name))));
       request.headers.addAll(commonHeaders);
       var streamedResponse = await request.send();
@@ -860,7 +862,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.all(5),
-      child: showoffer == true ? Container(height: 500,alignment: Alignment.center,child: Container(height: 30,width: 30,child: CircularProgressIndicator(color: Colors.white))) : Stack(
+      child: showoffer == true ? Container(height: 500,alignment: Alignment.center,child: Container(height: 30,width: 30,child: CircularProgressIndicator(color: textcolor))) : Stack(
         alignment: Alignment.center,
         children: <Widget>[
           Container(
@@ -878,6 +880,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                   offerModel!.message!.promoTableForQuantityamountBasedDiscount!.isEmpty
                       ? Container() :
                   _createDataTable(),
+                  SizedBox(height: 5),
                   offerModel!.message!.promosTableOfSameItem!.isEmpty
                       ? Container()
                       : Text("Buy X of item and get Y of same item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
@@ -885,6 +888,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                   offerModel!.message!.promosTableOfSameItem!.isEmpty
                       ? Container() :
                   _createPromosDataTable(),
+                  SizedBox(height: 5),
                   offerModel!.message!.promosTableOfDifferentItems!.isEmpty
                       ? Container()
                       : Text("Buy X of item and get Y of different item free", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
@@ -892,6 +896,7 @@ class _CustomDialogueState extends State<CustomDialogue> {
                   offerModel!.message!.promosTableOfDifferentItems!.isEmpty
                       ? Container() :
                   _createPromosDiscountDataTable(),
+                  SizedBox(height: 5),
                   offerModel!.message!.freeItemForEligibleQuantity!.isEmpty
                       ? Container()
                       : Text("Free Item for Eligible Quantity, Discount for Ineligible Quantity", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
