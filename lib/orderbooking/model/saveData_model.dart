@@ -482,7 +482,7 @@ class Promo {
   String? freeItems;
   int? quantity;
   double? price;
-  int? warehouseQuantity;
+  double? warehouseQuantity;
   String? promoType;
   String? doctype;
   int? unsaved;

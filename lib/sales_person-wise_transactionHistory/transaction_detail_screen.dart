@@ -238,8 +238,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(list[index].itemName.toString(),style: TextStyle(fontWeight: FontWeight.bold,),),
-                      SizedBox(height: 2,),
+                      Text(list[index].itemName.toString(),style: TextStyle(fontWeight: FontWeight.bold)),
+                      SizedBox(height: 2),
                       Row(
                         children: [
                           Text("Net Rate : ",style: TextStyle(fontWeight: FontWeight.bold)),

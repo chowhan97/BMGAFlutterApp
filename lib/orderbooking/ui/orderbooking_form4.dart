@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
@@ -153,16 +154,6 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   bool isSaveload = false;
 
   Future SaveData(BuildContext context) async {
-    // showDialog(
-    //     context: context,
-    //     builder: (_) => AlertDialog(
-    //       title: Text('Do you want to go back?'),
-    //       actions: [
-    //         MaterialButton(onPressed: (){},child: Text("Yes",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-    //         MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-    //       ],
-    //     )
-    // );
     print("call");
     isSaveload = true;
       // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -310,7 +301,13 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
     print("response ${response.body}");
     if (response.statusCode == 200) {
-      submit("Approved","");
+      setState(() {
+        print(response.body);
+        var res = json.decode(response.body);
+        print("so_name is===>>${res['message']['so_name']}");
+        print("qo_name is===>>${res['message']['qo_name']}");
+        submit("Approved","",order_booking_so: res['message']['so_name'],hunting_quotation: res['message']['qo_name']);
+      });
     }
     else {
       print("orderBooking Else");
@@ -328,7 +325,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
 
   bool isSubmitLoad = false;
   bool isSubmitSuccess = false;
-  Future submit(String status,String pendingReason) async{
+  Future submit(String status,String pendingReason,{order_booking_so,hunting_quotation}) async{
     // print(saveModel!.docs![0].totalAmount);
     // print(saveModel!.docinfo);
     print("status $status");
@@ -367,15 +364,14 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     var request = http.MultipartRequest('Post', Uri.parse(saveOrder()));
       request.fields.addAll({
         // 'doc': '{"docstatus":0,"doctype":"Order Booking V2","name":"new-order-booking-v2-2","__islocal":1,"__unsaved":1,"owner":$Owner,"company":$company,"customer_type":$customerType,"customer_name":"Banashankari Medicals","customer":$customer,"order_booking_items_v2":${widget.OrderBookingItemsV2},"order_booking_so":null,"hunting_quotation":null,"promos":${promolist},"promos_discount": ${promoDiscount},"sales_order_preview":$salesOrderPreviewList}',
-        'doc': '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}',
-
+          'doc': '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so": ${jsonEncode(order_booking_so)},"hunting_quotation": ${jsonEncode(hunting_quotation)},"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}',
         // 'doc': '{"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"workflow_state":${jsonEncode(saveModel!.docs![0].workflowState)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount}',
         // 'doc': '{"name":${jsonEncode(saveModel!.docs![0].name)},"owner":${jsonEncode(saveModel!.docs![0].owner)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx":${jsonEncode(saveModel!.docs![0].idx)},"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"company":"Bharath Medical %26 General Agencies","customer":${jsonEncode(saveModel!.docs![0].customer)},"customer_type":${jsonEncode(saveModel!.docs![0].customerType)},"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"unpaid_amount":${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit":${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount":${jsonEncode(saveModel!.docs![0].totalAmount)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"order_booking_items_v2": $Orderbookingitemsv2,"sales_order_preview":$SalesOrderPreview,"promos":$Promos,"promos_discount":$Promosdiscount,"__unsaved":1,"pending_reason": ""}',
         // 'doc': '{"name":"ORDRV20260","owner":"jeeva@yuvabe.com","creation":"2022-09-10 17:09:23.478118","modified":"2022-09-10 17:09:23.478118","modified_by":"dummy@gmail.com","idx":0,"docstatus":0,"pch_status":"Pending","company":"Bharath Medical & General Agencies","customer":"CUST-R-00002","customer_type":"Retail","pending_reason":"null","customer_name":"Banashankari Medicals","unpaid_amount":0,"credit_limit":0,"total_amount":0,"doctype":"Order Booking v2","order_booking_items_v2":[{"name":"f2fd235ad9","owner":"dummy@gmail.com","creation":"2022-09-10 17:09:23.478118","modified":"2022-09-10 17:09:23.478118","modified_by":"dummy@gmail.com","parent":"ORDRV20254","parentfield":"order_booking_items_v2","parenttype":"Order Booking V2","idx":1,"docstatus":0,"item_code":"Demo Item 4","free_items":0,"stock_uom":"Unit","quantity_available":1138,"quantity_booked":50,"average_price":170,"amount":8500,"gst_rate":12,"amount_after_gst":140,"rate_contract":"0","rate_contract_check":0,"sales_promo":0,"brand_name":"Johnson & Johnson","doctype":"Order Booking Items V2"}],"sales_order_preview":[{"docstatus":0,"doctype":"Order booking V2 Sales Order preview","name":"b270212263","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"ORDRV20254","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":1,"item_code":"Demo Item 4","quantity_available":1138,"quantity":50,"average":170,"promo_type":"None","warehouse":"BMGA Test Warehouse - BMGA"},{"docstatus":0,"doctype":"Order booking V2 Sales Order preview","name":"cbfcf30562","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"ORDRV20254","parentfield":"sales_order_preview","parenttype":"Order Booking V2","idx":2,"item_code":"Demo Item 4","quantity_available":430,"quantity":10,"average":0,"promo_type":"Buy x get same and discount for ineligible qty","warehouse":"Free Warehouse - BMGA"}],"promos":[{"docstatus":0,"doctype":"Order Booking V2 Sales promo","name":"743db9cbe6","__islocal":1,"__unsaved":1,"owner":"jeeva@yuvabe.com","parent":"ORDRV20254","parentfield":"promos","parenttype":"Order Booking V2","idx":1,"bought_item":"Demo Item 4","free_items":"Demo Item 4","price":0,"quantity":10,"warehouse_quantity":430,"promo_type":"Buy x get same and discount for ineligible qty"}],"promos_discount":[],"__unsaved":1}',
         'action': 'Submit'
       });
-      print("submit==>>>>??????>>>>>${'{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}'}");
-    // abc(status: "pending_submit",jeson: '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}');
+      //print("submit==>>>>??????>>>>>${'{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}'}");
+      // abc(status: "pending_submit",jeson: '{"docstatus":${jsonEncode(saveModel!.docs![0].docstatus)},"doctype":${jsonEncode(saveModel!.docs![0].doctype)},"name":${jsonEncode(saveModel!.docs![0].name)},"creation":${jsonEncode(saveModel!.docs![0].creation)},"modified":${jsonEncode(saveModel!.docs![0].modified)},"modified_by":${jsonEncode(saveModel!.docs![0].modifiedBy)},"idx": ${jsonEncode(saveModel!.docs![0].idx)},"pch_status": "${status}","__unsaved":1,"owner":${jsonEncode(saveModel!.docs![0].owner)},"company":${jsonEncode(saveModel!.docs![0].company)},"customer_type":$customerType,"customer_name":${jsonEncode(saveModel!.docs![0].customerName)},"customer":${jsonEncode(saveModel!.docs![0].customer)},"pending_reason": "${pendingReason}","unpaid_amount": ${jsonEncode(saveModel!.docs![0].unpaidAmount)},"credit_limit": ${jsonEncode(saveModel!.docs![0].creditLimit)},"total_amount": ${jsonEncode(saveModel!.docs![0].totalAmount)},"order_booking_items_v2":${jsonEncode(saveModel!.docs![0].orderBookingItemsV2)},"order_booking_so":null,"hunting_quotation":null,"promos":${Promos},"promos_discount": ${Promosdiscount},"sales_order_preview":$SalesOrderPreview}');
       print("here is fields===>>>${request.fields}");
       request.headers.addAll(commonHeaders);
       var streamedResponse = await request.send();
@@ -419,13 +415,28 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
   var deleteRes;
 
   Future DeleteOrder({id}) async {
+    Navigator.pop(context);
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row (children: [
+            CircularProgressIndicator(
+              valueColor:AlwaysStoppedAnimation<Color>(textcolor),
+            ),
+            Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+          ]),
+        );
+      },
+    );
     print("call");
     deleteLoading = true;
-    var request = http.MultipartRequest('GET', Uri.parse(deleteOrder()));
+    var request = http.MultipartRequest('POST', Uri.parse(deleteOrder()));
 
     request.fields.addAll({
       'doctype': 'Order Booking V2',
-      'name': 'ORDRV20504'
+      'name': id
     });
 
     request.headers.addAll(commonHeaders);
@@ -434,6 +445,14 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     var response = await http.Response.fromStream(streamedResponse);
     if (response.statusCode == 200) {
       setState(() {
+        isSaved = false;
+        fluttertoast(whiteColor, greyLightColor, "Delete Order Successful");
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        pushScreen(context, OrderBookingUi());
         print(response.body);
         String data = response.body;
         deleteRes = json.decode(data);
@@ -449,106 +468,125 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     }
   }
 
-
+  Future<bool> _onWillPop() async {
+    return isSaved == true && isSubmitSuccess == false ? (await  showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => AlertDialog(
+              title: Text('Do you want to go back? it will discard your order'),
+              actions: [
+                MaterialButton(onPressed: (){DeleteOrder(id: saveModel!.docs![0].name);},child: Text("Yes",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+                MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+              ],
+            )
+         )) : true;
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(55),
-        child: CustomAppBar(
-          title: Text('Order Booking', style: TextStyle(color: textcolor)),
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(
-              Icons.arrow_back,
-              color: textcolor,
-            ),
-          ),
-          // actions: [
-          //   TextButton(onPressed: (){
-          //     setState(() {
-          //       getOrderBooking();
-          //       // Promodetail = true;
-          //     });
-          //   },
-          //       child: Text("Booking Order",style: TextStyle(color: whiteColor)))
-          // ],
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(child:  isTableLoad == true
-              ? Container(height: MediaQuery.of(context).size.height,child: Center(child: CircularProgressIndicator()))
-              : Container(
-            height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    tableModel!.message!.salesOrder!.salesOrder!.isEmpty
-                        ? Container()
-                        : header("Sales Order Preview"),
-                    // SizedBox(height: 8),
-                    tableModel!.message!.salesOrder!.salesOrder!.isEmpty
-                        ? Container()
-                        : listSalesOrderPreview(tableModel!.message!.salesOrder!.salesOrder!),
-                    tableModel!.message!.salesPromosItems!.isEmpty
-                        ? Container()
-                        : header("Promos"),
-                    tableModel!.message!.salesPromosItems!.isEmpty
-                        ? Container()
-                        : listPromosView(tableModel!.message!.salesPromosItems!),
-                    tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
-                        ? Container()
-                        : header("Promos Discount"),
-                    tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
-                        ? Container()
-                    // : listPromosDiscountView(tableModel!.message!.salesPromoDiscount!.promos!),
-                        : listPromosDiscountView(tableModel!.message!.salesPromoDiscountedAmount!),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(55),
+          child: CustomAppBar(
+            title: Text('Order Booking', style: TextStyle(color: textcolor)),
+            leading: IconButton(
+              onPressed: () async{
+                isSaved == true && isSubmitSuccess == false ? (await  showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => AlertDialog(
+                  title: Text('Do you want to go back? it will discard your order'),
+                  actions: [
+                    MaterialButton(onPressed: (){DeleteOrder(id: saveModel!.docs![0].name);},child: Text("Yes",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+                    MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
                   ],
-                ),
+                )
+                )) : Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: textcolor,
               ),
             ),
-          ),),
-          if(isSaved == false)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(onPressed: (){
-              SaveData(context);
-            },height: 50,minWidth: double.infinity,color: textcolor,child: isSaveload == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("Save",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
           ),
-          if(isSaved == true)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(onPressed: (){
-              setState(() {
-                if(pending_status == true){
-                  print("if");
-                  if(isSaved == true){
-                    submit("Pending","Credit limit exceeded");
+        ),
+        body: Column(
+          children: [
+            Expanded(child:  isTableLoad == true
+                ? Container(height: MediaQuery.of(context).size.height,child: Center(child: CircularProgressIndicator()))
+                : Container(
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      tableModel!.message!.salesOrder!.salesOrder!.isEmpty
+                          ? Container()
+                          : header("Sales Order Preview"),
+                      // SizedBox(height: 8),
+                      tableModel!.message!.salesOrder!.salesOrder!.isEmpty
+                          ? Container()
+                          : listSalesOrderPreview(tableModel!.message!.salesOrder!.salesOrder!),
+                      tableModel!.message!.salesPromosItems!.isEmpty
+                          ? Container()
+                          : header("Promos"),
+                      tableModel!.message!.salesPromosItems!.isEmpty
+                          ? Container()
+                          : listPromosView(tableModel!.message!.salesPromosItems!),
+                      tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
+                          ? Container()
+                          : header("Promos Discount"),
+                      tableModel!.message!.salesPromoDiscountedAmount!.isEmpty
+                          ? Container()
+                      // : listPromosDiscountView(tableModel!.message!.salesPromoDiscount!.promos!),
+                          : listPromosDiscountView(tableModel!.message!.salesPromoDiscountedAmount!),
+                    ],
+                  ),
+                ),
+              ),
+            ),),
+            if(isSaved == false)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MaterialButton(onPressed: (){
+                SaveData(context);
+              },height: 50,minWidth: double.infinity,color: textcolor,child: isSaveload == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("Save",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+            ),
+            if(isSaved == true)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MaterialButton(onPressed: (){
+                setState(() {
+                  if(pending_status == true){
+                    print("if");
+                    if(isSaved == true){
+                      submit("Pending","Credit limit exceeded");
+                    }
+                    else{
+                      fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order');
+                    }
+                  }else{
+                    print("else");
+                    //not pending
+                    if(isSaved == true){
+                      getOrderBooking();
+                    }
+                    else{
+                      fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order');
+                    }
                   }
-                  else{
-                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order');
-                  }
-                }else{
-                  print("else");
-                  if(isSaved == true){
-                    getOrderBooking();
-                  }
-                  else{
-                    fluttertoast(whiteColor, redColor, 'Please Save Order First Then Submit Order');
-                  }
-                }
-              });
-            },height: 50,minWidth: double.infinity,color: textcolor,child: isSubmitLoad == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("Submit",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-          ),
-          SizedBox(height: 5)
-        ],
-      )
+                });
+              },height: 50,minWidth: double.infinity,color: textcolor,child: isSubmitLoad == true? Container(height: 20,width: 20,child: CircularProgressIndicator(color: Colors.white)) : Text("Submit",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+            ),
+            SizedBox(height: 5)
+          ],
+        )
+      ),
     );
   }
 
@@ -620,7 +658,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                         // Text("PromoType : ${list[index].promoType}",style: TextStyle(color: Colors.grey),maxLines: 2,overflow: TextOverflow.ellipsis),
                         SizedBox(height: 2),
                         Text(
-                          "${list[index].qty} x ${list[index].averagePrice}",
+                          "₹${list[index].qty} x ₹${list[index].averagePrice}",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
@@ -737,6 +775,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
           shrinkWrap: true,
           itemBuilder: (context,index){
             print("disc is===>>${list[index].promoType}");
+            print("dic is===>>${list[index].dic}");
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -777,7 +816,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                         // Text("PromoType : "+list[index].promoType.toString(), style: TextStyle(color: Colors.grey),maxLines: 1,overflow: TextOverflow.ellipsis,),
                         SizedBox(height: 2),
                         Text(
-                          "${list[index].dicQty == null ? "0.0" : list[index].dicQty} x ${list[index].dic == null ? "0.0" : list[index].dic}",
+                          "₹${list[index].dicQty == null ? "0.0" : list[index].dicQty} x ₹${list[index].dic == null ? "0.0" : list[index].dic}",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
@@ -785,7 +824,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                  (list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic) == 0 ? "₹0" :  "₹" + myFormat.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
+                  (list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null || list[index].dic == "0" ? 0.0 : list[index].dic) == 0 ? "₹0" :  "₹" + myFormat.format((list[index].dicQty == null ? 0.0 : list[index].dicQty)! * (list[index].dic == null ? 0.0 : list[index].dic)).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
