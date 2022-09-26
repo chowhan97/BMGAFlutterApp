@@ -418,6 +418,14 @@ String showOfferApi({name}){
   return 'https://erptest.bharathrajesh.co.in/api/method/bmga.global_api.sales_promo_detail_container?item_code=$name';
 }
 
+String CollectionTripListApi(){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.reportview.get';
+}
+
+String CollectionTripWiseListApi({name}){
+  return 'https://erptest.bharathrajesh.co.in/api/method/frappe.desk.form.load.getdoc?doctype=Collection+Trip&name=$name&_=1664170884197';
+}
+
 String getTableApi({itemcode,customer_type,company,order_list,customer}){
   return 'https://erptest.bharathrajesh.co.in/api/method/bmga.bmga.doctype.order_booking_v2.api.sales_promos?item_code=${itemcode}&customer_type=${customer_type}&company=${company}&order_list=${order_list}&customer=${customer}';
 }

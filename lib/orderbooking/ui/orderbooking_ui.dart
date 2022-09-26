@@ -58,7 +58,6 @@ class _OrderBookingUiState extends State<OrderBookingUi> {
               itemCount: _orderBookingList.length,
               itemBuilder: (context, index) {
                 print("_orderBookingList ${_orderBookingList[index].name}");
-
                 return GestureDetector(
                   onTap: (){
                     if(_orderBookingList[index].name == "" || _orderBookingList[index].name == null){

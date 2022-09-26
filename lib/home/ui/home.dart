@@ -1,3 +1,4 @@
+import 'package:ebuzz/collection_trip/collection_trip_list.dart';
 import 'package:ebuzz/common/circular_progress.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
@@ -89,57 +90,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   }
 
   addLabelListToWidgetList() async {
-    // if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.bom))
-    //   widgetsList.add(LabelList(label: 'BOM', route: BomUi()));
-
     if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
        widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/item.svg",fit: BoxFit.fill),label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
-    // if (labels.contains(DoctypeNames.purchaseOrder) &&
-    //     labels.contains(DoctypeNames.purchaseReceipt))
-    //   widgetsList.add(LabelList(label: 'Purchase Order', route: PurchaseOrderUi()));
-    // // if(labels.contains(DoctypeNames.leaveLedgerEntry))
-    // widgetsList.add(LabelList(label: 'Leave Balance', route: LeaveUi()));
-    // if (labels.contains(DoctypeNames.leaveApplication))
-    //   widgetsList.add(LabelList(
-    //       label: 'Leave List', route: EmployeeLeaveUi(name: name ?? '')));
-    // if (labels.contains(DoctypeNames.workOrder))
-    //   widgetsList.add(LabelList(label: 'Work Order', route: WorkOrderUi()));
-    // if (labels.contains(DoctypeNames.qualityInspection) &&
-    //     labels.contains(DoctypeNames.qualityInspectionTemplate) &&
-    //     labels.contains(DoctypeNames.salesInvoice) &&
-    //     labels.contains(DoctypeNames.purchaseInvoice) &&
-    //     labels.contains(DoctypeNames.deliveryNote) &&
-    //     labels.contains(DoctypeNames.item) &&
-    //     labels.contains(DoctypeNames.batch))
-    //   widgetsList.add(LabelList(
-    //       label: 'Quality Inspection', route: QualityInspectionListUi()));
-    // if (labels.contains(DoctypeNames.stockEntry))
-    //   widgetsList.add(LabelList(label: 'Stock Entry', route: StockEntryList()));
-    // if (labels.contains(DoctypeNames.item) &&
-    //     labels.contains(DoctypeNames.salesOrder) &&
-    //     labels.contains(DoctypeNames.company) &&
-    //     labels.contains(DoctypeNames.customer) &&
-    //     labels.contains(DoctypeNames.warehouse))
-    //   widgetsList.add(LabelList(label: 'Sales Order', route: SalesOrderListUi()));
-    // widgetsList
-    //     .add(LabelList(label: 'Evaluasi Staff', route: EvaluasiStaffFormUi()));
-    // if (labels.contains(DoctypeNames.item) &&
-    //     labels.contains(DoctypeNames.itemGroup) &&
-    //     labels.contains(DoctypeNames.brand) &&
-    //     labels.contains(DoctypeNames.quotation))
-    //   widgetsList.add(LabelList(label: 'Catalogue', route: ItemsUi()));
-    // if (labels.contains(DoctypeNames.customer) &&
-    //     labels.contains(DoctypeNames.lead) &&
-    //     labels.contains(DoctypeNames.company) &&
-    //     labels.contains(DoctypeNames.currency) &&
-    //     labels.contains(DoctypeNames.quotation) &&
-    //     labels.contains(DoctypeNames.bom) &&
-    //     labels.contains(DoctypeNames.territory) &&
-    //     labels.contains(DoctypeNames.uom) &&
-    //     labels.contains(DoctypeNames.item) &&
-    //     labels.contains(DoctypeNames.itemGroup) &&
-    //     labels.contains(DoctypeNames.customerGroup)) //global defaults
-    //   widgetsList.add(LabelList(label: 'Price Discovery', route: NewBom()));
     if (labels.contains(DoctypeNames.item) &&
         labels.contains(DoctypeNames.salesOrder) &&
         labels.contains(DoctypeNames.company) &&
@@ -149,9 +101,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     if (labels.contains(DoctypeNames.quotation))
       // widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Order booking.svg",fit: BoxFit.fill),label: Padding(padding: const EdgeInsets.only(left: 4,right: 4), child: Text('Sales Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center),), route: TransactionHistory()));
-    widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/customer care.svg",fit: BoxFit.fill),label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
-      // widgetsList.add(LabelList(label: 'Customer Outstanding', route: CustomerOutStanding()));
-      // widgetsList.add(LabelList(label: 'Test Api', route: TestApi()));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/customer care.svg",fit: BoxFit.fill),label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripList()));
       print(widgetsList.length);
       setState(() {});
   }
