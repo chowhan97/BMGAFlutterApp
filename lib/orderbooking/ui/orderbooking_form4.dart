@@ -446,7 +446,7 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
     if (response.statusCode == 200) {
       setState(() {
         isSaved = false;
-        fluttertoast(whiteColor, greyLightColor, "Delete Order Successful");
+        fluttertoast(whiteColor, greyLightColor, "Order Discarded Successful");
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
@@ -473,7 +473,14 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
             context: context,
             barrierDismissible: false,
             builder: (_) => AlertDialog(
-              title: Text('Do you want to go back? it will discard your order'),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Discard changes?'),
+                  SizedBox(height: 10),
+                  Text('Going back will discard all your changes.',style: TextStyle(color: greyLightColor,fontSize: 15)),
+                ],
+              ),
               actions: [
                 MaterialButton(onPressed: (){DeleteOrder(id: saveModel!.docs![0].name);},child: Text("Yes",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
                 MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
@@ -498,7 +505,14 @@ class _OrderBookingForm4State extends State<OrderBookingForm4> {
                 context: context,
                 barrierDismissible: false,
                 builder: (_) => AlertDialog(
-                  title: Text('Do you want to go back? it will discard your order'),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Discard changes?'),
+                      SizedBox(height: 10),
+                      Text('Going back will discard all your changes.',style: TextStyle(color: greyLightColor,fontSize: 15)),
+                    ],
+                  ),
                   actions: [
                     MaterialButton(onPressed: (){DeleteOrder(id: saveModel!.docs![0].name);},child: Text("Yes",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
                     MaterialButton(onPressed: (){Navigator.pop(context);},child: Text("No",style: TextStyle(color: whiteColor)),color: textcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),

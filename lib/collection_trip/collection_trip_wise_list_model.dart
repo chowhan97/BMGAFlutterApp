@@ -300,6 +300,8 @@ class Detail {
     this.totalAmount,
     this.chequeReference,
     this.chequeDate,
+    this.wireReference,
+    this.wireDate,
     this.doctype,
   });
 
@@ -323,6 +325,8 @@ class Detail {
   dynamic totalAmount;
   String? chequeReference;
   String? chequeDate;
+  String? wireReference;
+  String? wireDate;
   String? doctype;
 
   factory Detail.fromJson(Map<String, dynamic> json) => Detail(
@@ -346,6 +350,8 @@ class Detail {
     totalAmount: json["total_amount"],
     chequeReference: json["cheque_reference"] == null ? null : json["cheque_reference"],
     chequeDate: json["cheque_date"] == null ? null : json["cheque_date"],
+    wireReference: json["wire_reference"] == null ? null : json["wire_reference"],
+    wireDate: json["wire_date"] == null ? null : json["wire_date"],
     doctype: json["doctype"],
   );
 
@@ -370,6 +376,8 @@ class Detail {
     "total_amount": totalAmount,
     "cheque_reference": chequeReference == null ? null : chequeReference,
     "cheque_date": chequeDate == null ? null : chequeDate,
+    "wire_reference": wireReference == null ? null : wireReference,
+    "wire_date": wireDate == null ? null : wireDate,
     "doctype": doctype,
   };
 }

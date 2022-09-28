@@ -286,7 +286,7 @@ class _OrderBookingForm1State extends State<OrderBookingForm1> {
             borderRadius: BorderRadius.circular(5),
           ),
         // hintText: 'Select Customer',
-        hintText: 'Select Customer name',
+        hintText: 'Select Customer',
       ),
       // label: 'Customer',
       label: 'Customer Name',

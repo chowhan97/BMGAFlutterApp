@@ -587,6 +587,8 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
           physics: ScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context,index){
+            print("list[index].quantity===>>${list[index].quantity}");
+            print("list[index].price===>>${list[index].price}");
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -646,7 +648,7 @@ class _OrderBookingDetailState extends State<OrderBookingDetail> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "₹" + myFormat.format(int.parse(list[index].quantity!) * list[index].price!).toString(),
+                    "₹" + myFormat.format(list[index].quantity == null ? 0.0 : int.parse(list[index].quantity!) * list[index].price!).toString(),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

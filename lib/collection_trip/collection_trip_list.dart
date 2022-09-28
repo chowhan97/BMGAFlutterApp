@@ -107,10 +107,9 @@ class _CollectionTripListState extends State<CollectionTripList> {
                     padding: EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(collectionListModel!.message!.values![index][0] ?? '',
@@ -120,14 +119,14 @@ class _CollectionTripListState extends State<CollectionTripList> {
                             Row(
                               children: [
                                 Text("Delivery Trip No: ",style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text("${collectionListModel!.message!.values![index][14]}",style: TextStyle(color: greyLightColor),),
+                                Text("${collectionListModel!.message!.values![index][14]}",style: TextStyle(color: greyLightColor)),
                               ],
                             ),
                             SizedBox(height: 5),
                             Row(
                               children: [
                                 Text("Collection Person: ",style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text("${collectionListModel!.message!.values![index][15]}",style: TextStyle(color: greyLightColor),),
+                                Text("${collectionListModel!.message!.values![index][15]}",style: TextStyle(color: greyLightColor)),
                               ],
                             ),
                             // Text('Delivery Trip No: ' + collectionListModel!.message!.values![index][14]),
@@ -135,7 +134,7 @@ class _CollectionTripListState extends State<CollectionTripList> {
                             // collectionListModel!.message!.values![index][15] == null ? SizedBox(): Text('Collection Person: ' + collectionListModel!.message!.values![index][15]),
                           ],
                         ),
-                        Container(padding: EdgeInsets.all(5),decoration: BoxDecoration(color: collectionListModel!.message!.values![index][9] == 1 ? textcolor : greyLightColor,borderRadius: BorderRadius.circular(5)),child: Text(collectionListModel!.message!.values![index][9] == 1 ? "Submitted" : "Draft", style: TextStyle(fontSize: 16, color: Colors.white))),
+                        Container(padding: EdgeInsets.all(5),decoration: BoxDecoration(color: collectionListModel!.message!.values![index][9] == 1 ? Colors.blueAccent : textcolor,borderRadius: BorderRadius.circular(5)),child: Text(collectionListModel!.message!.values![index][9] == 1 ? "Submitted" : "Draft", style: TextStyle(fontSize: 16, color: Colors.white))),
                       ],
                     ),
                   ),
