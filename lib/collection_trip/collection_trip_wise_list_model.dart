@@ -229,6 +229,7 @@ class Doc {
     this.docstatus,
     this.deliveryTripNo,
     this.collectionPerson,
+    this.collectionPersonName,
     this.doctype,
     this.details,
     this.paymentEntry,
@@ -243,6 +244,7 @@ class Doc {
   int? docstatus;
   String? deliveryTripNo;
   String? collectionPerson;
+  String? collectionPersonName;
   String? doctype;
   List<Detail>? details;
   List<PaymentEntry>? paymentEntry;
@@ -257,6 +259,7 @@ class Doc {
     docstatus: json["docstatus"],
     deliveryTripNo: json["delivery_trip_no"],
     collectionPerson: json["collection_person"],
+    collectionPersonName: json['collection_person_name'],
     doctype: json["doctype"],
     details: List<Detail>.from(json["details"].map((x) => Detail.fromJson(x))),
     paymentEntry: List<PaymentEntry>.from(json["payment_entry"].map((x) => PaymentEntry.fromJson(x))),
@@ -272,6 +275,7 @@ class Doc {
     "docstatus": docstatus,
     "delivery_trip_no": deliveryTripNo,
     "collection_person": collectionPerson,
+    "collection_person_name": collectionPersonName,
     "doctype": doctype,
     "details": List<dynamic>.from(details!.map((x) => x.toJson())),
     "payment_entry": List<dynamic>.from(paymentEntry!.map((x) => x.toJson())),

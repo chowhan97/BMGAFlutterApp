@@ -10,6 +10,7 @@ import 'package:ebuzz/util/apiurls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CollectionTripWiseList extends StatefulWidget {
   var name;
@@ -22,8 +23,16 @@ class CollectionTripWiseList extends StatefulWidget {
 class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
    bool isLoadCollection = false;
    CollectionListWiseModel? collectionListWiseModel;
+   var listResp;
    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
    bool isLoadSave = false;
+   String? cash = "";
+   String? chaque = "";
+   String? wire = "";
+   String? chaque_ref = "";
+   String? chaque_date = "";
+   String? wire_ref = "";
+   String? wire_date = "";
 
   @override
   void initState() {
@@ -44,6 +53,7 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
       setState(() {
         print(response.body);
         String data = response.body;
+        listResp = json.decode(data);
         isLoadCollection = false;
         collectionListWiseModel = CollectionListWiseModel.fromJson(json.decode(data));
         print("collectionListModel===>>>${collectionListWiseModel!.docs![0].name}");
@@ -57,7 +67,7 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
     }
   }
 
-  Future save({data,cash,chaque,wire}) async {
+  Future save({index,updatedData}) async {
     Navigator.pop(context);
     showDialog(
       barrierDismissible: false,
@@ -73,16 +83,23 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
         );
       },
     );
-    var total = int.parse(cash) + int.parse(chaque) + int.parse(wire);
-    print("total is====>>>$total");
      setState(() {
        isLoadSave = true;
      });
      var request = http.MultipartRequest('POST', Uri.parse(CollectionTripSaveApi()));
-     request.fields.addAll({
-       'doc': '{"name":${jsonEncode(collectionListWiseModel!.docs![0].name)},"owner": ${jsonEncode(collectionListWiseModel!.docs![0].owner)},"creation":${jsonEncode(collectionListWiseModel!.docs![0].creation)},"modified":${jsonEncode(collectionListWiseModel!.docs![0].modified)},"modified_by":${jsonEncode(collectionListWiseModel!.docs![0].modifiedBy)},"idx":${jsonEncode(collectionListWiseModel!.docs![0].idx)},"docstatus":${jsonEncode(collectionListWiseModel!.docs![0].docstatus)},"delivery_trip_no":${jsonEncode(collectionListWiseModel!.docs![0].deliveryTripNo)},"collection_person":${jsonEncode(collectionListWiseModel!.docs![0].collectionPerson)},"doctype":${jsonEncode(collectionListWiseModel!.docs![0].doctype)},"details":[{"name": ${jsonEncode(data.name)},"owner":${jsonEncode(data.owner)},"creation":${jsonEncode(data.creation)},"modified":${jsonEncode(data.modified)},"modified_by":${jsonEncode(data.modifiedBy)},"parent":${jsonEncode(data.parent)},"parentfield":${jsonEncode(data.parentfield)},"parenttype":${jsonEncode(data.parenttype)},"idx":${jsonEncode(data.idx)},"docstatus":${jsonEncode(data.docstatus)},"invoice_no":${jsonEncode(data.invoiceNo)},"customer":${jsonEncode(data.customer)},"customer_name":${jsonEncode(data.customerName)},"pending_amount":${jsonEncode(data.pendingAmount)},"cash_amount":${jsonEncode(int.parse(cash))},"cheque_amount":${jsonEncode(int.parse(chaque))},"wire_amount":${jsonEncode(int.parse(wire))},"total_amount":${jsonEncode(total)},"doctype":${jsonEncode(data.doctype)}}],"payment_entry":[],"__unsaved":1}',
-       'action': 'Save'
-     });
+     List data = [];
+     data.clear();
+      collectionListWiseModel!.docs![0].details!.forEach((element){
+        data.add(element);
+        print("data index===>>>${data[index]}");
+        data[index] = updatedData;
+        print("data is====>>>$data");
+    });
+    request.fields.addAll({
+      // 'doc': '{"name":${jsonEncode(collectionListWiseModel!.docs![0].name)},"owner": ${jsonEncode(collectionListWiseModel!.docs![0].owner)},"creation":${jsonEncode(collectionListWiseModel!.docs![0].creation)},"modified":${jsonEncode(collectionListWiseModel!.docs![0].modified)},"modified_by":${jsonEncode(collectionListWiseModel!.docs![0].modifiedBy)},"idx":${jsonEncode(collectionListWiseModel!.docs![0].idx)},"docstatus":${jsonEncode(collectionListWiseModel!.docs![0].docstatus)},"delivery_trip_no":${jsonEncode(collectionListWiseModel!.docs![0].deliveryTripNo)},"collection_person":${jsonEncode(collectionListWiseModel!.docs![0].collectionPerson)},"collection_person_name":${jsonEncode(collectionListWiseModel!.docs![0].collectionPersonName)},"doctype":${jsonEncode(collectionListWiseModel!.docs![0].doctype)},"details":${jsonEncode(data)},"payment_entry":${jsonEncode(collectionListWiseModel!.docs![0].paymentEntry)},"__last_sync_on":2022-09-28T11:38:58.033Z,"__unsaved":1}',
+      'doc': '{"name":${jsonEncode(collectionListWiseModel!.docs![0].name)},"owner":${jsonEncode(collectionListWiseModel!.docs![0].owner)},"creation":${jsonEncode(collectionListWiseModel!.docs![0].creation)},"modified":${jsonEncode(collectionListWiseModel!.docs![0].modified)},"modified_by":${jsonEncode(collectionListWiseModel!.docs![0].modifiedBy)},"idx":${jsonEncode(collectionListWiseModel!.docs![0].idx)},"docstatus":${jsonEncode(collectionListWiseModel!.docs![0].docstatus)},"delivery_trip_no":${jsonEncode(collectionListWiseModel!.docs![0].deliveryTripNo)},"collection_person":${jsonEncode(collectionListWiseModel!.docs![0].collectionPerson)},"collection_person_name":${jsonEncode(collectionListWiseModel!.docs![0].collectionPersonName)},"doctype":${jsonEncode(collectionListWiseModel!.docs![0].doctype)},"details":${jsonEncode(data)},"payment_entry":${jsonEncode(collectionListWiseModel!.docs![0].paymentEntry)},"__last_sync_on":"2022-09-28T11:38:58.033Z","__unsaved":1}',
+      'action': 'Save'
+    });
      request.headers.addAll(commonHeaders);
      var streamedResponse = await request.send();
      var response = await http.Response.fromStream(streamedResponse);
@@ -233,12 +250,7 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(onTap: (){
-                            List clicked = [];
-                            clicked.clear();
-                            clicked.add({"name": collectionListWiseModel!.docs![0].details![index].name,"owner": collectionListWiseModel!.docs![0].details![index].owner,"creation": collectionListWiseModel!.docs![0].details![index].creation,"modified": collectionListWiseModel!.docs![0].details![index].modified,"modified_by": collectionListWiseModel!.docs![0].details![index].modifiedBy,"parent": collectionListWiseModel!.docs![0].details![index].parent,"parentfield": collectionListWiseModel!.docs![0].details![index].parentfield,"parenttype": collectionListWiseModel!.docs![0].details![index].parenttype,"idx": collectionListWiseModel!.docs![0].details![index].idx,"docstatus": collectionListWiseModel!.docs![0].details![index].docstatus,"invoice_no": collectionListWiseModel!.docs![0].details![index].invoiceNo,"customer": collectionListWiseModel!.docs![0].details![index].customer,"customer_name": collectionListWiseModel!.docs![0].details![index].customerName,"pending_amount": collectionListWiseModel!.docs![0].details![index].pendingAmount,"cash_amount": collectionListWiseModel!.docs![0].details![index].cashAmount,"cheque_amount": collectionListWiseModel!.docs![0].details![index].chequeAmount,"wire_amount": collectionListWiseModel!.docs![0].details![index].wireAmount,"total_amount": collectionListWiseModel!.docs![0].details![index].totalAmount,"cheque_reference": collectionListWiseModel!.docs![0].details![index].chequeReference,"cheque_date": collectionListWiseModel!.docs![0].details![index].chequeDate,"wire_reference": collectionListWiseModel!.docs![0].details![index].wireReference,"wire_date": collectionListWiseModel!.docs![0].details![index].wireDate,"doctype": collectionListWiseModel!.docs![0].details![index].doctype});
-                           // clicked.add(collectionListWiseModel!.docs![0].details![index]);
-                            print("aaa==>>${clicked}");
-                            print("ind==>>${index}");
+                            print("collectionListWiseModel!.docs![0].details![index]=====>>>${collectionListWiseModel!.docs![0].details![index]}");
                             showDialog(context: context,
                             builder: (BuildContext context) {
                               TextEditingController cash_controller = TextEditingController();
@@ -249,13 +261,23 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                               TextEditingController wire_ref_controller = TextEditingController();
                               TextEditingController wire_date_controller = TextEditingController();
                               DateTime selectedDate = DateTime.now();
+                              cash_controller.text = cash.toString();
+                              chaque_controller.text = chaque.toString();
+                              wire_controller.text = wire.toString();
+                              chaque_ref_controller.text = chaque_ref.toString();
+                              chaque_date_controller.text = chaque_date.toString();
+                              wire_ref_controller.text = wire_ref.toString();
+                              wire_date_controller.text = wire_date.toString();
+
                               var checkval = '';
                               var wireval = '';
                               bool ischeckShow = false;
                               bool iswireShow = false;
-                              //print("clicked=======>>>${clicked}");
 
-                              //================================================ select date================================================= //
+                              Map<String, dynamic> clicked = {"name":collectionListWiseModel!.docs![0].details![index].name,"owner":collectionListWiseModel!.docs![0].details![index].owner,"creation":collectionListWiseModel!.docs![0].details![index].creation,"modified":collectionListWiseModel!.docs![0].details![index].modified,"modified_by":collectionListWiseModel!.docs![0].details![index].modifiedBy,"parent":collectionListWiseModel!.docs![0].details![index].parent,"parentfield":collectionListWiseModel!.docs![0].details![index].parentfield,"parenttype":collectionListWiseModel!.docs![0].details![index].parenttype,"idx":collectionListWiseModel!.docs![0].details![index].idx,"docstatus":collectionListWiseModel!.docs![0].details![index].docstatus,"invoice_no":collectionListWiseModel!.docs![0].details![index].invoiceNo,"customer":collectionListWiseModel!.docs![0].details![index].customer,"customer_name":collectionListWiseModel!.docs![0].details![index].customerName,"pending_amount":collectionListWiseModel!.docs![0].details![index].pendingAmount,"cash_amount":collectionListWiseModel!.docs![0].details![index].cashAmount,"cheque_amount":collectionListWiseModel!.docs![0].details![index].chequeAmount,"wire_amount":collectionListWiseModel!.docs![0].details![index].wireAmount,"total_amount":collectionListWiseModel!.docs![0].details![index].totalAmount,"cheque_reference":collectionListWiseModel!.docs![0].details![index].chequeReference,"cheque_date":collectionListWiseModel!.docs![0].details![index].chequeDate,"wire_reference":collectionListWiseModel!.docs![0].details![index].wireReference,"wire_date":collectionListWiseModel!.docs![0].details![index].wireDate,"doctype":collectionListWiseModel!.docs![0].details![index].doctype};
+                              print("clicked is====>>>${jsonEncode(clicked)}");
+
+                              //================================================select date========================================================//
                               Future<Null> _selectDate(BuildContext context,{type}) async {
                                 final DateTime? picked = await showDatePicker(
                                     context: context,
@@ -266,9 +288,9 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                                 setState(() {
                                   selectedDate = picked!;
                                   if(type == "cheque"){
-                                    chaque_date_controller.text = DateFormat('dd-MM-yyy').format(picked).toString();
+                                    chaque_date_controller.text = DateFormat('dd-MM-yyyy').format(picked).toString();
                                   }else{
-                                    wire_date_controller.text = DateFormat('dd-MM-yyy').format(picked).toString();
+                                    wire_date_controller.text = DateFormat('dd-MM-yyyy').format(picked).toString();
                                   }
                                 });
                               }
@@ -465,7 +487,41 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                                         ],
                                       ),
                                       SizedBox(height: 5),
-                                      InkWell(onTap: (){save(data: collectionListWiseModel!.docs![0].details![index],cash: cash_controller.text,chaque: chaque_controller.text,wire: wire_controller.text);},child: Container(width: double.infinity,padding: EdgeInsets.all(10),decoration: BoxDecoration(color: textcolor,borderRadius: BorderRadius.circular(5)),child: Text("Save", style: TextStyle(fontSize: 16, color: Colors.white),textAlign: TextAlign.center)))
+                                      //InkWell(onTap: (){save(data: collectionListWiseModel!.docs![0].details![index],cash: cash_controller.text,chaque: chaque_controller.text,wire: wire_controller.text);},child: Container(width: double.infinity,padding: EdgeInsets.all(10),decoration: BoxDecoration(color: textcolor,borderRadius: BorderRadius.circular(5)),child: Text("Save", style: TextStyle(fontSize: 16, color: Colors.white),textAlign: TextAlign.center)))
+                                      InkWell(onTap: () async{
+                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                        prefs.setString('cash_controller', cash_controller.text.isEmpty ? "" : cash_controller.text);
+                                        prefs.setString('chaque_controller', chaque_controller.text.isEmpty ? "" : chaque_controller.text);
+                                        prefs.setString('wire_controller', wire_controller.text.isEmpty ? "" : wire_controller.text);
+                                        prefs.setString('chaque_ref_controller', chaque_ref_controller.text.isEmpty ? "" : chaque_ref_controller.text);
+                                        prefs.setString('chaque_date_controller', chaque_date_controller.text.isEmpty ? "" : chaque_date_controller.text);
+                                        prefs.setString('wire_ref_controller', wire_ref_controller.text.isEmpty ? "" : wire_ref_controller.text);
+                                        prefs.setString('wire_date_controller', wire_date_controller.text.isEmpty ? "" : wire_date_controller.text);
+                                        cash = prefs.getString("cash_controller").toString();
+                                        chaque =  prefs.getString("chaque_controller").toString();
+                                        wire =  prefs.getString("wire_controller").toString();
+                                        chaque_ref =  prefs.getString("chaque_ref_controller").toString();
+                                        chaque_date =  prefs.getString("chaque_date_controller").toString();
+                                        wire_ref =  prefs.getString("wire_ref_controller").toString();
+                                        wire_date =  prefs.getString("wire_date_controller").toString();
+
+                                        var total = int.parse(cash_controller.text) + int.parse(chaque_controller.text) + int.parse(wire_controller.text);
+                                        print("total is===>>>$total");
+                                        clicked.update("cash_amount", (value) => int.parse(cash_controller.text));
+                                        clicked.update("cheque_amount", (value) => int.parse(chaque_controller.text));
+                                        clicked.update("wire_amount", (value) => int.parse(wire_controller.text));
+                                        clicked.update("cheque_reference", (value) => chaque_ref_controller.text);
+                                        clicked.update("cheque_date", (value) => chaque_date_controller.text);
+                                        clicked.update("wire_reference", (value) => wire_ref_controller.text);
+                                        clicked.update("wire_date", (value) => wire_date_controller.text);
+                                        clicked.update("total_amount", (value) => total);
+                                        // print("updated clicked====>>>${jsonEncode(clicked)}");
+                                        // print("clicked index is====>>>${index}");
+                                        // data[index] = jsonEncode(clicked);
+                                        // print("test====>>>${data[index]}");
+                                        save(index: index,updatedData: clicked);
+                                      },
+                                        child: Container(width: double.infinity,padding: EdgeInsets.all(10),decoration: BoxDecoration(color: textcolor,borderRadius: BorderRadius.circular(5)),child: Text("Save", style: TextStyle(fontSize: 16, color: Colors.white),textAlign: TextAlign.center)))
                                     ],
                                   ),
                                   // actions: [InkWell(onTap: (){},child: Container(padding: EdgeInsets.all(10),decoration: BoxDecoration(color: textcolor,borderRadius: BorderRadius.circular(5)),child: Text("Save", style: TextStyle(fontSize: 16, color: Colors.white))))],

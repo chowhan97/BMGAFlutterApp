@@ -139,7 +139,7 @@ class _TransactionListState extends State<TransactionList> {
                       child:  transactionModel!.message!.values!.isEmpty ? CircularProgressIndicator(): Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Total Sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                          Text("Gross Sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
                           SizedBox(height: 5),
                           Text("₹${formatter.format(sum)}",style: TextStyle(fontSize: 15)),
                         ],
