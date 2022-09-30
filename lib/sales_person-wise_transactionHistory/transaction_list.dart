@@ -23,7 +23,9 @@ class _TransactionListState extends State<TransactionList> {
   TransactionModel? transactionModel;
   List selectedValue = [];
   var total = [];
+  var total2 = [];
   num sum = 0;
+  num Gross_sum = 0;
   var formatter = NumberFormat('#,##,000');
 
   Future getTableData() async {
@@ -45,7 +47,7 @@ class _TransactionListState extends State<TransactionList> {
       'filters':
           '[["Sales Invoice","posting_date","<=",$toDate],["Sales Invoice","posting_date",">=",$fromDate],["Sales Invoice","company","=","Bharath Medical & General Agencies"]]',
       'fields':
-          '["`tabSales Invoice`.`name`","`tabSales Invoice`.`docstatus`","`tabSales Invoice`.`title`","`tabSales Invoice`.`customer`","`tabSales Invoice`.`company`","`tabSales Invoice`.`grand_total`","`tabSales Invoice`.`status`","`tabSales Invoice`.`currency`","`tabSales Invoice`.`customer_name`","`tabSales Invoice`.`base_grand_total`","`tabSales Invoice`.`outstanding_amount`","`tabSales Invoice`.`due_date`","`tabSales Invoice`.`is_return`"]',
+          '["`tabSales Invoice`.`name`","`tabSales Invoice`.`docstatus`","`tabSales Invoice`.`title`","`tabSales Invoice`.`customer`","`tabSales Invoice`.`company`","`tabSales Invoice`.`grand_total`","`tabSales Invoice`.`status`","`tabSales Invoice`.`currency`","`tabSales Invoice`.`customer_name`","`tabSales Invoice`.`base_grand_total`","`tabSales Invoice`.`outstanding_amount`","`tabSales Invoice`.`due_date`","`tabSales Invoice`.`is_return`","`tabSales Invoice`.`total`"]',
       'distinct': 'false'
     });
     print("request.fields ${request.fields}");
@@ -78,15 +80,23 @@ class _TransactionListState extends State<TransactionList> {
                 "outstanding_amount":transactionModel!.message!.values![i][10],
                 "due_date":transactionModel!.message!.values![i][11],
                 "is_return":transactionModel!.message!.values![i][12],
+                "total":transactionModel!.message!.values![i][13]
               },
             ]);
             total.clear();
+            total2.clear();
             total.add(transactionModel!.message!.values![i][5]);
+            total2.add(transactionModel!.message!.values![i][13]);
             print("total is====>>>>$total");
+            print("total is====>>>>$total2");
             for (var i in total) {
               sum = sum + i;
             }
+            for (var i in total2) {
+              Gross_sum = Gross_sum + i;
+            }
             print(sum);
+            print("Gross_sum${Gross_sum}");
           });
           //{"message":{"keys":["name","docstatus","title","customer","company","grand_total","status","currency","customer_name","base_grand_total","outstanding_amount","due_date","is_return"],"values":[["SINV-22-00015",1,"Big Hospitals","CUST-H-00001","Bharath Medical & General Agencies",-693.0,"Return","INR","Big Hospitals",-693.0,0.0,"2022-08-13",1],["SINV-22-00016",1,"Balaji Medicals","CUST-R-00006","Bharath Medical & General Agencies",496.0,"Credit Note Issued","INR","Balaji Medicals",496.0,0.0,"2022-08-20",0],["SINV-22-00017",1,"Balaji Medicals","CUST-R-00006","Bharath Medical & General Agencies",-248.0,"Return","INR","Balaji Medicals",-248.0,0.0,"2022-08-20",1],["SINV-DL-00072",0,"Banashankari Medicals","CUST-R-00002","Bharath Medical & General Agencies",336268.3,"Draft","INR","Banashankari Medicals",336268.3,336268.0,"2022-08-11",0],["SINV-DL-00073",0,"Banashankari Medicals","CUST-R-00002","Bharath Medical & General Agencies",4185.0,"Draft","INR","Banashankari Medicals",4185.0,4185.0,"2022-08-12",0],
           // print(data);
@@ -130,21 +140,41 @@ class _TransactionListState extends State<TransactionList> {
               children: [
                 Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(15)),
-                      child:  transactionModel!.message!.values!.isEmpty ? CircularProgressIndicator(): Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Gross Sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
-                          SizedBox(height: 5),
-                          Text("₹${formatter.format(sum)}",style: TextStyle(fontSize: 15)),
-                        ],
+                  child: Row(
+                    children: [
+                      Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(15)),
+                          child:  transactionModel!.message!.values!.isEmpty ? CircularProgressIndicator(): Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Gross Sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                              SizedBox(height: 5),
+                              Text("₹${formatter.format(Gross_sum)}",style: TextStyle(fontSize: 15)),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                      Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(15)),
+                          child:  transactionModel!.message!.values!.isEmpty ? CircularProgressIndicator(): Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Total Sales",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                              SizedBox(height: 5),
+                              Text("₹${formatter.format(sum)}",style: TextStyle(fontSize: 15)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                     transactionModel!.message!.values!.isEmpty

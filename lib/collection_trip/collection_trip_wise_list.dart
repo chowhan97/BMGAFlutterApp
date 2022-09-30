@@ -38,8 +38,20 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
   void initState() {
     print("name===>>>${widget.name}");
     CollectionTrip();
+    getData();
     super.initState();
   }
+
+   getData() async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     cash = prefs.getString("cash_controller").toString();
+     chaque =  prefs.getString("chaque_controller").toString();
+     wire =  prefs.getString("wire_controller").toString();
+     chaque_ref =  prefs.getString("chaque_ref_controller").toString();
+     chaque_date =  prefs.getString("chaque_date_controller").toString();
+     wire_ref =  prefs.getString("wire_ref_controller").toString();
+     wire_date =  prefs.getString("wire_date_controller").toString();
+   }
 
   Future CollectionTrip() async {
     setState(() {
@@ -91,10 +103,27 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
      data.clear();
       collectionListWiseModel!.docs![0].details!.forEach((element){
         data.add(element);
-        print("data index===>>>${data[index]}");
-        data[index] = updatedData;
-        print("data is====>>>$data");
+        // print("data===>>>${data}");
+        // print("total data===>>>${data.length}");
+        // print("index is===>>>$index");
+        // print("data index===>>>${data[index].cashAmount}");
+        // print("updatedData===>>>${updatedData}");
+        // data[index] = updatedData;
+        // print("data is====>>>${data}");
+        // print("data is====>>>${data.length}");
+        // data.forEach((element2) {
+        //   print("total ele is===>>>${element2}");
+        // });
     });
+    print("data===>>>${data}");
+    print("total data===>>>${data.length}");
+    print("index is===>>>$index");
+    print("data index===>>>${data[index].cashAmount}");
+    print("updatedData===>>>${updatedData}");
+    // data.remove(index);
+    data[index] = updatedData;
+    print("data is====>>>${data}");
+    print("data is====>>>${data.length}");
     request.fields.addAll({
       // 'doc': '{"name":${jsonEncode(collectionListWiseModel!.docs![0].name)},"owner": ${jsonEncode(collectionListWiseModel!.docs![0].owner)},"creation":${jsonEncode(collectionListWiseModel!.docs![0].creation)},"modified":${jsonEncode(collectionListWiseModel!.docs![0].modified)},"modified_by":${jsonEncode(collectionListWiseModel!.docs![0].modifiedBy)},"idx":${jsonEncode(collectionListWiseModel!.docs![0].idx)},"docstatus":${jsonEncode(collectionListWiseModel!.docs![0].docstatus)},"delivery_trip_no":${jsonEncode(collectionListWiseModel!.docs![0].deliveryTripNo)},"collection_person":${jsonEncode(collectionListWiseModel!.docs![0].collectionPerson)},"collection_person_name":${jsonEncode(collectionListWiseModel!.docs![0].collectionPersonName)},"doctype":${jsonEncode(collectionListWiseModel!.docs![0].doctype)},"details":${jsonEncode(data)},"payment_entry":${jsonEncode(collectionListWiseModel!.docs![0].paymentEntry)},"__last_sync_on":2022-09-28T11:38:58.033Z,"__unsaved":1}',
       'doc': '{"name":${jsonEncode(collectionListWiseModel!.docs![0].name)},"owner":${jsonEncode(collectionListWiseModel!.docs![0].owner)},"creation":${jsonEncode(collectionListWiseModel!.docs![0].creation)},"modified":${jsonEncode(collectionListWiseModel!.docs![0].modified)},"modified_by":${jsonEncode(collectionListWiseModel!.docs![0].modifiedBy)},"idx":${jsonEncode(collectionListWiseModel!.docs![0].idx)},"docstatus":${jsonEncode(collectionListWiseModel!.docs![0].docstatus)},"delivery_trip_no":${jsonEncode(collectionListWiseModel!.docs![0].deliveryTripNo)},"collection_person":${jsonEncode(collectionListWiseModel!.docs![0].collectionPerson)},"collection_person_name":${jsonEncode(collectionListWiseModel!.docs![0].collectionPersonName)},"doctype":${jsonEncode(collectionListWiseModel!.docs![0].doctype)},"details":${jsonEncode(data)},"payment_entry":${jsonEncode(collectionListWiseModel!.docs![0].paymentEntry)},"__last_sync_on":"2022-09-28T11:38:58.033Z","__unsaved":1}',
@@ -111,6 +140,21 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
          pushScreen(context, CollectionTripList());
          print(response.body);
          String data = response.body;
+         var d = json.decode(data);
+         // print("given0 dsata===>>> ${d['docs'][0]['details'][0]}");
+         // print("given1 dsata===>>> ${d['docs'][0]['details'][1]}");
+         // print("given2 dsata===>>> ${d['docs'][0]['details'][2]}");
+         // print("given3 dsata===>>> ${d['docs'][0]['details'][3]}");
+         // print("given4 dsata===>>> ${d['docs'][0]['details'][4]}");
+         // print("given5 dsata===>>> ${d['docs'][0]['details'][5]}");
+         // print("given6 dsata===>>> ${d['docs'][0]['details'][6]}");
+         // print("given7 dsata===>>> ${d['docs'][0]['details'][7]}");
+         // print("given8 dsata===>>> ${d['docs'][0]['details'][8]}");
+         // print("given9 dsata===>>> ${d['docs'][0]['details'][9]}");
+         // print("given10 dsata===>>>${d['docs'][0]['details'][10]}");
+         // print("given11 dsata===>>>${d['docs'][0]['details'][11]}");
+         // print("given12 dsata===>>>${d['docs'][0]['details'][12]}");
+         // print("given13 dsata===>>>${d['docs'][0]['details'][13]}");
          isLoadSave = false;
          // collectionListWiseModel = CollectionListWiseModel.fromJson(json.decode(data));
          // print("collectionListModel===>>>${collectionListWiseModel!.docs![0].name}");
@@ -250,7 +294,14 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(onTap: (){
-                            print("collectionListWiseModel!.docs![0].details![index]=====>>>${collectionListWiseModel!.docs![0].details![index]}");
+                           // print("collectionListWiseModel!.docs![0].details![index]=====>>>${collectionListWiseModel!.docs![0].details![index]}");
+                            print("collectionListWiseModel!.docs![0].details![index]=====>>>${listResp['docs'][0]["details"][index]}");
+                            // List clicked = [];
+                            // clicked.clear();
+                            // clicked.add({"name": collectionListWiseModel!.docs![0].details![index].name,"owner": collectionListWiseModel!.docs![0].details![index].owner,"creation": collectionListWiseModel!.docs![0].details![index].creation,"modified": collectionListWiseModel!.docs![0].details![index].modified,"modified_by": collectionListWiseModel!.docs![0].details![index].modifiedBy,"parent": collectionListWiseModel!.docs![0].details![index].parent,"parentfield": collectionListWiseModel!.docs![0].details![index].parentfield,"parenttype": collectionListWiseModel!.docs![0].details![index].parenttype,"idx": collectionListWiseModel!.docs![0].details![index].idx,"docstatus": collectionListWiseModel!.docs![0].details![index].docstatus,"invoice_no": collectionListWiseModel!.docs![0].details![index].invoiceNo,"customer": collectionListWiseModel!.docs![0].details![index].customer,"customer_name": collectionListWiseModel!.docs![0].details![index].customerName,"pending_amount": collectionListWiseModel!.docs![0].details![index].pendingAmount,"cash_amount": collectionListWiseModel!.docs![0].details![index].cashAmount,"cheque_amount": collectionListWiseModel!.docs![0].details![index].chequeAmount,"wire_amount": collectionListWiseModel!.docs![0].details![index].wireAmount,"total_amount": collectionListWiseModel!.docs![0].details![index].totalAmount,"cheque_reference": collectionListWiseModel!.docs![0].details![index].chequeReference,"cheque_date": collectionListWiseModel!.docs![0].details![index].chequeDate,"wire_reference": collectionListWiseModel!.docs![0].details![index].wireReference,"wire_date": collectionListWiseModel!.docs![0].details![index].wireDate,"doctype": collectionListWiseModel!.docs![0].details![index].doctype});
+                            // clicked.add(collectionListWiseModel!.docs![0].details![index]);
+                            //  print("aaa==>>${clicked}");
+                            //  print("ind==>>${index}");
                             showDialog(context: context,
                             builder: (BuildContext context) {
                               TextEditingController cash_controller = TextEditingController();
@@ -261,19 +312,33 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                               TextEditingController wire_ref_controller = TextEditingController();
                               TextEditingController wire_date_controller = TextEditingController();
                               DateTime selectedDate = DateTime.now();
-                              cash_controller.text = cash.toString();
-                              chaque_controller.text = chaque.toString();
-                              wire_controller.text = wire.toString();
-                              chaque_ref_controller.text = chaque_ref.toString();
-                              chaque_date_controller.text = chaque_date.toString();
-                              wire_ref_controller.text = wire_ref.toString();
-                              wire_date_controller.text = wire_date.toString();
+                              cash_controller.text = myFormat.format(collectionListWiseModel!.docs![0].details![index].cashAmount);
+                              chaque_controller.text = myFormat.format(collectionListWiseModel!.docs![0].details![index].chequeAmount);
+                              wire_controller.text = myFormat.format(collectionListWiseModel!.docs![0].details![index].wireAmount);
+                              chaque_ref_controller.text = collectionListWiseModel!.docs![0].details![index].chequeReference.toString();
+                              chaque_date_controller.text = collectionListWiseModel!.docs![0].details![index].chequeDate.toString();
+                              wire_ref_controller.text = collectionListWiseModel!.docs![0].details![index].wireReference.toString();
+                              wire_date_controller.text = collectionListWiseModel!.docs![0].details![index].wireDate.toString();
+                              // cash_controller.text = cash.toString();
+                              // chaque_controller.text = chaque.toString();
+                              // wire_controller.text = wire.toString();
+                              // chaque_ref_controller.text = chaque_ref.toString();
+                              // chaque_date_controller.text = chaque_date.toString();
+                              // wire_ref_controller.text = wire_ref.toString();
+                              // wire_date_controller.text = wire_date.toString();
 
                               var checkval = '';
                               var wireval = '';
                               bool ischeckShow = false;
                               bool iswireShow = false;
-
+                              // List data = [];
+                              // data.clear();
+                              // collectionListWiseModel!.docs![0].details!.forEach((element){
+                              //   data.add(jsonEncode(element));
+                              //   print("element is===>>>${data}");
+                              // });
+                              //
+                              // print("index wise fetch====>>>${data[index]}");
                               Map<String, dynamic> clicked = {"name":collectionListWiseModel!.docs![0].details![index].name,"owner":collectionListWiseModel!.docs![0].details![index].owner,"creation":collectionListWiseModel!.docs![0].details![index].creation,"modified":collectionListWiseModel!.docs![0].details![index].modified,"modified_by":collectionListWiseModel!.docs![0].details![index].modifiedBy,"parent":collectionListWiseModel!.docs![0].details![index].parent,"parentfield":collectionListWiseModel!.docs![0].details![index].parentfield,"parenttype":collectionListWiseModel!.docs![0].details![index].parenttype,"idx":collectionListWiseModel!.docs![0].details![index].idx,"docstatus":collectionListWiseModel!.docs![0].details![index].docstatus,"invoice_no":collectionListWiseModel!.docs![0].details![index].invoiceNo,"customer":collectionListWiseModel!.docs![0].details![index].customer,"customer_name":collectionListWiseModel!.docs![0].details![index].customerName,"pending_amount":collectionListWiseModel!.docs![0].details![index].pendingAmount,"cash_amount":collectionListWiseModel!.docs![0].details![index].cashAmount,"cheque_amount":collectionListWiseModel!.docs![0].details![index].chequeAmount,"wire_amount":collectionListWiseModel!.docs![0].details![index].wireAmount,"total_amount":collectionListWiseModel!.docs![0].details![index].totalAmount,"cheque_reference":collectionListWiseModel!.docs![0].details![index].chequeReference,"cheque_date":collectionListWiseModel!.docs![0].details![index].chequeDate,"wire_reference":collectionListWiseModel!.docs![0].details![index].wireReference,"wire_date":collectionListWiseModel!.docs![0].details![index].wireDate,"doctype":collectionListWiseModel!.docs![0].details![index].doctype};
                               print("clicked is====>>>${jsonEncode(clicked)}");
 
@@ -505,21 +570,31 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                                         wire_ref =  prefs.getString("wire_ref_controller").toString();
                                         wire_date =  prefs.getString("wire_date_controller").toString();
 
-                                        var total = int.parse(cash_controller.text) + int.parse(chaque_controller.text) + int.parse(wire_controller.text);
+                                        var total = int.parse(cash_controller.text.replaceAll(",", "")) + int.parse(chaque_controller.text.replaceAll(",", "")) + int.parse(wire_controller.text.replaceAll(",", ""));
                                         print("total is===>>>$total");
-                                        clicked.update("cash_amount", (value) => int.parse(cash_controller.text));
-                                        clicked.update("cheque_amount", (value) => int.parse(chaque_controller.text));
-                                        clicked.update("wire_amount", (value) => int.parse(wire_controller.text));
+                                        clicked.update("cash_amount", (value) => int.parse(cash_controller.text.replaceAll(",", "")));
+                                        clicked.update("cheque_amount", (value) => int.parse(chaque_controller.text.replaceAll(",", "")));
+                                        clicked.update("wire_amount", (value) => int.parse(wire_controller.text.replaceAll(",", "")));
                                         clicked.update("cheque_reference", (value) => chaque_ref_controller.text);
                                         clicked.update("cheque_date", (value) => chaque_date_controller.text);
                                         clicked.update("wire_reference", (value) => wire_ref_controller.text);
                                         clicked.update("wire_date", (value) => wire_date_controller.text);
                                         clicked.update("total_amount", (value) => total);
+
+                                        listResp['docs'][0]["details"][index].update("cash_amount", (value) => int.parse(cash_controller.text.replaceAll(",", "")));
+                                        listResp['docs'][0]["details"][index].update("cheque_amount", (value) => int.parse(chaque_controller.text.replaceAll(",", "")));
+                                        listResp['docs'][0]["details"][index].update("wire_amount", (value) => int.parse(wire_controller.text.replaceAll(",", "")));
+                                        //listResp['docs'][0]["details"][index].update("cheque_reference", (value) => chaque_ref_controller.text);
+                                        // listResp['docs'][0]["details"][index].update("cheque_date", (value) => chaque_date_controller.text);
+                                        // listResp['docs'][0]["details"][index].update("wire_reference", (value) => wire_ref_controller.text);
+                                        // listResp['docs'][0]["details"][index].update("wire_date", (value) => wire_date_controller.text);
+                                        listResp['docs'][0]["details"][index].update("total_amount", (value) => total);
                                         // print("updated clicked====>>>${jsonEncode(clicked)}");
                                         // print("clicked index is====>>>${index}");
                                         // data[index] = jsonEncode(clicked);
                                         // print("test====>>>${data[index]}");
-                                        save(index: index,updatedData: clicked);
+                                        // save(index: index,updatedData: clicked);
+                                        save(index: index,updatedData: listResp['docs'][0]["details"][index]);
                                       },
                                         child: Container(width: double.infinity,padding: EdgeInsets.all(10),decoration: BoxDecoration(color: textcolor,borderRadius: BorderRadius.circular(5)),child: Text("Save", style: TextStyle(fontSize: 16, color: Colors.white),textAlign: TextAlign.center)))
                                     ],
