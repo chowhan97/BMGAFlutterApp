@@ -589,6 +589,7 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                                         // listResp['docs'][0]["details"][index].update("wire_reference", (value) => wire_ref_controller.text);
                                         // listResp['docs'][0]["details"][index].update("wire_date", (value) => wire_date_controller.text);
                                         listResp['docs'][0]["details"][index].update("total_amount", (value) => total);
+                                        print("updated data is===>>>${listResp['docs'][0]["details"][index]}");
                                         // print("updated clicked====>>>${jsonEncode(clicked)}");
                                         // print("clicked index is====>>>${index}");
                                         // data[index] = jsonEncode(clicked);
