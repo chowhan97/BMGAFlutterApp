@@ -21,6 +21,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
   TextEditingController fromdate = TextEditingController();
   TextEditingController todate = TextEditingController();
   TextEditingController company = TextEditingController();
+  var from_date;
+  var to_date;
   List<String> companyList = [];
 
   getCustomerAndCompanyList() async {
@@ -142,10 +144,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                             ? "Please choose to date"
                             : "Please choose company");
               } else {
-                pushScreen(
-                    context,
-                    TransactionList(
-                        fromdate: fromdate.text, todate: todate.text));
+                pushScreen(context, TransactionList(fromdate: from_date, todate: to_date));
               }
             },
             shape:
@@ -203,15 +202,23 @@ class _TransactionHistoryState extends State<TransactionHistory> {
         firstDate: DateTime(1950),
         lastDate: DateTime(2100));
 
-    if (pickedDate != null) {
+      if (pickedDate != null) {
       print(pickedDate);
       String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      String formattedDateNew = DateFormat('yyyy-MM-dd').format(pickedDate);
       print(formattedDate);
+      print("picked===>>${pickedDate.year}");
+      print("picked===>>${pickedDate.month}");
+      print("picked===>>${pickedDate.day}");
       setState(() {
         if (isFrom == true) {
-          fromdate.text = formattedDate;
+           from_date = formattedDateNew;
+           fromdate.text = formattedDate;
+          // fromdate.text = "${pickedDate.day.isOdd ? "0${pickedDate.day}" : pickedDate.day}-${pickedDate.month.isOdd ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.year}";
         } else if (isTo == true) {
-          todate.text = formattedDate;
+          // todate.text = "${pickedDate.day.isOdd ? "0${pickedDate.day}" : pickedDate.day}-${pickedDate.month.isOdd ? "0${pickedDate.month}" : pickedDate.month}-${pickedDate.year}";
+           todate.text = formattedDate;
+           to_date = formattedDateNew;
         } else {}
       });
     } else {}

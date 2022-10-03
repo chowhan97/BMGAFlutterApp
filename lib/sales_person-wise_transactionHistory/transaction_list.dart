@@ -30,6 +30,8 @@ class _TransactionListState extends State<TransactionList> {
 
   Future getTableData() async {
     print("call");
+    // print("from date===>>>>>${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.fromdate))}");
+    // print("to date===>>>>>${DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.todate))}");
     var toDate = jsonEncode(widget.todate);
     var fromDate = jsonEncode(widget.fromdate);
     fetch = true;
@@ -62,7 +64,7 @@ class _TransactionListState extends State<TransactionList> {
         fetch = false;
         print("table call");
         transactionModel = TransactionModel.fromJson(json.decode(data));
-        print("transactionModel====>>$transactionModel");
+        print("transactionModel====>>${transactionModel!.message!.keys}");
         for(int i = 0;i < transactionModel!.message!.values!.length; i++){
           setState(() {
             selectedValue.add([

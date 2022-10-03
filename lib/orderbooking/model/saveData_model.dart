@@ -550,6 +550,7 @@ class SalesOrderPreview {
     this.promoType,
     this.doctype,
     this.unsaved,
+    this.total_amount,
   });
 
   String? name;
@@ -570,6 +571,7 @@ class SalesOrderPreview {
   String? promoType;
   String? doctype;
   int? unsaved;
+  dynamic total_amount;
 
   factory SalesOrderPreview.fromJson(Map<String, dynamic> json) => SalesOrderPreview(
     name: json["name"],
@@ -590,6 +592,7 @@ class SalesOrderPreview {
     promoType: json["promo_type"],
     doctype: json["doctype"],
     unsaved: json["__unsaved"],
+    total_amount: json['total_amount']
   );
 
   Map<String, dynamic> toJson() => {
@@ -611,5 +614,6 @@ class SalesOrderPreview {
     "promo_type": promoType,
     "doctype": doctype,
     "__unsaved": unsaved,
+    "total_amount": total_amount
   };
 }

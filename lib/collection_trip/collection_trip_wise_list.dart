@@ -134,30 +134,15 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
      var response = await http.Response.fromStream(streamedResponse);
      if (response.statusCode == 200) {
        setState(() {
+         CollectionTrip();
          Navigator.pop(context);
-         Navigator.pop(context);
-         Navigator.pop(context);
-         pushScreen(context, CollectionTripList());
+         // Navigator.pop(context);
+         // Navigator.pop(context);
+         // pushScreen(context, CollectionTripList());
          print(response.body);
          String data = response.body;
          var d = json.decode(data);
-         // print("given0 dsata===>>> ${d['docs'][0]['details'][0]}");
-         // print("given1 dsata===>>> ${d['docs'][0]['details'][1]}");
-         // print("given2 dsata===>>> ${d['docs'][0]['details'][2]}");
-         // print("given3 dsata===>>> ${d['docs'][0]['details'][3]}");
-         // print("given4 dsata===>>> ${d['docs'][0]['details'][4]}");
-         // print("given5 dsata===>>> ${d['docs'][0]['details'][5]}");
-         // print("given6 dsata===>>> ${d['docs'][0]['details'][6]}");
-         // print("given7 dsata===>>> ${d['docs'][0]['details'][7]}");
-         // print("given8 dsata===>>> ${d['docs'][0]['details'][8]}");
-         // print("given9 dsata===>>> ${d['docs'][0]['details'][9]}");
-         // print("given10 dsata===>>>${d['docs'][0]['details'][10]}");
-         // print("given11 dsata===>>>${d['docs'][0]['details'][11]}");
-         // print("given12 dsata===>>>${d['docs'][0]['details'][12]}");
-         // print("given13 dsata===>>>${d['docs'][0]['details'][13]}");
          isLoadSave = false;
-         // collectionListWiseModel = CollectionListWiseModel.fromJson(json.decode(data));
-         // print("collectionListModel===>>>${collectionListWiseModel!.docs![0].name}");
        });
      }
      else {
@@ -312,13 +297,22 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                               TextEditingController wire_ref_controller = TextEditingController();
                               TextEditingController wire_date_controller = TextEditingController();
                               DateTime selectedDate = DateTime.now();
+                              // DateFormat("dd/MM/yyyy hh:mm").format(
+                              //   DateTime.parse(collectionListWiseModel!.docs![0].details![index].chequeDate.toString()),
+                              // );
                               cash_controller.text = myFormat.format(collectionListWiseModel!.docs![0].details![index].cashAmount);
                               chaque_controller.text = myFormat.format(collectionListWiseModel!.docs![0].details![index].chequeAmount);
                               wire_controller.text = myFormat.format(collectionListWiseModel!.docs![0].details![index].wireAmount);
                               chaque_ref_controller.text = collectionListWiseModel!.docs![0].details![index].chequeReference.toString();
-                              chaque_date_controller.text = collectionListWiseModel!.docs![0].details![index].chequeDate.toString();
+                              //chaque_date_controller.text = collectionListWiseModel!.docs![0].details![index].chequeDate.toString();
+                              chaque_date_controller.text =  DateFormat("dd-MM-yyyy").format(
+                                DateTime.parse(collectionListWiseModel!.docs![0].details![index].chequeDate.toString()),
+                              );
                               wire_ref_controller.text = collectionListWiseModel!.docs![0].details![index].wireReference.toString();
-                              wire_date_controller.text = collectionListWiseModel!.docs![0].details![index].wireDate.toString();
+                              //wire_date_controller.text = collectionListWiseModel!.docs![0].details![index].wireDate.toString();
+                              wire_date_controller.text = DateFormat("dd-MM-yyyy").format(
+                                DateTime.parse(collectionListWiseModel!.docs![0].details![index].wireDate.toString()),
+                              );
                               // cash_controller.text = cash.toString();
                               // chaque_controller.text = chaque.toString();
                               // wire_controller.text = wire.toString();
@@ -580,6 +574,7 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
                                         clicked.update("wire_reference", (value) => wire_ref_controller.text);
                                         clicked.update("wire_date", (value) => wire_date_controller.text);
                                         clicked.update("total_amount", (value) => total);
+
 
                                         listResp['docs'][0]["details"][index].update("cash_amount", (value) => int.parse(cash_controller.text.replaceAll(",", "")));
                                         listResp['docs'][0]["details"][index].update("cheque_amount", (value) => int.parse(chaque_controller.text.replaceAll(",", "")));
