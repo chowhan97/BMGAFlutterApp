@@ -268,7 +268,7 @@ class _TransactionListState extends State<TransactionList> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Doc',style: TextStyle(fontSize: 11)),
+                      // Text('Doc',style: TextStyle(fontSize: 11)),
                       Text('Status',style: TextStyle(fontSize: 11)),
                     ],
                   ))))),

@@ -199,8 +199,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
           );
         },
         initialDate: DateTime.now(),
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2100));
+        firstDate: DateTime(2021),
+        lastDate: DateTime.now());
 
       if (pickedDate != null) {
       print(pickedDate);
