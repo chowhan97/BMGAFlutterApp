@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:ebuzz/collection_trip/collection_trip_list.dart';
 import 'package:ebuzz/collection_trip/collection_trip_wise_list_model.dart';
+import 'package:ebuzz/collection_trip/employee_wise_collection_trip_model.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
 import 'package:ebuzz/common/navigations.dart';
@@ -23,6 +24,7 @@ class CollectionTripWiseList extends StatefulWidget {
 class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
    bool isLoadCollection = false;
    CollectionListWiseModel? collectionListWiseModel;
+   EmployeeWiseCollectionTripModel? employeeWiseCollectionTripModel;
    var listResp;
    NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
    bool isLoadSave = false;
@@ -37,7 +39,9 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
   @override
   void initState() {
     print("name===>>>${widget.name}");
+    GetEmpName();
     CollectionTrip();
+    // EmployeeCollectionTrip(employeeId: "HR-EMP-00003");
     getData();
     super.initState();
   }
@@ -78,6 +82,67 @@ class _CollectionTripWiseListState extends State<CollectionTripWiseList> {
       });
     }
   }
+
+
+   Future EmployeeCollectionTrip({employeeId}) async {
+     setState(() {
+       isLoadCollection = true;
+     });
+     var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/method/bmga.global_api.fetch_employee_collection_trips?employee=${employeeId}'));
+     request.headers.addAll(commonHeaders);
+     var streamedResponse = await request.send();
+     var response = await http.Response.fromStream(streamedResponse);
+     if (response.statusCode == 200) {
+       setState(() {
+         isLoadCollection = false;
+         print(response.body);
+         String data = response.body;
+         // listResp = json.decode(data);
+         employeeWiseCollectionTripModel = EmployeeWiseCollectionTripModel.fromJson(json.decode(data));
+         print("employeeWiseCollectionTripModel===>>>${employeeWiseCollectionTripModel!.message![0].invoiceNo}");
+       });
+     }
+     else {
+       print("error cause===>>${response.reasonPhrase}");
+       setState(() {
+         isLoadCollection = false;
+       });
+     }
+   }
+
+   bool getEmpName = false;
+
+   Future GetEmpName() async{
+     setState(() {
+       getEmpName = true;
+     });
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     var employee = prefs.getString("owner");
+     print("employee===>>${employee}");
+     var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/resource/Employee?fields=["name"]&filters=[["user_id", "=", ${jsonEncode(employee)}]]'));
+     request.headers.addAll(commonHeaders);
+     var streamedResponse = await request.send();
+     var response = await http.Response.fromStream(streamedResponse);
+     if (response.statusCode == 200) {
+       setState(() {
+         getEmpName = false;
+         print(response.body);
+         String data = response.body;
+         var EmpID = json.decode(data);
+         print("EmpID===>>>${EmpID['data'][0]['name']}");
+         EmployeeCollectionTrip(employeeId: EmpID['data'][0]['name']);
+         // employeeWiseCollectionTripModel = EmployeeWiseCollectionTripModel.fromJson(json.decode(data));
+         // print("employeeWiseCollectionTripModel===>>>${employeeWiseCollectionTripModel!.message![0].invoiceNo}");
+       });
+     }
+     else {
+       print("error cause===>>${response.reasonPhrase}");
+       setState(() {
+         getEmpName = false;
+       });
+     }
+   }
+
 
   Future save({index,updatedData}) async {
     Navigator.pop(context);
