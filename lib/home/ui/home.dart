@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:ebuzz/collection_trip/collection_trip_list.dart';
+import 'package:ebuzz/collection_trip/collection_trip_wise_list.dart';
 import 'package:ebuzz/common/circular_progress.dart';
 import 'package:ebuzz/common/colors.dart';
 import 'package:ebuzz/common/custom_appbar.dart';
@@ -11,6 +14,7 @@ import 'package:ebuzz/logout/service/logout_api_service.dart';
 import 'package:ebuzz/sales_person-wise_transactionHistory/transaction_history.dart';
 
 import 'package:ebuzz/settings/ui/settings.dart';
+import 'package:ebuzz/util/apiurls.dart';
 import 'package:ebuzz/util/constants.dart';
 
 import 'package:ebuzz/util/doctype_names.dart';
@@ -23,6 +27,8 @@ import 'package:ebuzz/common/display_helper.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 //Home class displays ui of different functionalities in form of cards
 class Home extends StatefulWidget {
@@ -42,6 +48,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   List<String> labels = [];
   List<LabelList> widgetsList = [];
   List<LabelList> widgetsHiddenList = [];
+  bool getEmpName = false;
+  var EmpID;
 
   //List of choices when user clicks on menu button in top right
   static List<Choice> choices = <Choice>[
@@ -52,6 +60,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    GetEmpName();
     //check login status
     // HomeService().checkLoginStatus('11019', context);
     CommonService().getItemList(context);
@@ -69,6 +78,36 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     //   }
     // });
     getPrefs();
+  }
+
+  Future GetEmpName() async{
+    setState(() {
+      getEmpName = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var employee = prefs.getString("owner");
+    print("employee===>>${employee}");
+    var request = http.Request('GET', Uri.parse('https://erptest.bharathrajesh.co.in/api/resource/Employee?fields=["name"]&filters=[["user_id", "=", ${jsonEncode(employee)}]]'));
+    request.headers.addAll(commonHeaders);
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      setState(() {
+        getEmpName = false;
+        print(response.body);
+        String data = response.body;
+        EmpID = json.decode(data);
+        print("EmpID===>>>${EmpID['data'][0]['name']}");
+        // employeeWiseCollectionTripModel = EmployeeWiseCollectionTripModel.fromJson(json.decode(data));
+        // print("employeeWiseCollectionTripModel===>>>${employeeWiseCollectionTripModel!.message![0].invoiceNo}");
+      });
+    }
+    else {
+      print("error cause===>>${response.reasonPhrase}");
+      setState(() {
+        getEmpName = false;
+      });
+    }
   }
 
 
@@ -90,19 +129,20 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   }
 
   addLabelListToWidgetList() async {
-    if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
+    // if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
        widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/item.svg",fit: BoxFit.fill),label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
-    if (labels.contains(DoctypeNames.item) &&
-        labels.contains(DoctypeNames.salesOrder) &&
-        labels.contains(DoctypeNames.company) &&
-        labels.contains(DoctypeNames.customer) &&
-        labels.contains(DoctypeNames.warehouse))
+    // if (labels.contains(DoctypeNames.item) &&
+    //     labels.contains(DoctypeNames.salesOrder) &&
+    //     labels.contains(DoctypeNames.company) &&
+    //     labels.contains(DoctypeNames.customer) &&
+    //     labels.contains(DoctypeNames.warehouse))
       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Order.svg",fit: BoxFit.fill),label: Text('Order Booking',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: OrderBookingUi()));
-    if (labels.contains(DoctypeNames.quotation))
+    // if (labels.contains(DoctypeNames.quotation))
       // widgetsList.add(LabelList(label: 'Quotation List', route: QuotationListUi()));
       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Order booking.svg",fit: BoxFit.fill),label: Padding(padding: const EdgeInsets.only(left: 4,right: 4), child: Text('Sales Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center),), route: TransactionHistory()));
       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/customer care.svg",fit: BoxFit.fill),label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
-      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripList()));
+      // widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripList()));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripWiseList(EmpId: EmpID['data'][0]['name'])));
       print(widgetsList.length);
       setState(() {});
   }

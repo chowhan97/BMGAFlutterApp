@@ -28,6 +28,8 @@ class Message {
   Message({
     this.name,
     this.invoiceNo,
+    this.customer_territory,
+    this.customer_name,
     this.pendingAmount,
     this.cashAmount,
     this.chequeAmount,
@@ -41,6 +43,8 @@ class Message {
 
   dynamic name;
   dynamic invoiceNo;
+  dynamic customer_territory;
+  dynamic customer_name;
   dynamic pendingAmount;
   dynamic cashAmount;
   dynamic chequeAmount;
@@ -54,6 +58,8 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) => Message(
     name: json["name"],
     invoiceNo: json["invoice_no"],
+    customer_territory: json['customer_territory'],
+    customer_name: json['customer_name'],
     pendingAmount: json["pending_amount"],
     cashAmount: json["cash_amount"],
     chequeAmount: json["cheque_amount"],
@@ -68,6 +74,8 @@ class Message {
   Map<String, dynamic> toJson() => {
     "name": name,
     "invoice_no": invoiceNo,
+    "customer_territory": customer_territory,
+    "customer_name": customer_name,
     "pending_amount": pendingAmount,
     "cash_amount": cashAmount,
     "cheque_amount": chequeAmount,
