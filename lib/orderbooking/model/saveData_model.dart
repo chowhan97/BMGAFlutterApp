@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:ebuzz/orderbooking/model/sales_promos_model.dart';
+
 SaveModel saveModelFromJson(String str) => SaveModel.fromJson(json.decode(str));
 
 String saveModelToJson(SaveModel data) => json.encode(data.toJson());
@@ -243,6 +245,7 @@ class Doc {
     this.doctype,
     this.orderBookingItemsV2,
     this.salesOrderPreview,
+    this.quotationPreview,
     this.promos,
     this.promosDiscount,
     this.localname,
@@ -271,6 +274,7 @@ class Doc {
   String? doctype;
   List<OrderBookingItemsV2>? orderBookingItemsV2;
   List<SalesOrderPreview>? salesOrderPreview;
+  List<QuotationPreview>? quotationPreview;
   List<Promo>? promos;
   List<dynamic>? promosDiscount;
   String? localname;
@@ -299,6 +303,7 @@ class Doc {
     doctype: json["doctype"],
     orderBookingItemsV2: List<OrderBookingItemsV2>.from(json["order_booking_items_v2"].map((x) => OrderBookingItemsV2.fromJson(x))),
     salesOrderPreview: List<SalesOrderPreview>.from(json["sales_order_preview"].map((x) => SalesOrderPreview.fromJson(x))),
+    quotationPreview: List<QuotationPreview>.from(json["quotation_preview"].map((x) => QuotationPreview.fromJson(x))),
     promos: List<Promo>.from(json["promos"].map((x) => Promo.fromJson(x))),
     promosDiscount: List<dynamic>.from(json["promos_discount"].map((x) => x)),
     localname: json["localname"],
@@ -328,6 +333,7 @@ class Doc {
     "doctype": doctype,
     "order_booking_items_v2": List<dynamic>.from(orderBookingItemsV2!.map((x) => x.toJson())),
     "sales_order_preview": List<dynamic>.from(salesOrderPreview!.map((x) => x.toJson())),
+    "quotation_preview": List<dynamic>.from(quotationPreview!.map((x) => x.toJson())),
     "promos": List<dynamic>.from(promos!.map((x) => x.toJson())),
     "promos_discount": List<dynamic>.from(promosDiscount!.map((x) => x)),
     "localname": localname,
@@ -617,3 +623,4 @@ class SalesOrderPreview {
     "total_amount": total_amount
   };
 }
+

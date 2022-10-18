@@ -130,7 +130,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   addLabelListToWidgetList() async {
     // if (labels.contains(DoctypeNames.item) && labels.contains(DoctypeNames.stockLedger))
-       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/item.svg",fit: BoxFit.fill),label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/item.svg",fit: BoxFit.fill),label: Text('Item',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: ItemUi()));
     // if (labels.contains(DoctypeNames.item) &&
     //     labels.contains(DoctypeNames.salesOrder) &&
     //     labels.contains(DoctypeNames.company) &&
@@ -142,7 +142,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Order booking.svg",fit: BoxFit.fill),label: Padding(padding: const EdgeInsets.only(left: 4,right: 4), child: Text('Sales Summary',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center),), route: TransactionHistory()));
       widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/customer care.svg",fit: BoxFit.fill),label: Text('Customer Outstanding',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CustomerOutStanding()));
       // widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripList()));
-      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripWiseList(EmpId: EmpID['data'][0]['name'])));
+      widgetsList.add(LabelList(icon: SvgPicture.asset("assets/home_icons/Collection trip.svg",fit: BoxFit.fill),label: Text('Collection Trip',style: TextStyle(color: Constants.commonTextColor),textAlign: TextAlign.center), route: CollectionTripWiseList(EmpId: EmpID['data'][0]['name'],isFirstTime: true)));
       print(widgetsList.length);
       setState(() {});
   }
